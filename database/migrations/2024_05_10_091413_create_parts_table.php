@@ -15,6 +15,7 @@ class CreatePartsTable extends Migration
     {
         Schema::create('parts', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('setting_id')->nullable()->constrained('settings')->onDelete('cascade');
             $table->string('part_name');
             $table->string('part_no')->nullable();
             $table->text('description')->nullable();

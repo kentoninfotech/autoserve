@@ -19,7 +19,7 @@ class TransactionsController extends Controller
     public function index()
     {
         $accountheads = accountheads::all();
-        $jobs = jobs::select('id','jid','customerid')->where('jid','>',0)->where('status','Pending')->get();
+        $jobs = jobs::select('id','jid','customerid')->where('jid','>',0)->get();
         $transactions = transactions::orderBy('id','desc')->paginate(50);
         $users = User::select('id','name')->get();
 

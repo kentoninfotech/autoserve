@@ -15,6 +15,7 @@ class CreateExpendituresTable extends Migration
     {
         Schema::create('expenditure', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('setting_id')->nullable()->constrained('settings')->onDelete('cascade');
             $table->string('description')->nullable();
             $table->string('amount')->nullable();
             $table->string('dated')->nullable();

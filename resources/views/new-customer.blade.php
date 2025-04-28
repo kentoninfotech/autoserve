@@ -24,7 +24,7 @@
                                 $job->diagnosis = [];
                                 $job->sale = [];
 
-                            $customerid = "LAC".strtoupper(substr(md5(uniqid(rand(1,6))), 0, 7));
+                            $customerid = "TAS".strtoupper(substr(md5(uniqid(rand(1,6))), 0, 7));
                         }else{
                             $jobno = $job->id;
                             if(isset($job->vehicle)){
@@ -35,12 +35,13 @@
                         $users= \App\Models\User::select('id','name')->get();
                     @endphp
 
-                    <form method="POST" action="{{ route('addnewcustomer') }}">
+                    <form method="POST" action="{{ route('addnewcustomer') }}" enctype="multipart/form-data">
                             <input type="hidden" name="id" value="{{$job->id}}">
                             <input type="hidden" name="jobno" value="{{$job->jobno}}">
                             <input type="hidden" name="editjobno" value="{{$editjobno}}">
                             <input type="hidden" name="jobid" value="{{$job->jobid}}">
                             <input type="hidden" id="oldtotalamount" value="{{$job->amount}}">
+                            <input type="hidden" name="old_diagnosis_file" value="{{$job->diagnosis ? $job->diagnosis->diagnosis : ""}}">
                         @csrf
                         <ul class="nav nav-tabs" id="jobordertabs">
                             <li class="active"><a href="#tab1" data-toggle="tab">Contact Information</a></li>
@@ -372,6 +373,16 @@
                                         </div>
                                     </div>
 
+                                </div>
+
+                                <div class="row form-row">
+                                    <div class="form-group col-md-3">
+                                        <label for="diagnosis">Upload Diagnosis Result</label>
+                                        <div>
+
+                                        <input type="file" id="diagnosis" name="diagnosis"  class="form-control" >
+                                        </div>
+                                    </div>
                                 </div>
 
                                 <div class="row form-row">

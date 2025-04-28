@@ -10,4 +10,10 @@ class settings extends Model
     use HasFactory;
 
     protected $guarded = [];
+
+    public function Owner()
+    {
+        return $this->belongsTo(User::class);
+    }
+    
 }

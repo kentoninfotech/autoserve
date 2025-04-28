@@ -28,13 +28,15 @@
                             }
                     @endphp
 
-                       <form method="POST" action="{{ route('addnewcustomer') }}">
+                       <form method="POST" action="{{ route('addnewcustomer') }}" enctype="multipart/form-data">
 
                             <input type="hidden" name="id" value="{{$job->id}}">
                             <input type="hidden" name="jobno" value="{{$jobno}}">
                             <input type="hidden" name="editjobno" value="{{$editjobno}}">
                             <input type="hidden" name="jobid" value="">
                             <input type="hidden" name="newcjob" value="newcjob">
+                            <input type="hidden" name="old_diagnosis_file" value="{{$job->diagnosis ? $job->diagnosis->diagnosis : ""}}">
+
 
                         @csrf
                         <ul class="nav nav-tabs" id="jobordertabs">
@@ -259,6 +261,16 @@
 
                                 <div class="row form-row">
                                     <div class="form-group col-md-3">
+                                        <label for="diagnosis">Upload Diagnosis Result</label>
+                                        <div>
+
+                                        <input type="file" id="diagnosis" name="diagnosis"  class="form-control" >
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row form-row">
+                                    <div class="form-group col-md-3">
                                         <label for="ddate">Diagnosis Date</label>
                                         <div>
 
@@ -324,7 +336,7 @@
                                         @php $pi = 1; @endphp
                                         <datalist id="productslist">
                                             @foreach ($parts as $pas)
-                                                <option value="{{$pas->part_name}}" data-pid="{{ $pas->id }}" data-price="{{$pas->selling_price}}"  data-instock="{{ $pas->stock->quantity_in_stock }}">
+                                                <option value="{{$pas->part_name}}" data-pid="{{ $pas->id }}" data-price="{{$pas->selling_price}}"  data-instock="{{ $pas->stock->quantity_in_stock ?? 0}}">
                                             @endforeach
                                         </datalist>
                                         <div class="row form-row partslist" id="{{$pi}}">

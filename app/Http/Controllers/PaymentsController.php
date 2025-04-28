@@ -22,6 +22,12 @@ class PaymentsController extends Controller
         return view('payments', compact('payments'));
     }
 
+    public function debtors()
+    {
+        $debtors = payments::orderBy('dated','desc')->orderBy('invoiceno','desc')->paginate(400);
+        return view('debtors', compact('debtors'));
+    }
+
     /**
      * Show the form for creating a new resource.
      *

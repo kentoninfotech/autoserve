@@ -15,6 +15,7 @@ class CreatePartsordersTable extends Migration
     {
         Schema::create('partsorders', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('setting_id')->nullable()->constrained('settings')->onDelete('cascade');
             $table->string('customerid',30)->nullable();
             $table->string('jobno',30)->nullable();
             $table->string('partsname',60)->nullable();

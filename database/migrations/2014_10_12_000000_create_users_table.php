@@ -35,7 +35,7 @@ class CreateUsersTable extends Migration
             array(
                 'name' => 'Kojo Admin',
                 'email' => 'admin@kojoautos.com',
-                'password' => '$2y$10$kbHiVY5Tt31WQj/lTCTjoOQUGHFc7..6KxU8p8Vu0koVZsk3vK77.',
+                'password' => '$2y$10$CjKcFVg7zWhsdqlqfQVKDeTHYy/j/kFlTSWnNLkMHZhK7q8yXfaXG',
                 'role' => 'Super',
                 'status' => 'Active',
                 'facility' => 'Central',

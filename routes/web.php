@@ -27,9 +27,9 @@ Route::post('/settings', [App\Http\Controllers\HomeController::class, 'settings'
 Route::post('/searchjobs', [App\Http\Controllers\JobsController::class, 'jobSearch'])->name('searchjobs');
 Route::post('/namecheck', [App\Http\Controllers\JobsController::class, 'nameCheck'])->name('namecheck');
 
-Route::get('/new-payment/{invoiceno}', [App\Http\Controllers\PaymentsController::class, 'newPayment'])->name('new-payment')->middleware('role:Admin,Finance,Super');
+Route::get('/new-payment/{invoiceno}', [App\Http\Controllers\PaymentsController::class, 'newPayment'])->name('new-payment')->middleware('role:Admin,Finance,Super,Front-Desk');
 
-Route::post('/makepayment', [App\Http\Controllers\PaymentsController::class, 'store'])->name('makepayment')->middleware('role:Admin,Finance,Super');
+Route::post('/makepayment', [App\Http\Controllers\PaymentsController::class, 'store'])->name('makepayment')->middleware('role:Admin,Finance,Super,Front-Desk');
 
 // TASKS / TO DOs
 Route::post('/newtask', [App\Http\Controllers\TasksController::class, 'store'])->name('newtask');
@@ -68,7 +68,7 @@ Route::post('/newpersonnel', [App\Http\Controllers\PersonnelController::class, '
 Route::post('/psfuform', [App\Http\Controllers\HomeController::class, 'psfuForm'])->name('psfuform')->middleware('role:Admin,Super,Front-Desk');
 Route::get('/psfu', [App\Http\Controllers\HomeController::class, 'psfu'])->name('psfu')->middleware('role:Admin,Super,Front-Desk');
 Route::get('/jobpsfu/{jobno}', [App\Http\Controllers\HomeController::class, 'jobPSFU'])->name('jobpsfu')->middleware('role:Admin,Super,Front-Desk');
-
+Route::get('/allpsfus', [App\Http\Controllers\HomeController::class, 'allPSFUs'])->name('allpsfus')->middleware('role:Admin,Super,Front-Desk');
 
 // PARTS
 Route::get('/parts', [App\Http\Controllers\PartsController::class, 'index'])->name('parts');
@@ -121,8 +121,16 @@ Route::post('/addjobno', [App\Http\Controllers\JobsController::class, 'addJobno'
 Route::get('/invoice/{jobno}/{type}', [App\Http\Controllers\JobsController::class, 'printInvoice'])->name('invoice')->middleware('role:Front-Desk,Admin,Finance,Super,Spare-Parts');
 Route::post('/filterjobs', [App\Http\Controllers\JobsController::class, 'filterJobs'])->name('filterjobs')->middleware('role:Admin,Super,Front-Desk,Spare-Parts');
 Route::post('/filterTransactions', [App\Http\Controllers\TransactionsController::class, 'filterTransactions'])->name('filterTransactions')->middleware('role:Admin,Super,Finance');
+// Create link to download diagnosis->diagnosis file
+Route::get('/diagnosis-file/{jobno}', [App\Http\Controllers\JobsController::class, 'diagnosisFile'])->name('diagnosis-file')->middleware('role:Front-Desk,Admin,Finance,Super,Spare-Parts');
 
 
+// JOB CONTROLS
+Route::get('/job-controls', [App\Http\Controllers\ControlsController::class, 'index'])->name('job-controls')->middleware('role:Admin,Super,Front-Desk');
+Route::post('/assignedToTechnician', [App\Http\Controllers\ControlsController::class, 'store'])->name('assignedToTechnician')->middleware('role:Admin,Super,Front-Desk');
+Route::get('/delete-control/{id}', [App\Http\Controllers\ControlsController::class, 'destroy'])->name('delete-control')->middleware('role:Admin,Super,Front-Desk');
+// print controls
+Route::get('/print-controls', [App\Http\Controllers\ControlsController::class, 'printControls'])->name('print-controls')->middleware('role:Admin,Super,Front-Desk');
 // DELIVERIES
 Route::resource('deliveries', App\Http\Controllers\DeliveryController::class);
 Route::post('actualDelivery',[App\Http\Controllers\DeliveryController::class,'actualDelivery'])->name('actualDelivery');
@@ -131,8 +139,13 @@ Route::get('/delivery_note/{did}',[App\Http\Controllers\DeliveryController::clas
 Route::post('/changedate', [App\Http\Controllers\JobsController::class, 'changedate'])->name('changedate')->middleware('role:Admin,Super,Front-Desk');
 
 // PAYMENTS
-Route::get('/payments', [App\Http\Controllers\PaymentsController::class, 'index'])->name('payments')->middleware('role:Admin,Finance,Super');
-Route::get('/expenditures', [App\Http\Controllers\ExpenditureController::class, 'index'])->name('expenditures')->middleware('role:Admin,Finance,Super');
+Route::get('/payments', [App\Http\Controllers\PaymentsController::class, 'index'])->name('payments')->middleware('role:Admin,Finance,Super,Front-Desk');
+Route::get('/debtors', [App\Http\Controllers\PaymentsController::class, 'debtors'])->name('debtors')->middleware('role:Admin,Finance,Super,Front-Desk');
+
+// ATTENDANCE MANAGEMENT
+Route::get('/attendance', [App\Http\Controllers\AttendanceSController::class, 'index'])->name('attendances')->middleware('role:Admin,Super,Front-Desk');
+Route::post('/present/{pid}', [App\Http\Controllers\AttendanceSController::class, 'store'])->name('present')->middleware('role:Admin,Super,Front-Desk');
+Route::get('/attendances', [App\Http\Controllers\AttendanceSController::class, 'Attendances'])->name('attendances')->middleware('role:Admin,Super,Front-Desk');
 
 Route::get('/delete/{id}/{table}', [App\Http\Controllers\JobsController::class, 'genericDelete'])->name('delete')->middleware('role:Admin,Super');
 // ARTISAN COMMANDS

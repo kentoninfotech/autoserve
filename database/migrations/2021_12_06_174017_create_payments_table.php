@@ -15,6 +15,7 @@ class CreatePaymentsTable extends Migration
     {
         Schema::create('payments', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('setting_id')->nullable()->constrained('settings')->onDelete('cascade');
             $table->string('customerid')->nullable();
             $table->string('jobno')->nullable();
             $table->string('invoiceno')->nullable();

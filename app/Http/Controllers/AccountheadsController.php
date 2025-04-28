@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\accountheads;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class AccountheadsController extends Controller
 {
@@ -43,6 +44,8 @@ class AccountheadsController extends Controller
             'category' => $request->category,
             'type' => $request->type,
             'description'=>$request->description,
+            // 'settings' => $request->settings_id,
+            'setting_id' => Auth::user()->settings_id,
 
         ]);
         $accountheads = accountheads::all();

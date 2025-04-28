@@ -19,7 +19,7 @@
 
 <body onload="window.print()"  style="background-color: white !important;">
 	<!-- WRAPPER -->
-            <img  src="{{ asset('/public/images/kjheaderbg.png') }}" alt="{{$settings->motto}}" class="img-responsive" style="height: 150px; width: auto;">
+            <img  src="{{ asset('/images/kjheaderbg2.png') }}" alt="{{$settings->motto}}" class="img-responsive" style="height: 150px; width: auto;">
 
         <div style="padding: 0px 30px 0px 30px; background-color: white !important;">
             @yield('content')

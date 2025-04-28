@@ -400,6 +400,13 @@ class HomeController extends Controller
         return redirect()->back()->with(['message'=>"The PSFU activity for invoice number ".$request->jid." saved"]);
     }
 
+    public function allPSFUs(){
+      $allpsfus = psfu::all();
+      return view('allpsfus', compact('allpsfus'));
+    }
+
+
+
     public function sendSMS(request $request){
       ini_set('allow_url_fopen',1);
       $senderid = $request->senderid;

@@ -12,6 +12,9 @@ use App\Models\User;
 use App\Models\partsorder;
 use App\Models\payments;
 use App\Models\parts;
+use App\Models\stock;
+use App\Models\psfu;
+use App\Models\controls;
 use Illuminate\Http\Request;
 // use PDF;
 
@@ -254,6 +257,17 @@ class JobsController extends Controller
             ));
         }
 
+        if ($request->hasFile('diagnosis')) {
+            $file = $request->file('diagnosis');
+            $filename = time() . '_' . $file->getClientOriginalName();
+            $destinationPath = public_path('/pdf');
+            $file->move($destinationPath, $filename);
+            $diagnosis_file = $filename;
+        } else {
+            $diagnosis_file = $request->old_diagnosis_file;
+        }
+
+
             $veh = vehicle::updateOrCreate(['vregno'=>$request->vregno],$request->only(
                 'customerid',
                 'vregno',
@@ -284,7 +298,7 @@ class JobsController extends Controller
             $status = $request->sstatus;
             $dated = $request->sdate!="" ? date('Y-m-d', strtotime($request->sdate)) : date('Y-m-d', strtotime($request->ddate));
         }else{
-            $description = $request->diagnosis;
+            $description = $request->problems;
             $status = $request->status;
             $dated = $request->ddate!="" ? date('Y-m-d', strtotime($request->ddate)) : date('Y-m-d', strtotime($request->sdate));
         }
@@ -366,7 +380,7 @@ class JobsController extends Controller
         $diag = diagnosis::updateOrCreate(['jobno'=>$jobno],$request->only(
             'customerid',
             // 'jobno',
-            'diagnosis',
+            // 'diagnosis',
             'problems',
             'causes',
             'request',
@@ -377,7 +391,13 @@ class JobsController extends Controller
         ));
 
         $diag->jobno = $jobno;
+        $diag->diagnosis = $diagnosis_file;
         $diag->save();
+
+        // save jobno to controls
+        controls::updateOrCreate(['jobno'=>$jobno],$request->only('jobno'));
+
+
 
         return redirect()->route('newjob')->with(['message'=>'Order Saved Successfully! <br> <a href="/invoice/'.$jobno.'/estimate" class="btn btn-success">Print Job Estimate</a> OR <a href="/invoice/'.$jobno.'/instruction" class="btn btn-primary">Print Job Instruction</a>']);
     }
@@ -557,6 +577,13 @@ class JobsController extends Controller
             // return $pdf_doc->save('public/pdf/'.$type.'-'.$jobno.'.pdf')->stream($type.'-'.$jobno.'.pdf');
 
         return view('invoice', compact('job','vehicle','title'));
+    }
+
+    public function diagnosisFile($jobno)
+    {
+        $diagnosis_file = diagnosis::where('jobno',$jobno)->first()->diagnosis;
+
+        return response()->file(public_path('pdf/'.$diagnosis_file));
     }
 
     public function jobSearch(request $request)

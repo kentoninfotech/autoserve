@@ -15,6 +15,7 @@ class CreateDeliveriesTable extends Migration
     {
         Schema::create('deliveries', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('setting_id')->nullable()->constrained('settings')->onDelete('cascade');
             $table->string('customerid',50)->nullable();
             $table->unsignedBigInteger('job_no')->nullable();
             $table->decimal('amount', 10, 2)->nullable();

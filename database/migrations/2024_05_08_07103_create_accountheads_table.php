@@ -15,6 +15,7 @@ class CreateAccountheadsTable extends Migration
     {
         Schema::create('accountheads', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('setting_id')->nullable()->constrained('settings')->onDelete('cascade');
             $table->string('title',50)->nullable();
             $table->string('category',50)->nullable();
             $table->string('type',50)->nullable();

@@ -90,8 +90,8 @@ class PersonnelController extends Controller
         }
 
         $validateData = $request->validate([
-            'picture'=>'image|mimes:jpg,png,jpeg,gif,svg',
-            'cv'=>'image|mimes:jpg,png,jpeg,gif,svg,doc,docx,pdf'
+            'picture'=>'image|mimes:jpg,png,jpeg,gif,svg|max:2048',
+            'cv'=>'image|mimes:jpg,png,jpeg,gif,svg,doc,docx,pdf|max:2048',
         ]);
         
         if(!empty($request->file('picture'))){

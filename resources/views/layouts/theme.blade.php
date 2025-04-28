@@ -84,11 +84,14 @@
 		}
 
         .btn-success{
-            background-color: #032f69 !important;
+            /* background-color: #032f69 !important; LAC*/
+            background-color: #5e9a52 !important;
         }
 
         .btn-primary{
-            background-color: #032f69 !important;
+            /* background-color: #032f69 !important; LAC*/
+            background-color: #5e9a52 !important;
+
         }
 	</style>
 </head>
@@ -100,7 +103,7 @@
 		<!-- NAVBAR -->
 		<nav class="navbar navbar-default navbar-fixed-top" style="clear: both !important;">
 			<div class="brand">
-				<a href="{{url('/')}}"><img  src="{{asset('/public/images/'.$settings->logo)}}" alt="{{$settings->motto}}" class="img-responsive logo" style="height: 35px !important; float: left;"></a> {{$settings->ministry_name}}
+				<a href="{{url('/')}}"><img  src="{{asset('images/'.$settings->logo)}}" alt="{{$settings->motto}}" class="img-responsive logo" style="height: 35px !important; float: left;"></a> <b>{{$settings->ministry_name}}</b>
 				<button type="button" class="btn-toggle-fullwidth"><i class="lnr lnr-menu"></i></button>
 			</div>
 
@@ -202,6 +205,9 @@
 									<li><a href="{{url('newjob')}}" class="roledlink Front-Desk Admin Super">New Job</a></li>
 									<li><a href="{{url('jobs')}}" class="roledlink Front-Desk Admin Super Finance">Pending Jobs</a></li>
 									<li><a href="{{url('completedjobs')}}" class="roledlink Front-Desk Admin Super Finance">Completed Jobs</a></li>
+                                    <li><a href="{{url('job-controls')}}" class="roledlink Front-Desk Admin Super">Job Control Management</a></li>
+                                    <li><a href="{{url('attendance')}}" class="roledlink Front-Desk Admin Super">Attendance Management</a></li>
+
 								</ul>
 							</div>
 						</li>
@@ -225,7 +231,7 @@
 								<ul class="nav">
 									<li><a href="{{url('transactions')}}" class="roledlink Cashier Finance Admin Super">All Transactions</a></li>
                                     <li><a href="{{url('payments')}}" class="roledlink Cashier Finance Admin Super">Payments</a></li>
-									{{-- <li><a href="{{url('expenditures')}}" class="roledlink Cashier Finance Admin Super">Expenditures</a></li> --}}
+									<li><a href="{{url('debtors')}}" class="roledlink Cashier Finance Admin Super">Debtors</a></li>
                                     <li><a href="{{url('account-heads')}}" class="roledlink Cashier Finance Admin Super">Account Heads</a></li>
 
 								</ul>
@@ -238,7 +244,7 @@
 								<ul class="nav">
 									<li><a href="{{url('reminders')}}" class="roledlink Front-Desk Admin Super">Reminders</a></li>
 									<li><a href="{{url('psfu')}}" class="roledlink Front-Desk Admin Super">Post Service Followup</a></li>
-									<li><a href="{{url('posreports')}}" class="roledlink Front-Desk Admin Super">PSFU Reports Reports</a></li>
+									<li><a href="{{url('allpsfus')}}" class="roledlink Front-Desk Admin Super">PSFU Reports</a></li>
 								</ul>
 							</div>
 						</li>

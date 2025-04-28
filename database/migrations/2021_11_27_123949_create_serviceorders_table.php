@@ -15,6 +15,7 @@ class CreateServiceordersTable extends Migration
     {
         Schema::create('serviceorders', function (Blueprint $table) {
             $table->id();
+            
             $table->string('customerid')->nullable();
             $table->string('jobno')->nullable();
             $table->string('servicename')->nullable();

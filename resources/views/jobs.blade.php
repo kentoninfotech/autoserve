@@ -58,6 +58,8 @@
                                     <td>
                                         @if ($job->jid!="0")
                                             {{$job->jid}}
+
+
                                         @else
                                             <form action="{{ route('addjobno') }}" method="post">
                                                 @csrf
@@ -82,10 +84,13 @@
                                         <a href="{{ url('/invoice/'.$job->jobno)}}/estimate" target="_blank" class="label label-info">Estimate</a>
                                         <a href="{{ url('/invoice/'.$job->jobno)}}/instruction" target="_blank" class="label label-info">Instruction</a>
 
-                                            <a href="{{ url('/new-payment/'.$job->jid)}}" target="_blank" class="label label-primary roledlink Finance Admin Super">Make Payment</a>
+                                            <a href="{{ url('/new-payment/'.$job->jid)}}" target="_blank" class="label label-primary roledlink Finance Admin Super Front-Desk">Make Payment</a>
 
                                         <a href="{{ url('/invoice/'.$job->jobno)}}/receipt" target="_blank" class="label label-primary">Receipt</a>
                                         <a href="#"  data-toggle="modal" data-target="#invoicedate" id="{{$job->jobno}}" onClick="changeDate({{$job->jobno}})" class="label label-warning roledlink Super Admin">Change Date</a>
+                                        @if (isset($job->diagnosis) && ($job->diagnosis->diagnosis != ""))
+                                            <a href="{{ url('/diagnosis-file/'.$job->jobno)}}" target="_blank" class="label label-info">Diagnosis File</a>
+                                        @endif
                                         <a href="{{ url('/delete/'.$job->id)}}/jobs" class="label label-danger roledlink Super Admin"  onclick="return confirm('Are you sure you want to delete this record? {{$job->description}}?')">Delete</a>
                                     </td>
 

@@ -15,6 +15,7 @@ class CreateSuppliesTable extends Migration
     {
         Schema::create('supplies', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('setting_id')->nullable()->constrained('settings')->onDelete('cascade');
             $table->foreignId('part_id')->constrained('parts')->onDelete('cascade');
             $table->double('quantity_supplied',10,2)->nullable();
             $table->string('supplier_name')->nullable();

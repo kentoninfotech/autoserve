@@ -15,6 +15,7 @@ class CreatePersonnelsTable extends Migration
     {
         Schema::create('personnels', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('setting_id')->nullable()->constrained('settings')->onDelete('cascade');
             $table->string('surname')->nullable();
             $table->string('firstname')->nullable();
             $table->string('othernames')->nullable();

@@ -15,6 +15,7 @@ class CreatePsfusTable extends Migration
     {
         Schema::create('psfus', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('setting_id')->nullable()->constrained('settings')->onDelete('cascade');
             $table->string('customerid')->nullable();
             $table->string('vregno')->nullable();
             $table->string('jobno')->nullable();
