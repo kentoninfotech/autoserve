@@ -15,9 +15,14 @@ use App\Http\Controllers\HomeController;
 */
 
 
+Route::get('/', function () {
+    return view('index');
+});
+
+
 Auth::routes();
 // ->middleware('role:editor,approver');
-Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/dashboard', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index']);
 Route::get('/logout', [App\Http\Controllers\HomeController::class, 'logout'])->name('logout');
 

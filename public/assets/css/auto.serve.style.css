@@ -1,0 +1,159 @@
+/* General Styles */
+
+body {
+  font-family: 'Segoe UI', Arial, sans-serif;
+  background: #f8f9fa;
+}
+.hero {
+  background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('../images/hero-bg.jpg') center/cover no-repeat;
+  min-height: 80vh;
+  color: #fff;
+  position: relative;
+}
+.hero-img {
+  max-width: 350px;
+  border-radius: 1rem;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.2);
+}
+.features-carousel .carousel-item {
+  min-height: 350px;
+}
+/* Modern hover and animation for Features Section */
+.feature-box {
+  background: #fff;
+  transition: transform 0.35s cubic-bezier(.4,2,.3,1), box-shadow 0.35s, border-color 0.3s;
+  box-shadow: 0 2px 12px rgba(13,110,253,0.06);
+  border: 2px solid transparent;
+  position: relative;
+  z-index: 1;
+}
+.feature-box:hover, .feature-box:focus-within {
+  transform: translateY(-12px) scale(1.04) rotate(-1deg);
+  box-shadow: 0 8px 32px rgba(13,110,253,0.18), 0 2px 8px rgba(0,0,0,0.10);
+  border-color: #0d6efd;
+}
+.feature-box::after {
+  content: '';
+  display: block;
+  position: absolute;
+  left: 50%;
+  bottom: 0;
+  width: 0;
+  height: 3px;
+  background: linear-gradient(90deg, #0d6efd 0%, #ffc107 100%);
+  border-radius: 2px;
+  transition: width 0.35s cubic-bezier(.4,2,.3,1), left 0.35s cubic-bezier(.4,2,.3,1);
+  z-index: 2;
+}
+.feature-box:hover::after, .feature-box:focus-within::after {
+  width: 80%;
+  left: 10%;
+}
+
+/* Animate features on scroll */
+@media (prefers-reduced-motion: no-preference) {
+  .feature-box {
+    opacity: 0;
+    transform: translateY(40px);
+    transition: opacity 0.7s cubic-bezier(.4,2,.3,1), transform 0.7s cubic-bezier(.4,2,.3,1);
+  }
+  .feature-box.visible {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* Testimonial hover and animation */
+.testimonial {
+  background: #fff;
+  border-left: 4px solid #0d6efd;
+  font-style: italic;
+  transition: box-shadow 0.35s, transform 0.35s, border-color 0.3s;
+  box-shadow: 0 2px 12px rgba(13,110,253,0.06);
+  border-radius: 1rem;
+  position: relative;
+  z-index: 1;
+}
+.testimonial:hover, .testimonial:focus-within {
+  box-shadow: 0 8px 32px rgba(255,193,7,0.18), 0 2px 8px rgba(0,0,0,0.10);
+  border-color: #ffc107;
+  transform: translateY(-8px) scale(1.03) rotate(1deg);
+}
+.testimonial::after {
+  content: '';
+  display: block;
+  position: absolute;
+  left: 50%;
+  bottom: 0;
+  width: 0;
+  height: 3px;
+  background: linear-gradient(90deg, #ffc107 0%, #0d6efd 100%);
+  border-radius: 2px;
+  transition: width 0.35s cubic-bezier(.4,2,.3,1), left 0.35s cubic-bezier(.4,2,.3,1);
+  z-index: 2;
+}
+.testimonial:hover::after, .testimonial:focus-within::after {
+  width: 70%;
+  left: 15%;
+}
+@media (prefers-reduced-motion: no-preference) {
+  .testimonial {
+    opacity: 0;
+    transform: translateY(40px);
+    transition: opacity 0.7s cubic-bezier(.4,2,.3,1), transform 0.7s cubic-bezier(.4,2,.3,1);
+  }
+  .testimonial.visible {
+    opacity: 1;
+    transform: none;
+  }
+}
+@media (max-width: 767.98px) {
+  .hero {
+    padding-left: 1rem !important;
+    padding-right: 1rem !important;
+    padding-top: 80px !important;
+    padding-bottom: 2rem !important;
+  }
+  .hero h1 {
+    font-size: 2rem !important;
+    line-height: 1.2 !important;
+  }
+  .hero .lead {
+    font-size: 1.1rem !important;
+    margin-bottom: 1.5rem !important;
+  }
+  .hero .btn {
+    font-size: 1rem !important;
+    padding: 0.75rem 1.5rem !important;
+  }
+  .features-carousel {
+    padding-left: 1rem !important;
+    padding-right: 1rem !important;
+    margin-top: 2rem !important;
+    margin-bottom: 2rem !important;
+  }
+  .features-carousel .carousel-item > .row {
+    gap: 1.5rem 0;
+  }
+  .features-carousel .carousel-item {
+    padding: 1.5rem 0.5rem !important;
+  }
+  .features-carousel .carousel-inner {
+    border-radius: 1rem;
+  }
+  .features-carousel img {
+    margin-bottom: 1rem;
+  }
+}
+html {
+  scroll-behavior: smooth;
+}
+#featuresCarousel, #about {
+  scroll-margin-top: 140px;
+}
+#nextToBusiness {
+  width: 40%;
+  margin: 0 auto;
+  float: none;
+  display: block;
+}
