@@ -16,19 +16,20 @@ class CreateSettingsTable extends Migration
         Schema::create('settings', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->nullable()->constrained('users')->onDelete('cascade');
-            $table->string('ministry_name')->nullable();
+            $table->string('company_name')->nullable();
             $table->string('motto')->nullable();
             $table->string('logo')->nullable();
             $table->string('address')->nullable();
             $table->string('background')->nullable();
             $table->string('mode')->nullable();
+            $table->string('deployment_type')->nullable();
             $table->timestamps();
             
         });
 
         DB::table('settings')->insert(
             array(
-                'ministry_name' => 'KOJO AUTOS, ABUJA',
+                'company_name' => 'KOJO AUTOS, ABUJA',
                 'motto' => 'Automobile Services',
                 'logo' => 'logo-dark.png',
                 'background' => 'login-bg.jpg',

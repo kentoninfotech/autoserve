@@ -6,7 +6,7 @@
   <title>AutoServe - Automobile Management System</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
   <!--style.css-->
-  <link rel="stylesheet" href="{{ asset('assets/css/auto.serve.style.css') }}">
+  <link rel="stylesheet" href="{{ asset('assets/css/auto.serve.styles.css') }}">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
 </head>
@@ -229,51 +229,81 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-        <ul class="nav nav-tabs mb-3" id="registerTab" role="tablist">
-          <li class="nav-item" role="presentation">
-            <button class="nav-link active" id="user-tab" data-bs-toggle="tab" data-bs-target="#user" type="button" role="tab" aria-controls="user" aria-selected="true">User Details</button>
-          </li>
-          <li class="nav-item" role="presentation">
-            <button class="nav-link" id="business-tab" data-bs-toggle="tab" data-bs-target="#business" type="button" role="tab" aria-controls="business" aria-selected="false">Business Details</button>
-          </li>
-        </ul>
-        <form id="registrationForm" class="row g-3 justify-content-center">
-          <div class="tab-content w-100">
-            <div class="tab-pane fade show active" id="user" role="tabpanel" aria-labelledby="user-tab">
-              <div class="col-12 mb-3">
-                <label for="name" class="form-label">Full Name</label>
-                <input type="text" class="form-control form-control-sm" id="name" required>
+      <form action="{{ route('company.register') }}" method="POST" id="registrationForm" class="row g-3 justify-content-center">
+          @csrf
+          <div id="formMessage"></div>
+          <!-- flash messages -->
+          @if(session('success'))
+                 <div class="alert alert-success">
+                      <strong>{{session('success')}}</strong>
+                </div>
+          @endif
+          <!-- validation errors -->
+          @if ($errors->any())
+              <div class="alert alert-danger">
+                  <ul>
+                      @foreach ($errors->all() as $error)
+                          <li>{{ $error }}</li>
+                      @endforeach
+                  </ul>
               </div>
-              <div class="col-12 mb-3">
-                <label for="email" class="form-label">Email address</label>
-                <input type="email" class="form-control form-control-sm" id="email" required>
-              </div>
-              <div class="col-12 mb-3">
-                <label for="phone" class="form-label">Phone Number</label>
-                <input type="tel" class="form-control form-control-sm" id="phone" required>
-              </div>
-              <div class="col-12 mt-3 text-end">
-                <button type="button" class="btn btn-primary" id="nextToBusiness">Next <i class="bi bi-arrow-right"></i></button>
-              </div>
-            </div>
-            <div class="tab-pane fade" id="business" role="tabpanel" aria-labelledby="business-tab">
-              <div class="col-12 mb-3">
-                <label for="company" class="form-label">Company Name</label>
-                <input type="text" class="form-control form-control-sm" id="company" required>
-              </div>
-              <div class="col-12 mb-3">
-                <label for="industry" class="form-label">Industry</label>
-                <input type="text" class="form-control form-control-sm" id="industry">
-              </div>
-              <div class="col-12 mb-3">
-                <label for="address" class="form-label">Business Address</label>
-                <input type="text" class="form-control form-control-sm" id="address">
-              </div>
-              <div class="col-12 mt-3">
-                <button type="submit" class="btn btn-primary w-100">Register</button>
-                <div id="formMessage" class="mt-3"></div>
-              </div>
-            </div>
+          @endif
+          <div class="col-12 mb-3">
+            <label for="name" class="form-label">Full Name</label>
+            <input type="text" name="name" value="{{old('name')}}" class="form-control form-control-sm" id="name" required autofocus="autofocus">
+            @error('name')
+                <span class="invalid-feedback" role="alert">
+                    <strong>{{ $message }}</strong>
+                </span>
+            @enderror
+          </div>
+          <div class="col-12 mb-3">
+            <label for="email" class="form-label">Email address</label>
+            <input type="email" name="email" value="{{old('email')}}" class="form-control form-control-sm" id="email" autocomplete="username" required>
+            @error('email')
+                <span class="invalid-feedback" role="alert">
+                    <strong>{{ $message }}</strong>
+                </span>
+            @enderror
+          </div>
+          <div class="col-12 mb-3">
+            <label for="phone_number" class="form-label">Phone Number</label>
+            <input type="text" name="phone_number" value="{{old('phone_number')}}" class="form-control form-control-sm" id="phone_number" required>
+            @error('phone_number')
+                <span class="invalid-feedback" role="alert">
+                    <strong>{{ $message }}</strong>
+                </span>
+            @enderror
+          </div>
+          <div class="col-12 mb-3">
+            <label for="company_name" class="form-label">Company Name</label>
+            <input type="text" name="company_name" value="{{old('company_name')}}" class="form-control form-control-sm" id="company_name" required>
+            @error('company_name')
+                <span class="invalid-feedback" role="alert">
+                    <strong>{{ $message }}</strong>
+                </span>
+            @enderror
+          </div>
+          <div class="col-12 mb-3">
+            <label for="deployment_type" class="form-label">Deployment Method</label>
+            <select name="deployment_type" class="form-select form-select-sm" id="deployment_type" required>
+              <option value="" disabled selected>Select Deployment Method</option>
+              <option value="cloud">Online</option>
+              <option value="on-premise">On-Premise</option>
+              <option value="subscription">Subscription</option>
+            </select>
+          </div>
+          <div class="col-12 mb-3">
+            <label for="address" class="form-label">Company Address</label>
+            <input type="text" name="address" value="{{old('address')}}" class="form-control form-control-sm" id="address">
+            @error('address')
+                <span class="invalid-feedback" role="alert">
+                    <strong>{{ $message }}</strong>
+                </span>
+            @enderror
+          </div>
+          <div class="col-12 mt-3">
+            <button type="submit" class="btn btn-primary w-100">Register</button>
           </div>
         </form>
       </div>
@@ -339,6 +369,6 @@
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
   <!--Custom JS-->
-  <script src="{{ asset('/assets/js/auto.serve.scripts.js') }}"></script>
+  <script src="{{ asset('assets/js/auto.serve.scripts.js') }}"></script>
 </body>
 </html>

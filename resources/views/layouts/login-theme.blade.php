@@ -2,7 +2,7 @@
 <html lang="en" class="fullscreen-bg">
 
 <head>
-	<title>{{$settings->ministry_name}} | Login</title>
+	<title>{{$settings->company_name}} | Login</title>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
@@ -45,7 +45,7 @@
                         <div class="right" style="background-image: url('{{ asset('public/images/' . $settings->background) }}'); background-repeat: no-repeat; background-size: cover;">
                             <div class="overlay"></div>
                             <div class="content text">
-                                <h1 class="heading">{{$settings->ministry_name}}</h1>
+                                <h1 class="heading">{{$settings->company_name}}</h1>
                                 <p>{{$settings->motto}}</p>
                             </div>
                         </div>

@@ -103,7 +103,7 @@
 		<!-- NAVBAR -->
 		<nav class="navbar navbar-default navbar-fixed-top" style="clear: both !important;">
 			<div class="brand">
-				<a href="{{url('/')}}"><img  src="{{asset('images/'.$settings->logo)}}" alt="{{$settings->motto}}" class="img-responsive logo" style="height: 35px !important; float: left;"></a> <b>{{$settings->ministry_name}}</b>
+				<a href="{{url('/')}}"><img  src="{{asset('images/'.$settings->logo)}}" alt="{{$settings->motto}}" class="img-responsive logo" style="height: 35px !important; float: left;"></a> <b>{{$settings->company_name}}</b>
 				<button type="button" class="btn-toggle-fullwidth"><i class="lnr lnr-menu"></i></button>
 			</div>
 
@@ -351,8 +351,8 @@
 				<input type="hidden" name="oldbackground" id="id" value="{{$settings->background}}">
 
                 <div class="form-group">
-                    <label for="ministry_name">Organization</label>
-                    <input type="text" name="ministry_name" id="ministry_name" class="form-control" value="{{$settings->ministry_name}}">
+                    <label for="company_name">Organization</label>
+                    <input type="text" name="company_name" id="company_name" class="form-control" value="{{$settings->company_name}}">
                 </div>
 
 				<div class="form-group">

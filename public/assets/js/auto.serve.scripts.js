@@ -4,24 +4,6 @@ if (carousel) {
   const bsCarousel = new bootstrap.Carousel(carousel, { interval: 4000, ride: 'carousel' });
 }
 
-// Registration form submission
-const form = document.getElementById('registrationForm');
-const formMessage = document.getElementById('formMessage');
-if (form) {
-  form.addEventListener('submit', function(e) {
-    e.preventDefault();
-    formMessage.textContent = 'Thank you for registering! We will contact you soon.';
-    formMessage.className = 'alert alert-success';
-    form.reset();
-    // Close modal after short delay
-    setTimeout(() => {
-      const modal = bootstrap.Modal.getInstance(document.getElementById('registerModal'));
-      if (modal) modal.hide();
-      formMessage.textContent = '';
-      formMessage.className = '';
-    }, 1500);
-  });
-}
 
 // Scroll-triggered animation for features and testimonials
 function revealOnScroll(selector) {
@@ -64,13 +46,72 @@ document.addEventListener('DOMContentLoaded', function() {
       scrollWithOffset(e, '#about');
     });
   });
-  const nextBtn = document.getElementById('nextToBusiness');
-  if (nextBtn) {
-    nextBtn.addEventListener('click', function() {
-      const businessTab = document.getElementById('business-tab');
-      if (businessTab) {
-        new bootstrap.Tab(businessTab).show();
-      }
-    });
-  }
+  
 });
+
+
+// Handle form submission via AJAX to prevent modal from closing
+const form = document.getElementById('registrationForm');
+if (form) {
+  form.addEventListener('submit', async function (e) {
+    e.preventDefault(); // Prevent default form submission
+
+    // Clear any previous messages
+    const formMessage = document.getElementById('formMessage');
+    if (formMessage) {
+      formMessage.textContent = '';
+      formMessage.className = '';
+    }
+
+    // Collect form data
+    const formData = new FormData(form);
+
+    try {
+      // Send form data to the server
+      const response = await fetch(form.action, {
+        method: 'POST',
+        body: formData,
+        headers: {
+          'X-Requested-With': 'XMLHttpRequest',
+        },
+      });
+
+      if (response.ok) {
+        // Display success message
+        if (formMessage) {
+          formMessage.textContent = 'Registration successful!';
+          formMessage.className = 'alert alert-success';
+        }
+        form.reset(); // Reset the form
+      } else if (response.status === 422) {
+        // Handle validation errors
+        const errorData = await response.json();
+        if (formMessage && errorData.errors) {
+          formMessage.textContent = 'Please fix the following errors:';
+          formMessage.className = 'alert alert-danger';
+          const errorList = document.createElement('ul');
+          for (const [field, messages] of Object.entries(errorData.errors)) {
+            messages.forEach(message => {
+              const listItem = document.createElement('li');
+              listItem.textContent = message;
+              errorList.appendChild(listItem);
+            });
+          }
+          formMessage.appendChild(errorList);
+        }
+      } else {
+        // Handle unexpected errors
+        if (formMessage) {
+          formMessage.textContent = 'An unexpected error occurred. Please try again later.';
+          formMessage.className = 'alert alert-danger';
+        }
+      }
+    } catch (error) {
+      // Handle network or other errors
+      if (formMessage) {
+        formMessage.textContent = 'An error occurred. Please check your connection and try again.';
+        formMessage.className = 'alert alert-danger';
+      }
+    }
+  });
+}

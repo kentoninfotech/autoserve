@@ -503,7 +503,7 @@ class HomeController extends Controller
 
 
       settings::updateOrCreate(['id'=>$request->id],[
-          'ministry_name' => $request->ministry_name,
+          'company_name' => $request->company_name,
           'motto' => $request->motto,
           'logo' => $logo,
           'address' => $request->address,

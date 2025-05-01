@@ -15,9 +15,14 @@ use App\Http\Controllers\HomeController;
 */
 
 
+
+//  Landing Page
 Route::get('/', function () {
     return view('index');
 });
+
+// Authentication
+Route::post('/', [App\Http\Controllers\SettingsController::class, 'companyRegister'])->name('company.register');
 
 
 Auth::routes();
