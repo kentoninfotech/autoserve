@@ -67,7 +67,7 @@
 </section>
 
   <!-- Features Carousel -->
-  <section class="features-carousel py-5 position-relative" style="background: linear-gradient(90deg, #fff 60%, #e3f2fd 100%); overflow: hidden;">
+  <section class="features-carousel py-5 position-relative" style="background: linear-gradient(90deg, #f8f9fa 60%, #e9ecef 100%); overflow: hidden;">
   <div class="container position-relative">
     <div id="featuresCarousel" class="carousel slide animate__animated animate__fadeInUp" data-bs-ride="carousel">
       <div class="carousel-inner">
@@ -79,8 +79,10 @@
               </div>
             </div>
             <div class="col-md-6 animate__animated animate__fadeInRight">
-              <h3 class="fw-bold text-success mb-2"><i class="bi bi-people"></i> Comprehensive Customer & Vehicle Records</h3>
-              <div class="alert alert-success mb-2">Maintain detailed records of customers, vehicles, and their complete repair history.</div>
+              <div class="card border-0 shadow-lg rounded-4 p-4">
+                <h2 class="fw-bold text-primary mb-3"><i class="bi bi-people"></i> Comprehensive Customer & Vehicle Records</h2>
+                <h3 class="text-muted">Maintain detailed records of customers, vehicles, and their complete repair history.</h3>
+              </div>
             </div>
           </div>
         </div>
@@ -92,8 +94,10 @@
               </div>
             </div>
             <div class="col-md-6 animate__animated animate__fadeInRight">
-              <h3 class="fw-bold text-warning mb-2"><i class="bi bi-bell"></i> Automated Service Reminders</h3>
-              <div class="alert alert-warning text-dark mb-2">Send SMS and email reminders to customers for upcoming services and appointments.</div>
+              <div class="card border-0 shadow-lg rounded-4 p-4">
+                <h2 class="fw-bold text-warning mb-3"><i class="bi bi-bell"></i> Automated Service Reminders</h2>
+                <h3 class="text-muted">Send SMS and email reminders to customers for upcoming services and appointments.</h3>
+              </div>
             </div>
           </div>
         </div>
@@ -105,8 +109,10 @@
               </div>
             </div>
             <div class="col-md-6 animate__animated animate__fadeInRight">
-              <h3 class="fw-bold text-secondary mb-2"><i class="bi bi-receipt"></i> Inventory & Invoice Management</h3>
-              <div class="alert alert-secondary mb-2">Track inventory, generate invoices, receipts, and manage payroll and staff tasks efficiently.</div>
+              <div class="card border-0 shadow-lg rounded-4 p-4">
+                <h2 class="fw-bold text-secondary mb-3"><i class="bi bi-receipt"></i> Inventory & Invoice Management</h2>
+                <h3 class="text-muted">Track inventory, generate invoices, receipts, and manage payroll and staff tasks efficiently.</h3>
+              </div>
             </div>
           </div>
         </div>
@@ -120,7 +126,7 @@
         <span class="visually-hidden">Next</span>
       </button>
     </div>
-    <div style="position:absolute;bottom:-60px;left:-60px;width:180px;height:180px;background:rgba(25,135,84,0.08);border-radius:50%;z-index:0;"></div>
+    <div style="position:absolute;bottom:-60px;left:-60px;width:180px;height:180px;background:rgba(13,110,253,0.08);border-radius:50%;z-index:0;"></div>
   </div>
 </section>
 
@@ -198,21 +204,21 @@
         <div class="testimonial p-4 shadow rounded mb-4 bg-white">
           <div class="mb-2"><i class="bi bi-chat-quote text-primary fs-2"></i></div>
           <p>"AutoServe has transformed our business. Managing customers and inventory has never been easier!"</p>
-          <h6 class="mt-3">- John D., Auto Garage Owner</h6>
+          <h6 class="mt-3">- Abdue A., Kojo Autos, Abuja</h6>
         </div>
       </div>
       <div class="col-md-4 animate__animated animate__fadeInUp animate__delay-2s">
         <div class="testimonial p-4 shadow rounded mb-4 bg-white">
           <div class="mb-2"><i class="bi bi-chat-quote text-warning fs-2"></i></div>
           <p>"The automated reminders keep our customers happy and coming back. Highly recommended!"</p>
-          <h6 class="mt-3">- Sarah K., Service Manager</h6>
+          <h6 class="mt-3">- Edima K., Taharish Automobile, Abuja</h6>
         </div>
       </div>
       <div class="col-md-4 animate__animated animate__fadeInRight animate__delay-3s">
         <div class="testimonial p-4 shadow rounded mb-4 bg-white">
           <div class="mb-2"><i class="bi bi-chat-quote text-success fs-2"></i></div>
           <p>"Inventory and billing are now seamless. Our staff loves the new system!"</p>
-          <h6 class="mt-3">- Mike L., Workshop Supervisor</h6>
+          <h6 class="mt-3">- Juliana B., AutoWellness Center, Lagos</h6>
         </div>
       </div>
     </div>
@@ -221,89 +227,62 @@
 </section>
 
   <!-- Registration Modal -->
-<div class="modal fade" id="registerModal" tabindex="-1" aria-labelledby="registerModalLabel" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
-  <div class="modal-dialog modal-lg">
+<div class="modal fade" id="registerModal" tabindex="-1" aria-labelledby="registerModalLabel" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false" style="background-color: rgba(0, 0, 0, 0.1);">
+  <div class="modal-dialog modal-dialog-centered modal-lg">
     <div class="modal-content">
-      <div class="modal-header">
+      <div class="modal-header bg-primary text-white">
         <h5 class="modal-title" id="registerModalLabel">Register an Account</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-      <form action="{{ route('company.register') }}" method="POST" id="registrationForm" class="row g-3 justify-content-center">
+        <form action="{{ route('company.register') }}" method="POST" id="registrationForm" class="row g-4">
           @csrf
           <div id="formMessage"></div>
-          <!-- flash messages -->
           @if(session('success'))
-                 <div class="alert alert-success">
-                      <strong>{{session('success')}}</strong>
-                </div>
+            <div class="alert alert-success">
+              <strong>{{session('success')}}</strong>
+            </div>
           @endif
-          <!-- validation errors -->
           @if ($errors->any())
-              <div class="alert alert-danger">
-                  <ul>
-                      @foreach ($errors->all() as $error)
-                          <li>{{ $error }}</li>
-                      @endforeach
-                  </ul>
-              </div>
+            <div class="alert alert-danger">
+              <ul>
+                @foreach ($errors->all() as $error)
+                  <li>{{ $error }}</li>
+                @endforeach
+              </ul>
+            </div>
           @endif
-          <div class="col-12 mb-3">
+          <div class="col-md-6">
             <label for="name" class="form-label">Full Name</label>
-            <input type="text" name="name" value="{{old('name')}}" class="form-control form-control-sm" id="name" required autofocus="autofocus">
-            @error('name')
-                <span class="invalid-feedback" role="alert">
-                    <strong>{{ $message }}</strong>
-                </span>
-            @enderror
+            <input type="text" name="name" value="{{old('name')}}" class="form-control" id="name" required autofocus>
           </div>
-          <div class="col-12 mb-3">
-            <label for="email" class="form-label">Email address</label>
-            <input type="email" name="email" value="{{old('email')}}" class="form-control form-control-sm" id="email" autocomplete="username" required>
-            @error('email')
-                <span class="invalid-feedback" role="alert">
-                    <strong>{{ $message }}</strong>
-                </span>
-            @enderror
+          <div class="col-md-6">
+            <label for="email" class="form-label">Email Address</label>
+            <input type="email" name="email" value="{{old('email')}}" class="form-control" id="email" required>
           </div>
-          <div class="col-12 mb-3">
+          <div class="col-md-6">
             <label for="phone_number" class="form-label">Phone Number</label>
-            <input type="text" name="phone_number" value="{{old('phone_number')}}" class="form-control form-control-sm" id="phone_number" required>
-            @error('phone_number')
-                <span class="invalid-feedback" role="alert">
-                    <strong>{{ $message }}</strong>
-                </span>
-            @enderror
+            <input type="text" name="phone_number" value="{{old('phone_number')}}" class="form-control" id="phone_number" required>
           </div>
-          <div class="col-12 mb-3">
+          <div class="col-md-6">
             <label for="company_name" class="form-label">Company Name</label>
-            <input type="text" name="company_name" value="{{old('company_name')}}" class="form-control form-control-sm" id="company_name" required>
-            @error('company_name')
-                <span class="invalid-feedback" role="alert">
-                    <strong>{{ $message }}</strong>
-                </span>
-            @enderror
+            <input type="text" name="company_name" value="{{old('company_name')}}" class="form-control" id="company_name" required>
           </div>
-          <div class="col-12 mb-3">
+          <div class="col-md-6">
+            <label for="address" class="form-label">Company Address</label>
+            <textarea name="address" class="form-control" id="address" rows="3">{{old('address')}}</textarea>
+          </div>
+          <div class="col-md-6">
             <label for="deployment_type" class="form-label">Deployment Method</label>
-            <select name="deployment_type" class="form-select form-select-sm" id="deployment_type" required>
+            <select name="deployment_type" class="form-select" id="deployment_type" required>
               <option value="" disabled selected>Select Deployment Method</option>
-              <option value="cloud">Online</option>
+              <option value="online">Online</option>
               <option value="on-premise">On-Premise</option>
               <option value="subscription">Subscription</option>
             </select>
           </div>
-          <div class="col-12 mb-3">
-            <label for="address" class="form-label">Company Address</label>
-            <input type="text" name="address" value="{{old('address')}}" class="form-control form-control-sm" id="address">
-            @error('address')
-                <span class="invalid-feedback" role="alert">
-                    <strong>{{ $message }}</strong>
-                </span>
-            @enderror
-          </div>
-          <div class="col-12 mt-3">
-            <button type="submit" class="btn btn-primary w-100">Register</button>
+          <div class="col-12">
+            <button type="submit" class="btn btn-primary w-100 mb-3">Register</button>
           </div>
         </form>
       </div>
@@ -317,18 +296,30 @@
     <h2 class="text-center mb-4 animate__animated animate__fadeInDown text-warning">Contact Us</h2>
     <div class="row">
       <div class="col-md-6 mb-4 mb-md-0 animate__animated animate__fadeInLeft">
-        <form id="contactForm" class="p-4 shadow rounded bg-white">
+          @if(session('successful'))
+            <div class="alert alert-success">
+              <strong>{{session('successful')}}</strong>
+            </div>
+          @endif
+          @if(session('errorful'))
+            <div class="alert alert-danger">
+              <strong>{{session('errorful')}}</strong>
+            </div>
+          @endif
+          
+        <form id="contactForm" class="p-4 shadow rounded bg-white" action="{{ route('web.equiry') }}" method="POST">
+          @csrf
           <div class="mb-3">
             <label for="contactName" class="form-label">Your Name</label>
-            <input type="text" class="form-control form-control-sm" id="contactName" required>
+            <input type="text" class="form-control form-control-sm" id="contactName" name="name" required>
           </div>
           <div class="mb-3">
             <label for="contactEmail" class="form-label">Email address</label>
-            <input type="email" class="form-control form-control-sm" id="contactEmail" required>
+            <input type="email" class="form-control form-control-sm" id="contactEmail" name="email" required>
           </div>
           <div class="mb-3">
             <label for="contactMessage" class="form-label">Message</label>
-            <textarea class="form-control form-control-sm" id="contactMessage" rows="4" required></textarea>
+            <textarea class="form-control form-control-sm" id="contactMessage" rows="4" name="message" required></textarea>
           </div>
           <button type="submit" class="btn btn-primary w-100">Send Message</button>
           <div id="contactFormMessage" class="mt-3"></div>
@@ -336,9 +327,9 @@
       </div>
       <div class="col-md-6 d-flex flex-column justify-content-center animate__animated animate__fadeInRight">
         <div class="ps-md-4 bg-dark bg-opacity-75 p-4 rounded text-white">
-          <div class="mb-3"><i class="bi bi-envelope-at text-primary fs-3 me-2"></i><a href="mailto:info@autoserve.com" class="text-white text-decoration-underline">info@autoserve.com</a></div>
-          <div class="mb-3"><i class="bi bi-telephone text-success fs-3 me-2"></i><a href="tel:+1234567890" class="text-white text-decoration-underline">+1 234 567 890</a></div>
-          <div class="mb-3"><i class="bi bi-geo-alt text-danger fs-3 me-2"></i>123 AutoServe Ave, Motor City, Country</div>
+          <div class="mb-3"><i class="bi bi-envelope-at text-primary fs-3 me-2"></i><a href="mailto:info@autoserve.com" class="text-white text-decoration-underline">info@autoserve.com.ng</a></div>
+          <div class="mb-3"><i class="bi bi-telephone text-success fs-3 me-2"></i><a href="tel:+1234567890" class="text-white text-decoration-underline">+234 913 109 5135</a></div>
+          <div class="mb-3"><i class="bi bi-geo-alt text-danger fs-3 me-2"></i>Peace Park Building, Utako, Abuja</div>
           <div class="alert alert-info mt-3">We respond within 24 hours. Your information is safe with us!</div>
         </div>
       </div>

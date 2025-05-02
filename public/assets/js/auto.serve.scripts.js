@@ -77,12 +77,17 @@ if (form) {
       });
 
       if (response.ok) {
-        // Display success message
-        if (formMessage) {
-          formMessage.textContent = 'Registration successful!';
-          formMessage.className = 'alert alert-success';
-        }
-        form.reset(); // Reset the form
+        // Handle successful registration by removing the form and displaying the backend response
+        const responseData = await response.json();
+        const modalBody = form.closest('.modal-body');
+        const modalTitle = document.getElementById('registerModalLabel');
+        modalTitle.textContent = 'Registration Complete'; // Update modal title
+        modalBody.innerHTML = `
+          <div class="alert alert-success text-center">
+            <h4>${responseData.message || 'Registration Successful!'}</h4>
+            <p>${responseData.instructions || 'Please check your email for further instructions on how to proceed.'}</p>
+          </div>
+        `;
       } else if (response.status === 422) {
         // Handle validation errors
         const errorData = await response.json();

@@ -18,9 +18,9 @@ class CreateSettingsTable extends Migration
             $table->foreignId('user_id')->nullable()->constrained('users')->onDelete('cascade');
             $table->string('company_name')->nullable();
             $table->string('motto')->nullable();
-            $table->string('logo')->nullable();
+            $table->string('logo')->nullable()->default('logo-dark.png');
             $table->string('address')->nullable();
-            $table->string('background')->nullable();
+            $table->string('background')->nullable()->default('login-bg.jpg');
             $table->string('mode')->nullable();
             $table->string('deployment_type')->nullable();
             $table->timestamps();

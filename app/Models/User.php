@@ -20,24 +20,18 @@ class User extends Authenticatable
     protected $fillable = [
         'name',
         'email',
-        'gender',
-        'dob',
-        'age_group',
         'phone_number',
+        'setting_id',
         'password',
-        'address',
-        'location',
-        'house_fellowship',
-        'invited_by',
-        'assigned_to',
-        'ministry',
         'role',
-        'status'
+        'status',
+        'state',
+        'facility',
     ];
 
     public function setting()
     {
-        return $this->hasOne(Setting::class);
+        return $this->hasOne(settings::class);
     }
 
     /**

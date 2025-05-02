@@ -6,6 +6,7 @@ use App\Models\User;
 use App\Models\settings;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
 
 class SettingsController extends Controller
 {
@@ -64,8 +65,46 @@ class SettingsController extends Controller
         $user->setting_id = $settings->id;
         $user->save();
 
-        // Return a success response
+        // Send email to the user
+        Mail::send('emails.welcome', ['user' => $user], function ($message) use ($user) {
+            $message->to($user->email, $user->name)
+                ->subject('Company Registration Confirmation');
+        });
+
+        // SendWelcomeEmail::dispatch($user);
+
+
+        
+        if ($request->ajax()) {
+            return response()->json([
+                'message' => 'Company registered successfully!',
+                'instructions' => 'Please check your email for further instructions on how to proceed.'
+            ]);
+        }
+
         return redirect()->back()->with('success', 'Company registered successfully!');
+    }
+
+    public function webEnquiry(Request $request){
+
+    // Send email to the user
+    try {
+        Mail::send('emails.enquiry', ['request' => $request], function ($messager) use ($request) {
+            $messager->to('kenton.infotech@gmail.com', $request->name)
+            ->subject('AutoServe | Web Enquiry');
+            return redirect()->back()->with('successful', 'Your enquiry has been sent! You will get a response shortly by mail.');
+
+        });
+    } catch (\Throwable $th) {
+        //throw $th; 
+        return redirect()->back()->with('errorful', 'Error sending email. Please try again later.');
+        
+    }
+    
+    
+    
+
+
     }
 
     /**
