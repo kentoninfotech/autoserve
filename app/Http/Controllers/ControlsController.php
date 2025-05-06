@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\controls;
 use App\Models\User;
 use Illuminate\Http\Request;
+use App\Scopes\SettingScope;
 
 class ControlsController extends Controller
 {
@@ -16,7 +17,7 @@ class ControlsController extends Controller
     public function index()
     {
         $controls = controls::paginate(50);
-        $technicians = User::select('id','name')->get();
+        $technicians = User::query()->withGlobalScope('setting', new SettingScope)->select('id','name')->get();
         return view('controls', compact('controls','technicians'));
     }
 

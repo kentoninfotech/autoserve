@@ -5,7 +5,9 @@ namespace App\Http\Controllers;
 use App\Models\personnel;
 use Illuminate\Http\Request;
 use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use App\Scopes\SettingScope;
 
 class PersonnelController extends Controller
 {
@@ -22,7 +24,7 @@ class PersonnelController extends Controller
 
     public function Users()
     {
-        $usersa = User::all();
+        $usersa = User::query()->withGlobalScope('setting', new SettingScope)->get();
         return view('users', compact('usersa'));
     }
 
@@ -82,6 +84,7 @@ class PersonnelController extends Controller
                 'name'=>$request->surname." ".$request->firstname." ".$request->othernames,
                 'phone_number'=>$request->phoneno,
                 'email'=>$request->email,
+                'setting_id'=> Auth::user()->setting_id,
                 'state'=>$request->stateoforigin,
                 'status'=>"Active",
                 'password'=>$newpassword,

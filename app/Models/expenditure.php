@@ -10,6 +10,9 @@ class expenditure extends Model
 {
     use HasFactory;
 
+    protected $table = 'expenditure';
+    protected $guarded = [];
+
     /**
      * The "booted" method of the model.
      */

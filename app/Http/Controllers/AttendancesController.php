@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\attendances;
 use Illuminate\Http\Request;
+use App\Models\personnel;
 
 class AttendancesController extends Controller
 {
@@ -14,8 +15,8 @@ class AttendancesController extends Controller
      */
     public function index()
     {
-        $attendances = attendances::paginate(50);
-        return view('attendance', compact('attendance'));
+        $attendances = personnel::paginate(50);
+        return view('attendance', compact('attendances'));
     }
 
     public function Attendances()

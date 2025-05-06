@@ -3,15 +3,12 @@
 @section('content')
 @php $pagetype="report"; $sn=1; @endphp
 
-    <h3 class="page-title">Personnel | <small style="color: green">Take Attendance</small></h3>
-    <div style="text-align: right;"><a href="{{url('/add-personnel')}}" class="btn btn-primary"><i class="fa fa-plus"></i> Add New Staff</a></div>
+    <h3 class="page-title">Personnel | <small style="color: green">Attendance Records</small></h3>
+    <div style="text-align: right;"><a href="{{url('/attendance')}}" class="btn btn-primary"><i class="fa fa-check"></i> Take Attendance</a></div>
 
     <div class="row">
             <div class="panel">
 
-                <div class="panel-heading">
-                    <a href="{{ url('/attendances') }}" target="_blank" class="btn btn-primary btn-xs">View Attendance</a>
-                </div>
 
                 <div class="panel-body">
                     <table class="table  responsive-table" id="products" style="font-size: 0.9em !important">
@@ -27,7 +24,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($attendance as $per)
+                            @foreach ($attendances as $per)
 
                                 <tr>
 

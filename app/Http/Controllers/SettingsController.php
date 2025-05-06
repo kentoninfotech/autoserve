@@ -7,6 +7,7 @@ use App\Models\settings;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
+use App\Mail\AccountWelcomeMail;
 
 class SettingsController extends Controller
 {
@@ -66,19 +67,14 @@ class SettingsController extends Controller
         $user->save();
 
         // Send email to the user
-        Mail::send('emails.welcome', ['user' => $user], function ($message) use ($user) {
-            $message->to($user->email, $user->name)
-                ->subject('Company Registration Confirmation');
-        });
-
-        // SendWelcomeEmail::dispatch($user);
+        Mail::to($user->email)->queue((new AccountWelcomeMail($user)));
 
 
         
         if ($request->ajax()) {
             return response()->json([
                 'message' => 'Company registered successfully!',
-                'instructions' => 'Please check your email for further instructions on how to proceed.'
+                'instructions' => 'Please check your email (and your spam/junk folder, just in case it lands there) for further instructions on how to proceed.'
             ]);
         }
 
@@ -87,23 +83,31 @@ class SettingsController extends Controller
 
     public function webEnquiry(Request $request){
 
-    // Send email to the user
-    try {
-        Mail::send('emails.enquiry', ['request' => $request], function ($messager) use ($request) {
-            $messager->to('kenton.infotech@gmail.com', $request->name)
-            ->subject('AutoServe | Web Enquiry');
-            return redirect()->back()->with('successful', 'Your enquiry has been sent! You will get a response shortly by mail.');
+    // Send email to the AutoServe team
+    $request->validate([
+        'name' => 'required|string|max:100',
+        'email' => 'required|email',
+        'subject' => 'nullable|string|max:255',
+        'message' => 'required|string',
+    ]);
 
-        });
-    } catch (\Throwable $th) {
-        //throw $th; 
-        return redirect()->back()->with('errorful', 'Error sending email. Please try again later.');
-        
-    }
-    
-    
-    
+    $data = [
+        'name' => $request->input('name'),
+        'email' => $request->input('email'),
+        'subject' => $request->input('subject'),
+        'user_message' => $request->input('message'), 
+    ];
 
+    Mail::queue('emails.enquiry', $data, function ($message) use ($data) {
+        $message->from($data['email'], $data['name']);
+        $message->to(env('MAIL_USERNAME'), 'AutoServe | Web Enquiry');
+        $message->subject($data['subject']);
+        $message->replyTo($data['email'], $data['name']);
+    });
+
+    return redirect()->back()->with('success', 'Thank you for your message! We will get back to you shortly.');
+
+    
 
     }
 

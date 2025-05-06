@@ -32,8 +32,9 @@
                         <td>{{$ca->phone_number}}</td>
                         <td>{{$ca->role}}</td>
 
-                        <td><a href="delete/{{$ca->id}}/user" class="btn btn-danger btn-sm roledlink Super Admin">Delete</a></td>
-
+                        @if($ca->role !=="Super")
+                          <td><a href="delete/{{$ca->id}}/user" class="btn btn-danger btn-sm roledlink Super Admin" onclick="return confirm('Are you sure you want to delete this record? {{$ca->name}}\'s account?')">Delete</a></td>
+                        @endif
 
                     </tr>
                     @endforeach

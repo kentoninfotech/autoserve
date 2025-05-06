@@ -14,6 +14,8 @@ use App\Http\Controllers\HomeController;
 |
 */
 
+
+
 // Auto Serve System AccountsController Route
 Route::get('/accounts', [App\Http\Controllers\AccountsController::class, 'index'])->name('accounts.index')->middleware('role:Super');
 Route::get('/accounts/{id}', [App\Http\Controllers\AccountsController::class, 'show'])->name('accounts.show')->middleware('role:Super');
@@ -21,7 +23,7 @@ Route::get('/accounts/edit/{id}', [App\Http\Controllers\AccountsController::clas
 Route::put('/accounts/update/{id}', [App\Http\Controllers\AccountsController::class, 'update'])->name('accounts.update')->middleware('role:Super');
 
 // Send Feedback/Equiry E-mail
-Route::post('/enquiry', [App\Http\Controllers\SettingsController::class, 'webEnquiry'])->name('web.equiry');
+Route::post('/enquiry', [App\Http\Controllers\SettingsController::class, 'webEnquiry'])->name('web.enquiry');
 
 
 //  Landing Page
@@ -29,7 +31,14 @@ Route::get('/', function () {
     return view('index');
 });
 
-// Authentication
+
+// Account Backup
+Route::get('/backup', [App\Http\Controllers\BackupController::class, 'index'])->name('backup')->middleware('role:Super,Admin');
+// Backup all records
+Route::post('/backup-all', [App\Http\Controllers\BackupController::class, 'backupAllRecords'])->name('backup.all')->middleware('role:Super,Admin');
+// Route to download backup files
+Route::get('/download-backup/{file}', [App\Http\Controllers\BackupController::class, 'downloadBackup'])->name('download.backup')->middleware('role:Super,Admin');
+// Company Account Register
 Route::post('/', [App\Http\Controllers\SettingsController::class, 'companyRegister'])->name('company.register');
 
 
@@ -161,9 +170,9 @@ Route::get('/payments', [App\Http\Controllers\PaymentsController::class, 'index'
 Route::get('/debtors', [App\Http\Controllers\PaymentsController::class, 'debtors'])->name('debtors')->middleware('role:Admin,Finance,Super,Front-Desk');
 
 // ATTENDANCE MANAGEMENT
-Route::get('/attendance', [App\Http\Controllers\AttendanceSController::class, 'index'])->name('attendances')->middleware('role:Admin,Super,Front-Desk');
-Route::post('/present/{pid}', [App\Http\Controllers\AttendanceSController::class, 'store'])->name('present')->middleware('role:Admin,Super,Front-Desk');
-Route::get('/attendances', [App\Http\Controllers\AttendanceSController::class, 'Attendances'])->name('attendances')->middleware('role:Admin,Super,Front-Desk');
+Route::get('/attendance', [App\Http\Controllers\AttendancesController::class, 'index'])->name('attendances')->middleware('role:Admin,Super,Front-Desk');
+Route::post('/present/{pid}', [App\Http\Controllers\AttendancesController::class, 'store'])->name('present')->middleware('role:Admin,Super,Front-Desk');
+Route::get('/attendances', [App\Http\Controllers\AttendancesController::class, 'Attendances'])->name('attendances')->middleware('role:Admin,Super,Front-Desk');
 
 Route::get('/delete/{id}/{table}', [App\Http\Controllers\JobsController::class, 'genericDelete'])->name('delete')->middleware('role:Admin,Super');
 // ARTISAN COMMANDS

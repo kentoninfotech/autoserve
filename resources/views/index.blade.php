@@ -81,7 +81,7 @@
             <div class="col-md-6 animate__animated animate__fadeInRight">
               <div class="card border-0 shadow-lg rounded-4 p-4">
                 <h2 class="fw-bold text-primary mb-3"><i class="bi bi-people"></i> Comprehensive Customer & Vehicle Records</h2>
-                <h3 class="text-muted">Maintain detailed records of customers, vehicles, and their complete repair history.</h3>
+                <h4 class="text-muted">Maintain detailed records of customers, vehicles, and their complete repair history.</h4>
               </div>
             </div>
           </div>
@@ -96,7 +96,7 @@
             <div class="col-md-6 animate__animated animate__fadeInRight">
               <div class="card border-0 shadow-lg rounded-4 p-4">
                 <h2 class="fw-bold text-warning mb-3"><i class="bi bi-bell"></i> Automated Service Reminders</h2>
-                <h3 class="text-muted">Send SMS and email reminders to customers for upcoming services and appointments.</h3>
+                <h4 class="text-muted">Send SMS and email reminders to customers for upcoming services and appointments.</h4>
               </div>
             </div>
           </div>
@@ -111,7 +111,7 @@
             <div class="col-md-6 animate__animated animate__fadeInRight">
               <div class="card border-0 shadow-lg rounded-4 p-4">
                 <h2 class="fw-bold text-secondary mb-3"><i class="bi bi-receipt"></i> Inventory & Invoice Management</h2>
-                <h3 class="text-muted">Track inventory, generate invoices, receipts, and manage payroll and staff tasks efficiently.</h3>
+                <h4 class="text-muted">Track inventory, generate invoices, receipts, and manage payroll and staff tasks efficiently.</h4>
               </div>
             </div>
           </div>
@@ -296,6 +296,9 @@
     <h2 class="text-center mb-4 animate__animated animate__fadeInDown text-warning">Contact Us</h2>
     <div class="row">
       <div class="col-md-6 mb-4 mb-md-0 animate__animated animate__fadeInLeft">
+        <form id="contactForm" class="p-4 shadow rounded bg-white" action="{{ route('web.enquiry') }}" method="POST">
+          @csrf
+
           @if(session('successful'))
             <div class="alert alert-success">
               <strong>{{session('successful')}}</strong>
@@ -306,9 +309,6 @@
               <strong>{{session('errorful')}}</strong>
             </div>
           @endif
-          
-        <form id="contactForm" class="p-4 shadow rounded bg-white" action="{{ route('web.equiry') }}" method="POST">
-          @csrf
           <div class="mb-3">
             <label for="contactName" class="form-label">Your Name</label>
             <input type="text" class="form-control form-control-sm" id="contactName" name="name" required>
@@ -317,6 +317,7 @@
             <label for="contactEmail" class="form-label">Email address</label>
             <input type="email" class="form-control form-control-sm" id="contactEmail" name="email" required>
           </div>
+          <input type="hidden" name="subject" value="AutoServe | Web Enquiry">
           <div class="mb-3">
             <label for="contactMessage" class="form-label">Message</label>
             <textarea class="form-control form-control-sm" id="contactMessage" rows="4" name="message" required></textarea>
