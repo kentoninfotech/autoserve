@@ -3,63 +3,60 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\User;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\DB;
-use App\Models\vehicle;
-use App\Models\transactions;
-use App\Models\task;
-use App\Models\supply;
-use App\Models\stock;
-use App\Models\settings;
-use App\Models\serviceOrder;
-use App\Models\Sale;
-use App\Models\psfu;
-use App\Models\personnel;
-use App\Models\payment;
-use App\Models\partsorder;
-use App\Models\part;
-use App\Models\jobs;
-use App\Models\expenditure;
-use App\Models\diagnosis;
-use App\Models\delivery;
-use App\Models\controls;
+
 
 class BackupController extends Controller
 {
     /**
      * This controller will be use to manage all the Backups on Auto Serve System.
      * 
-     *  - View Backups
+     *  - View, Download Backups
      *  - Manage backups
      * 
      */
+
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+    /**
+     * Display a listing of the backup files.
+     *
+     * @return \Illuminate\Http\Response
+     */
+
     public function index(Request $request)
     {
         $settingId = $request->user()->setting_id;
 
-        // Fetch available backup files related to the user's setting_id
-        $backupFiles = collect(\Storage::files('backups'))
-            ->filter(function ($file) use ($settingId) {
-                return str_contains($file, "backup_users_{$settingId}_");
-            });
-
-        // Fetch all backup files for all records
+        // Fetch all backup files for the user's setting_id
         $allBackups = collect(Storage::files('backups'))
-            ->filter(function ($file) {
-                return str_contains($file, 'backup_all_records_');
+            ->filter(function ($file) use ($settingId) {
+                return str_contains($file, "backup_all_records_{$settingId}_");
+            })
+            ->map(function ($file) {
+                return basename($file); // Extract only the file name
             });
 
-        // Pass both user-specific and all-records backups to the view
+        // Pass the filtered backups to the view
         return view('backup', [
-            'backups' => $backupFiles,
             'allBackups' => $allBackups
         ]);
     }
 
+    /**
+     * Create a backup of all records.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    
     public function backupAllRecords(Request $request)
     {
         $settingId = $request->user()->setting_id;
+        $format = $request->input('format', 'json'); // Default to JSON if no format is specified
 
         // List of models to back up
         $models = [
@@ -99,32 +96,101 @@ class BackupController extends Controller
             $backupData[$modelName] = $records->isEmpty() ? [] : $records;
         }
 
-        // Convert backup data to JSON
-        $backupJson = json_encode($backupData);
+        if ($format === 'sql') {
+            $sqlDump = "";
+            foreach ($backupData as $tableName => $records) {
+                $sqlDump .= "-- Dumping data for table: $tableName\n";
+                foreach ($records as $record) {
+                    $columns = implode(',', array_keys($record->toArray()));
+                    $values = implode(',', array_map(fn($value) => "'" . addslashes($value) . "'", array_values($record->toArray())));
+                    $sqlDump .= "INSERT INTO $tableName ($columns) VALUES ($values);\n";
+                }
+            }
 
-        // Define backup file name
-        $fileName = 'backup_all_records_' . now()->format('Y_m_d_H_i_s') . '.json';
+            $fileName = 'backup_all_records_' . $settingId . '_' . now()->format('Y_m_d_H_i_s') . '.sql';
+            Storage::put('backups/' . $fileName, $sqlDump);
+        } elseif ($format === 'zipped-sql') {
+            $sqlDump = "";
+            foreach ($backupData as $tableName => $records) {
+                $sqlDump .= "-- Dumping data for table: $tableName\n";
+                foreach ($records as $record) {
+                    $columns = implode(',', array_keys($record->toArray()));
+                    $values = implode(',', array_map(fn($value) => "'" . addslashes($value) . "'", array_values($record->toArray())));
+                    $sqlDump .= "INSERT INTO $tableName ($columns) VALUES ($values);\n";
+                }
+            }
 
-        // Store the backup file in storage/app/backups
-        Storage::storeAs('backups/' . $fileName, $backupJson, 'public');
+            $fileName = 'backup_all_records_' . $settingId . '_' . now()->format('Y_m_d_H_i_s') . '.sql';
+            $tempFilePath = storage_path('app/backups/' . $fileName);
+            file_put_contents($tempFilePath, $sqlDump);
 
-        return redirect()->route('backup')->with('message', 'Backup of all records created successfully.'. ' file '. $fileName);
+            $zipFileName = 'backup_all_records_' . $settingId . '_' . now()->format('Y_m_d_H_i_s') . '.zip';
+            $zip = new \ZipArchive();
+            $zip->open(storage_path('app/backups/' . $zipFileName), \ZipArchive::CREATE);
+            $zip->addFile($tempFilePath, $fileName);
+            $zip->close();
+
+            unlink($tempFilePath); // Remove the temporary SQL file
+        } else {
+            $backupJson = json_encode($backupData);
+            $fileName = 'backup_all_records_' . $settingId . '_' . now()->format('Y_m_d_H_i_s') . '.json';
+            Storage::put('backups/' . $fileName, $backupJson);
+        }
+
+        return redirect()->route('backup')->with('message', 'Backup of all records created successfully. - File: ' . $fileName);
     }
 
-    public function downloadBackup($file)
+    /**
+     * Download a backup file.
+     *
+     * @param  string  $file
+     * @return \Illuminate\Http\Response
+     */
+
+    public function downloadBackup($file, Request $request)
     {
-        $filePath = storage_path('app/backups/' . $file);
+        $settingId = $request->user()->setting_id;
 
-        // Log the file name and path for debugging
-        \Log::info('Download request for file: ' . $file);
-        \Log::info('Constructed file path: ' . $filePath);
+        // Ensure the file belongs to the user's setting_id
+        if (!str_contains($file, "backup_all_records_{$settingId}_")) {
+            return redirect()->route('backup')->with('error', 'Unauthorized access to the backup file.');
+        }
 
-        if (!file_exists($filePath)) {
+        $filePath = 'backups/' . $file; 
+
+        if (!Storage::exists($filePath)) {
             \Log::error('File not found: ' . $filePath);
             return redirect()->route('backup')->with('error', 'File not found. Please ensure the backup file exists.');
         }
 
-        //return response()->download($filePath);
-        return response()->file(public_path($filePath));
+        return Storage::download($filePath);
+    }
+
+    /**
+     * Delete a backup file.
+     *
+     * @param  string  $file
+     * @return \Illuminate\Http\Response
+     */
+
+    public function deleteBackup($file, Request $request)
+    {
+        $settingId = $request->user()->setting_id;
+
+        // Ensure the file belongs to the user's setting_id
+        if (!str_contains($file, "backup_all_records_{$settingId}_")) {
+            return redirect()->route('backup')->with('error', 'Unauthorized access to delete the backup file.');
+        }
+
+        $filePath = 'backups/' . $file; // Relative path for Laravel Storage
+
+        if (!Storage::exists($filePath)) {
+            \Log::error('File not found for deletion: ' . $filePath);
+            return redirect()->route('backup')->with('error', 'File not found. Please ensure the backup file exists.');
+        }
+
+        Storage::delete($filePath);
+
+        return redirect()->route('backup')->with('message', 'Backup file deleted successfully.');
     }
 }

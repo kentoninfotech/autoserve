@@ -25,6 +25,9 @@ Route::put('/accounts/update/{id}', [App\Http\Controllers\AccountsController::cl
 // Send Feedback/Equiry E-mail
 Route::post('/enquiry', [App\Http\Controllers\SettingsController::class, 'webEnquiry'])->name('web.enquiry');
 
+// Company Account Register
+Route::post('/', [App\Http\Controllers\SettingsController::class, 'companyRegister'])->name('company.register');
+
 
 //  Landing Page
 Route::get('/', function () {
@@ -38,8 +41,8 @@ Route::get('/backup', [App\Http\Controllers\BackupController::class, 'index'])->
 Route::post('/backup-all', [App\Http\Controllers\BackupController::class, 'backupAllRecords'])->name('backup.all')->middleware('role:Super,Admin');
 // Route to download backup files
 Route::get('/download-backup/{file}', [App\Http\Controllers\BackupController::class, 'downloadBackup'])->name('download.backup')->middleware('role:Super,Admin');
-// Company Account Register
-Route::post('/', [App\Http\Controllers\SettingsController::class, 'companyRegister'])->name('company.register');
+// Route to delete backup files
+Route::delete('/delete-backup/{file}', [App\Http\Controllers\BackupController::class, 'deleteBackup'])->name('delete.backup')->middleware('role:Super,Admin');
 
 
 Auth::routes();
