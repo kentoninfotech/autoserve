@@ -20,26 +20,24 @@ class AccountsController extends Controller
 
     public function index()
     {
-        $users = User::whereHas('setting')->with('setting')->get();
+        $users = User::whereHas('setting')->with('setting')->where('role', 'Super')->get();
         return view('accounts.index', compact('users'));
     }
 
     public function show($user)
     {
-        // Find the user by ID
         $user = User::findOrFail($user);
         return view('accounts.show', compact('user'));
     }
 
     public function edit($id)
     {
-        // Find the user by ID
         $user = User::findOrFail($id);
         // Check if the user has settings
         if (!$user->setting) {
             return redirect()->route('accounts.index')->with('error', 'Settings not found for this user.');
         }
-        // Pass the user and settings to the view
+        
         return view('accounts.edit', compact('user'));
     }
 
@@ -47,17 +45,14 @@ class AccountsController extends Controller
     {
         $validatedData = $request->all();
 
-        // Find the user by ID
         $user = User::findOrFail($id);
 
-        // Update the user details
         $user->update([
             'name' => $validatedData['name'],
             'email' => $validatedData['email'],
             'phone_number' => $validatedData['phone_number'],
         ]);
 
-        // Update the settings details
         $settings = settings::where('user_id', $id)->first();
         if ($settings) {
             $settings->update([

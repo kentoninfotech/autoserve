@@ -29,12 +29,12 @@ class CreateSettingsTable extends Migration
 
         DB::table('settings')->insert(
             array(
-                'company_name' => 'KOJO AUTOS, ABUJA',
-                'motto' => 'Automobile Services',
+                'company_name' => 'AutoServe',
+                'motto' => 'Automobile Management System',
                 'logo' => 'logo-dark.png',
                 'background' => 'login-bg.jpg',
                 'mode' => 'Active',
-                'address'=>'FCT'
+                'address'=>'Peace Park, FCT Abuja',
             )
         );
 

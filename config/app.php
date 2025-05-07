@@ -13,7 +13,7 @@ return [
     |
     */
 
-    'name' => env('APP_NAME', 'MinistryManager'),
+    'name' => env('APP_NAME', 'AutoServe'),
 
     /*
     |--------------------------------------------------------------------------

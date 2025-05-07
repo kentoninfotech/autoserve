@@ -6,6 +6,7 @@ use App\Models\tasks;
 use Illuminate\Http\Request;
 use App\Models\followups;
 use App\Models\User;
+use App\Scopes\SettingScope;
 use Auth;
 use Artisan;
 
@@ -24,7 +25,7 @@ class TasksController extends Controller
             $tasks = tasks::where('assigned_to',Auth::user()->id)->orderBy('status', 'DESC')->paginate(50);
         }
 
-        $users = User::select('id','name')->get();
+        $users = User::query()->withGlobalScope('setting', new SettingScope)->select('id','name')->get();
 
         return view('tasks', compact('tasks','users'));
     }

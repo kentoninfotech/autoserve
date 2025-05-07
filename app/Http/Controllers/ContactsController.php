@@ -13,6 +13,7 @@ use App\Models\partsorder;
 use App\Models\payments;
 use Illuminate\Http\Request;
 use DB;
+use App\Scopes\SettingScope;
 
 class ContactsController extends Controller
 {
@@ -24,7 +25,7 @@ class ContactsController extends Controller
     public function index()
     {
         $contacts = contacts::select('id','customerid','name','organization','telephoneno','vat','sundry')->orderBy('name','ASC')->with(['vehicles'])->get();
-        $users = User::select('name','id')->get();
+        $users = User::query()->withGlobalScope('setting', new SettingScope)->select('name','id')->get();
         return view('contacts', compact('contacts','users'));
     }
 

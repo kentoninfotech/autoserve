@@ -1,9 +1,9 @@
-@extends('layouts.autoserve')
+@extends('layouts.theme')
 
 @section('content')
 <div class="container mt-5">
-    <div class="card shadow-lg border-0">
-        <div class="card-body">
+    <div class="panel shadow-lg border-0">
+        <div class="panel-body">
             <a href="{{ route('accounts.index') }}" class="btn btn-outline-secondary float-right mb-3">Back</a>
             <div class="text-center mb-4">
                 <h1 class="text-primary font-weight-bold">{{ $user->setting->company_name ?? 'N/A' }}</h1>

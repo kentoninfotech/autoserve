@@ -34,6 +34,11 @@ class User extends Authenticatable
         return $this->hasOne(settings::class);
     }
 
+    public function settings()
+    {
+        return $this->belongsTo(settings::class, 'setting_id');
+    }
+
     /**
      * The attributes that should be hidden for serialization.
      *

@@ -103,7 +103,7 @@
 		<!-- NAVBAR -->
 		<nav class="navbar navbar-default navbar-fixed-top" style="clear: both !important;">
 			<div class="brand">
-				<a href="{{url('/')}}"><img  src="{{asset('images/'.$settings->logo)}}" alt="{{$settings->motto}}" class="img-responsive logo" style="height: 35px !important; float: left;"></a> <b>{{$settings->company_name}}</b>
+				<a href="{{url('/')}}"><img  src="{{asset('images/'. Auth::user()->settings->logo ? Auth::user()->settings->logo : '') }}" alt="{{ Auth::user()->settings->motto }}" class="img-responsive logo" style="height: 35px !important; float: left;"></a> <b>{{ Auth::user()->settings->company_name}}</b>
 				<button type="button" class="btn-toggle-fullwidth"><i class="lnr lnr-menu"></i></button>
 			</div>
 
@@ -161,11 +161,11 @@
 						<li class="dropdown">
 							<a href="#" class="dropdown-toggle" data-toggle="dropdown"> <i class="lnr lnr-user"></i> <span>@auth {{ Auth::user()->name }} @endauth </span> <i class="icon-submenu lnr lnr-chevron-down"></i></a>
 							<ul class="dropdown-menu">
-								<li class="roledlink Admin Super Front-Desk"><a class="btn btn-success update-pro" href="{{url('newjob')}}" title="New Customer" target="_blank" style="color: white; font-weight: bold;"><span class="fa fa-user-plus"></span> <span>New Customer</span></a></li>
-								<li class="roledlink Admin Super"><a href="{{url('my_profile/'.$login_user->id ?? '')}}"><i class="lnr lnr-user"></i> <span>My Profile</span></a></li>
+								<li class="roledlink AutoServe Admin Super Front-Desk"><a class="btn btn-success update-pro" href="{{url('newjob')}}" title="New Customer" target="_blank" style="color: white; font-weight: bold;"><span class="fa fa-user-plus"></span> <span>New Customer</span></a></li>
+								<li class="roledlink AutoServe Admin Super"><a href="{{url('my_profile/'.$login_user->id ?? '')}}"><i class="lnr lnr-user"></i> <span>My Profile</span></a></li>
 								<li><a href="{{url('tasks')}}"><i class="lnr lnr-envelope"></i> <span>Message</span></a></li>
 
-								<li class="roledlink Admin Super" style="visibility:hidden !important;"><a href="#"  data-toggle="modal" data-target="#settings"><i class="lnr lnr-cog"></i> <span>Settings</span></a></li>
+								<li class="roledlink AutoServe Admin Super" style="visibility:hidden !important;"><a href="#"  data-toggle="modal" data-target="#settings"><i class="lnr lnr-cog"></i> <span>Settings</span></a></li>
 								<li><a href="{{url('help')}}"><i class="lnr lnr-bubble"></i> Basic Use</a></li>
 								<li><a href="{{url('security')}}"><i class="lnr lnr-lock"></i> Security</a></li>
 								<li><a href="{{url('logout')}}"><i class="lnr lnr-exit"></i> <span>Logout</span></a></li>
@@ -185,6 +185,15 @@
 				<nav>
 					<ul class="nav">
 						<li><a href="{{url('home')}}" class="active"><i class="lnr lnr-home"></i> <span>Dashboard</span></a></li>
+
+						<li class="roledlink AutoServe" style="visibility:hidden;">
+							<a href="#subPages01" data-toggle="collapse" class="collapsed"><i class="lnr lnr-users"></i> <span>Accounts</span> <i class="icon-submenu lnr lnr-chevron-left"></i></a>
+							<div id="subPages01" class="collapse ">
+								<ul class="nav">
+									<li><a href="{{ route('accounts.index') }}" class="roledlink AutoServe">All Accounts</a></li>
+								</ul>
+							</div>
+						</li>
 
 
 						<li class="roledlink Front-Desk Admin Followup Finance Super Spare-Parts" style="visibility:hidden;">
@@ -306,7 +315,7 @@
 		<div class="clearfix"></div>
 		<footer>
 			<div class="container-fluid">
-				<p class="copyright">&copy; {{date("Y")}} <a href="https://www.gintecservices.com.ng" target="_blank">Gintec Global Services </a>. All Rights Reserved.</p>
+				<p class="copyright">&copy; {{date("Y")}} <a href="https://www.autoserve.com.ng" target="_blank">AutoServe </a>. All Rights Reserved.</p>
 			</div>
 		</footer>
 	</div>

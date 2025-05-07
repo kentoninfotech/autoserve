@@ -17,10 +17,10 @@ use App\Http\Controllers\HomeController;
 
 
 // Auto Serve System AccountsController Route
-Route::get('/accounts', [App\Http\Controllers\AccountsController::class, 'index'])->name('accounts.index')->middleware('role:Super');
-Route::get('/accounts/{id}', [App\Http\Controllers\AccountsController::class, 'show'])->name('accounts.show')->middleware('role:Super');
-Route::get('/accounts/edit/{id}', [App\Http\Controllers\AccountsController::class, 'edit'])->name('accounts.edit')->middleware('role:Super');
-Route::put('/accounts/update/{id}', [App\Http\Controllers\AccountsController::class, 'update'])->name('accounts.update')->middleware('role:Super');
+Route::get('/accounts', [App\Http\Controllers\AccountsController::class, 'index'])->name('accounts.index')->middleware('role:AutoServe');
+Route::get('/accounts/{id}', [App\Http\Controllers\AccountsController::class, 'show'])->name('accounts.show')->middleware('role:AutoServe');
+Route::get('/accounts/edit/{id}', [App\Http\Controllers\AccountsController::class, 'edit'])->name('accounts.edit')->middleware('role:AutoServe');
+Route::put('/accounts/update/{id}', [App\Http\Controllers\AccountsController::class, 'update'])->name('accounts.update')->middleware('role:AutoServe');
 
 // Send Feedback/Equiry E-mail
 Route::post('/enquiry', [App\Http\Controllers\SettingsController::class, 'webEnquiry'])->name('web.enquiry');

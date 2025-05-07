@@ -14,6 +14,7 @@ use App\Models\vehicle;
 use App\Models\jobs;
 use App\Models\serviceorder;
 use App\Models\psfu;
+use App\Scopes\SettingScope;
 use DB;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Hash;
@@ -123,15 +124,15 @@ class HomeController extends Controller
             'status'=>$request->status
 
         ]);
-        $members = User::all();
-        $users = User::select('name','id')->get();
+        $members = User::query()->withGlobalScope('setting', new SettingScope)->get();
+        $users = User::query()->withGlobalScope('setting', new SettingScope)->select('name','id')->get();
         return view('members', compact('members','users'));
 
     }
 
     public function deleteMember($id)
     {
-      $user = User::where('id',$id)->delete();
+      $user = User::query()->withGlobalScope('setting', new SettingScope)->where('id',$id)->delete();
       $message = 'The User has been deleted!';
       return redirect()->route('members')->with(['message'=>$message]);
 
@@ -530,11 +531,11 @@ class HomeController extends Controller
     }
 
     public function fixPasswords(){
-      $allpasswords = User::select('id','password')->get();
+      $allpasswords = User::query()->withGlobalScope('setting', new SettingScope)->select('id','password')->get();
       foreach ($allpasswords as $passwords) {
         if($passwords->id!=1){
           $newpassword = Hash::make($passwords->password);
-          User::where('id',$passwords->id)->update(['password'=>$newpassword]);
+          User::query()->withGlobalScope('setting', new SettingScope)->where('id',$passwords->id)->update(['password'=>$newpassword]);
         }
       }
 

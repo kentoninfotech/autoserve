@@ -32,12 +32,12 @@ class CreateUsersTable extends Migration
 
         DB::table('users')->insert(
             array(
-                'name' => 'Kojo Admin',
+                'name' => 'AutoServe Admin',
                 'email' => 'admin@kojoautos.com',
                 'password' => '$2y$10$CjKcFVg7zWhsdqlqfQVKDeTHYy/j/kFlTSWnNLkMHZhK7q8yXfaXG',
-                'role' => 'Super',
+                'role' => 'AutoServe',
                 'status' => 'Active',
-                'facility' => 'Central',
+                'facility' => 'AutoServe',
                 'state' => 'Central'
             )
         );

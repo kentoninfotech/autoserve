@@ -16,6 +16,7 @@ use App\Models\stock;
 use App\Models\psfu;
 use App\Models\controls;
 use Illuminate\Http\Request;
+use App\Scopes\SettingScope;
 // use PDF;
 
 class Job {
@@ -688,7 +689,7 @@ class JobsController extends Controller
         }
 
         if($table=="user"){
-            User::findOrFail($id)->delete();
+            User::query()->withGlobalScope('setting', new SettingScope)->findOrFail($id)->delete();
         }
         $message = 'The record has been deleted!';
         return redirect()->route('home')->with(['message'=>$message]);

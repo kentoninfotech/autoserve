@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use App\Models\accountheads;
 use App\Models\User;
 use App\Models\jobs;
+use App\Scopes\SettingScope;
 
 class TransactionsController extends Controller
 {
@@ -21,7 +22,7 @@ class TransactionsController extends Controller
         $accountheads = accountheads::all();
         $jobs = jobs::select('id','jid','customerid')->where('jid','>',0)->get();
         $transactions = transactions::orderBy('id','desc')->paginate(50);
-        $users = User::select('id','name')->get();
+        $users = User::query()->withGlobalScope('setting', new SettingScope)->select('id','name')->get();
 
         return view('transactions', compact('transactions','users','accountheads','jobs'));
     }
@@ -34,7 +35,7 @@ class TransactionsController extends Controller
         $accountheads = accountheads::all();
         $jobs = jobs::select('id','jid','customerid')->where('jid','>',0)->where('status','Pending')->get();
         $transactions = transactions::whereBetween('dated',  [$from, $to])->orderBy('id','desc')->paginate(50);
-        $users = User::select('id','name')->get();
+        $users = User::query()->withGlobalScope('setting', new SettingScope)->select('id','name')->get();
 
         return view('transactions', compact('transactions','users','accountheads','jobs'));
     }
@@ -93,7 +94,7 @@ class TransactionsController extends Controller
         }
         $transactions = transactions::paginate(50);
         $accountheads = accountheads::select('title','category')->get();
-        $users = User::select('id','name')->get();
+        $users = User::query()->withGlobalScope('setting', new SettingScope)->select('id','name')->get();
 
         $jobs = jobs::select('id','jid','customerid')->where('jid','>',0)->where('status','Pending')->get();
 

@@ -1,9 +1,9 @@
-@extends('layouts.autoserve')
+@extends('layouts.theme')
 
 @section('content')
 <div class="container">
-    <div class="card shadow-sm">
-        <div class="card-body">
+    <div class="panel shadow-sm">
+        <div class="panel-body">
             <a href="{{ route('accounts.index') }}" class="btn btn-secondary float-right mb-3">Back</a>
             <h1>Edit Account</h1>
             <form action="{{ route('accounts.update', $user->id) }}" method="POST">
