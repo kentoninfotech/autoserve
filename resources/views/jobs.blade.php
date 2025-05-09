@@ -91,6 +91,12 @@
                                         @if (isset($job->diagnosis) && ($job->diagnosis->diagnosis != ""))
                                             <a href="{{ url('/diagnosis-file/'.$job->jobno)}}" target="_blank" class="label label-info">Diagnosis File</a>
                                         @endif
+                                        @php
+                                            $image_path = public_path("job_images/$job->jobno");
+                                        @endphp
+                                        @if(File::exists($image_path))
+                                            <a href="{{ url('/job-gallery/'.$job->jobno)}}" target="_blank" class="label label-info">Job Gallery</a>
+                                        @endif
                                         <a href="{{ url('/delete/'.$job->id)}}/jobs" class="label label-danger roledlink Super Admin"  onclick="return confirm('Are you sure you want to delete this record? {{$job->description}}?')">Delete</a>
                                     </td>
 

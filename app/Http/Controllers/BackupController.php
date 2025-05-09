@@ -131,6 +131,22 @@ class BackupController extends Controller
             $zip->close();
 
             unlink($tempFilePath); // Remove the temporary SQL file
+        } elseif ($format === 'csv') {
+            $csvData = "";
+            foreach ($backupData as $tableName => $records) {
+                $csvData .= "Table: $tableName\n";
+                if (!empty($records)) {
+                    $columns = array_keys($records->first()->toArray());
+                    $csvData .= implode(",", $columns) . "\n";
+                    foreach ($records as $record) {
+                        $csvData .= implode(",", array_map(fn($value) => '"' . addslashes($value) . '"', $record->toArray())) . "\n";
+                    }
+                }
+                $csvData .= "\n";
+            }
+
+            $fileName = 'backup_all_records_' . $settingId . '_' . now()->format('Y_m_d_H_i_s') . '.csv';
+            Storage::put('backups/' . $fileName, $csvData);
         } else {
             $backupJson = json_encode($backupData);
             $fileName = 'backup_all_records_' . $settingId . '_' . now()->format('Y_m_d_H_i_s') . '.json';

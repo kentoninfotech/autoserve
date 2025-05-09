@@ -17,6 +17,8 @@ use App\Models\psfu;
 use App\Models\controls;
 use Illuminate\Http\Request;
 use App\Scopes\SettingScope;
+use Illuminate\Support\Facades\File;
+
 // use PDF;
 
 class Job {
@@ -231,6 +233,9 @@ class JobsController extends Controller
      */
     public function store(Request $request)
     {
+        // Validate Images (mulit-images) upload
+        $request->validate(['images.*' => 'image|mimes:jpeg,png,jpg,gif|max:2048',]);
+
         $jno = jobs::select('jobno')->orderBy('id','desc')->first();
         if($jno==null){
             $jobno = 0;
@@ -257,6 +262,20 @@ class JobsController extends Controller
                 'customerid'
             ));
         }
+
+        // 
+        $job_image_path = public_path("job_images/$jobno");
+
+        if (!File::exists($job_image_path)) {
+            File::makeDirectory($job_image_path, 0777, true);
+
+            foreach ($request->file('images') as $index => $image) {
+                $imageName = $jobno . '_' . now()->format('Y_m_d') . '_' . $index . '_' . $image->getClientOriginalName();
+                $image->move($job_image_path, $imageName);
+            }
+    
+        }
+
 
         if ($request->hasFile('diagnosis')) {
             $file = $request->file('diagnosis');
@@ -547,7 +566,7 @@ class JobsController extends Controller
         //     $vcheck = diagnosis::select('remarks')->where('jobno',$jobno)->first();
         //     $vregno = $vcheck->remarks;
         // }
-
+        
         if($type=="receipt"){
 
             $job = payments::where('jobno',$jobno)->orderBy('id','desc')->first();
@@ -575,9 +594,27 @@ class JobsController extends Controller
 
             $pdf_doc = \PDF::loadView('invoice', compact('job','vehicle','title'));
 
-            // return $pdf_doc->save('public/pdf/'.$type.'-'.$jobno.'.pdf')->stream($type.'-'.$jobno.'.pdf');
+            // 1. Save the PDF to server
+            $pdf_path = public_path('pdf/'.$type.'-'.$jobno.'.pdf');
+            $pdf_doc->save($pdf_path);
 
-        return view('invoice', compact('job','vehicle','title'));
+            // Pass PDF URL to blade to trigger download with JS
+            $pdf_url = asset('/pdf/'.$type.'-'.$jobno.'.pdf');
+
+            // Check if Job Images & then pass to invoice
+            $job_images = []; 
+            $job_image_Path = public_path("job_images/$jobno");
+            if (File::exists($job_image_Path)){
+                $job_images = File::files($job_image_Path);
+                $job_images = collect($job_images)->filter(function ($image) {
+                    // Filter for image files (optional: adjust extensions)
+                    return in_array($image->getExtension(), ['jpg', 'jpeg', 'png', 'gif']);
+                });
+            }
+
+            // $pdf_doc->save('public/pdf/'.$type.'-'.$jobno.'.pdf')->stream($type.'-'.$jobno.'.pdf');
+
+        return view('invoice', compact('job','vehicle','title','type','pdf_url', 'job_images'));
     }
 
     public function diagnosisFile($jobno)
@@ -699,4 +736,27 @@ class JobsController extends Controller
     {
         return redirect('invoice/'.$request->jobno.'/invoice')->with('newdate', $request->changedate);
     }
+
+    /**
+     * Show the gallery of images for a specific job number.
+     *
+     * @param  string  $jobno
+     * @return \Illuminate\View\View|\Illuminate\Http\Response
+     */
+
+    public function showGallery($jobno)
+    {
+        $path = public_path("job_images/$jobno");
+
+        if (!File::exists($path)) {
+            return abort(404, 'Job image folder not found.');
+        }
+
+        $images = collect(File::files($path))->filter(function ($file) {
+            return in_array(strtolower($file->getExtension()), ['jpg', 'jpeg', 'png', 'gif']);
+        });
+
+        return view('job-gallery', compact('jobno', 'images'));
+    }
+
 }

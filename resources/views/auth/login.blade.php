@@ -2,7 +2,7 @@
 
 @section('content')
                     <div class="header">
-                        <div class="logo text-center"><img src="{{asset('public/images/'.$settings->logo)}}" alt="Logo" height="30" width="auto"></div>
+                        <div class="logo text-center"><img src="{{asset('/images/logo.png')}}" alt="Logo" width="auto" height="50"></div>
                         <p class="lead">Login to your account</p>
                     </div>
 
@@ -27,7 +27,7 @@
                             <label for="password" class="control-label sr-only">{{ __('Password') }}</label>
 
 
-                                <input placeholder="Password" id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="current-password">
+                                <input placeholder="Password" id="password" type="password" class="form-control mt-3 @error('password') is-invalid @enderror" name="password" required autocomplete="current-password">
 
                                 @error('password')
                                     <span class="invalid-feedback" role="alert">

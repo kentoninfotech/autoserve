@@ -509,7 +509,7 @@ class HomeController extends Controller
           'logo' => $logo,
           'address' => $request->address,
           'background' => $background,
-          'mode'=>$request->mode
+          'mode'=>$request->mode,
 
       ]);
       $message = "The settings has been updated!";

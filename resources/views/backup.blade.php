@@ -20,6 +20,7 @@
                                 <select name="format" id="format" class="form-control">
                                     <option value="" selected disabled>Select Backup Format</option>
                                     <option value="sql">SQL</option>
+                                    <option value="csv">CSV</option>
                                     <option value="json">JSON</option>
                                     <option value="zipped-sql">Zipped SQL</option>
                                 </select>

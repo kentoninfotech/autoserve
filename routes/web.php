@@ -30,9 +30,9 @@ Route::post('/', [App\Http\Controllers\SettingsController::class, 'companyRegist
 
 
 //  Landing Page
-Route::get('/', function () {
-    return view('index');
-});
+// Route::get('/', function () {
+//     return view('index');
+// });
 
 
 // Account Backup
@@ -47,7 +47,7 @@ Route::delete('/delete-backup/{file}', [App\Http\Controllers\BackupController::c
 
 Auth::routes();
 // ->middleware('role:editor,approver');
-Route::get('/dashboard', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index']);
 Route::get('/logout', [App\Http\Controllers\HomeController::class, 'logout'])->name('logout');
 
@@ -148,11 +148,13 @@ Route::get('/newvjob/{customerid}/{vreg}', [App\Http\Controllers\JobsController:
 Route::get('/edit-job/{jobno}', [App\Http\Controllers\JobsController::class, 'editJob'])->name('edit-job')->middleware('role:Front-Desk,Admin,Spare-Parts,Super');
 Route::post('/addnewcustomer', [App\Http\Controllers\JobsController::class, 'store'])->name('addnewcustomer')->middleware('role:Admin,Super,Front-Desk,Spare-Parts');
 Route::post('/addjobno', [App\Http\Controllers\JobsController::class, 'addJobno'])->name('addjobno')->middleware('role:Admin,Super,Front-Desk');
-Route::get('/invoice/{jobno}/{type}', [App\Http\Controllers\JobsController::class, 'printInvoice'])->name('invoice')->middleware('role:Front-Desk,Admin,Finance,Super,Spare-Parts');
+Route::get('/invoice/{jobno}/{type}', [App\Http\Controllers\JobsController::class, 'printInvoice'])->name('invoice');
 Route::post('/filterjobs', [App\Http\Controllers\JobsController::class, 'filterJobs'])->name('filterjobs')->middleware('role:Admin,Super,Front-Desk,Spare-Parts');
 Route::post('/filterTransactions', [App\Http\Controllers\TransactionsController::class, 'filterTransactions'])->name('filterTransactions')->middleware('role:Admin,Super,Finance');
 // Create link to download diagnosis->diagnosis file
 Route::get('/diagnosis-file/{jobno}', [App\Http\Controllers\JobsController::class, 'diagnosisFile'])->name('diagnosis-file')->middleware('role:Front-Desk,Admin,Finance,Super,Spare-Parts');
+// Job Images Gallery
+Route::get('/job-gallery/{jobno}', [App\Http\Controllers\JobsController::class, 'showGallery'])->name('vehicle.gallery');
 
 
 // JOB CONTROLS

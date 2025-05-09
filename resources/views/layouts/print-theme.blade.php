@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-	<title>Auto Wellness Center | Autoserve ERP</title>
+	<title>Auto Prince Technologies | Autoserve ERP</title>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
@@ -19,8 +19,12 @@
 
 <body onload="window.print()"  style="background-color: white !important;">
 	<!-- WRAPPER -->
-            <img  src="{{ asset('/images/kjheaderbg2.png') }}" alt="{{$settings->motto}}" class="img-responsive" style="height: 150px; width: auto;">
+            <img  src="{{ asset('/images/aptheader.png') }}" alt="{{ Auth::user()->settings->motto}}" class="img-responsive" style="height: 150px; width: auto;">
 
         <div style="padding: 0px 30px 0px 30px; background-color: white !important;">
             @yield('content')
         </div>
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>

@@ -2,7 +2,7 @@
 <html lang="en" class="fullscreen-bg">
 
 <head>
-	<title>{{$settings->company_name}} | Login</title>
+	<title>Auto Prince | Login</title>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
@@ -18,7 +18,7 @@
 	<link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700" rel="stylesheet">
 	<!-- ICONS -->
 	<link rel="apple-touch-icon" sizes="76x76" href="{{asset('public/assets/img/apple-icon.png')}}">
-	<link rel="icon" type="image/png" sizes="96x96" href="{{asset('public/assets/img/favicon.png')}}">
+	<link rel="icon" type="image/png" sizes="96x96" href="{{asset('public/assets/images/favicon.png')}}">
     <style>
         .btn-primary{
             background-color: #032f69 !important;
@@ -42,11 +42,11 @@
                                 <!----------------------------END YIELD PAGE CONTENT -->
                             </div>
                         </div>
-                        <div class="right" style="background-image: url('{{ asset('public/images/' . $settings->background) }}'); background-repeat: no-repeat; background-size: cover;">
+                        <div class="right" style="background-image: url('{{ asset('/images/background.jpg') }}'); background-repeat: no-repeat; background-size: cover;">
                             <div class="overlay"></div>
                             <div class="content text">
-                                <h1 class="heading">{{$settings->company_name}}</h1>
-                                <p>{{$settings->motto}}</p>
+                                <h1 class="heading">Auto Prince Technologies</h1>
+                                <p>Reliable Auto-Care Provider</p>
                             </div>
                         </div>
                         <div class="clearfix"></div>

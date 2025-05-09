@@ -103,7 +103,7 @@
 		<!-- NAVBAR -->
 		<nav class="navbar navbar-default navbar-fixed-top" style="clear: both !important;">
 			<div class="brand">
-				<a href="{{url('/')}}"><img  src="{{asset('images/'. Auth::user()->settings->logo ? Auth::user()->settings->logo : '') }}" alt="{{ Auth::user()->settings->motto }}" class="img-responsive logo" style="height: 35px !important; float: left;"></a> <b>{{ Auth::user()->settings->company_name}}</b>
+				<a href="{{url('/')}}"><img  src="{{asset('images/logo.png') }}" alt="{{ Auth::user()->settings->motto }}" class="img-responsive logo" style="height: 40px !important; float: left;"></a> <b>{{ Auth::user()->settings->company_name}}</b>
 				<button type="button" class="btn-toggle-fullwidth"><i class="lnr lnr-menu"></i></button>
 			</div>
 
@@ -353,25 +353,25 @@
 
             <form method="POST" action="{{ route('settings') }}" enctype="multipart/form-data">
                 @csrf
-                <input type="hidden" name="id" id="id" value="{{$settings->id}}">
+                <input type="hidden" name="id" id="id" value="{{Auth::user()->settings->id}}">
 
-				<input type="hidden" name="oldlogo" id="id" value="{{$settings->logo}}">
+				<input type="hidden" name="oldlogo" id="id" value="{{Auth::user()->settings->logo}}">
 
-				<input type="hidden" name="oldbackground" id="id" value="{{$settings->background}}">
+				<input type="hidden" name="oldbackground" id="id" value="{{Auth::user()->settings->background}}">
 
                 <div class="form-group">
                     <label for="company_name">Organization</label>
-                    <input type="text" name="company_name" id="company_name" class="form-control" value="{{$settings->company_name}}">
+                    <input type="text" name="company_name" id="company_name" class="form-control" value="{{Auth::user()->settings->company_name}}">
                 </div>
 
 				<div class="form-group">
                     <label for="motto">Motto</label>
-                    <input type="text" name="motto" id="motto" class="form-control" value="{{$settings->motto}}">
+                    <input type="text" name="motto" id="motto" class="form-control" value="{{Auth::user()->settings->motto}}">
                 </div>
 
 				<div class="form-group">
                     <label for="address">Address</label>
-                    <input type="text" name="address" id="address" class="form-control" value="{{$settings->address}}">
+                    <input type="text" name="address" id="address" class="form-control" value="{{Auth::user()->settings->address}}">
                 </div>
 
 
@@ -390,7 +390,7 @@
 				<div class="form-group">
 				  <label for="mode">Mode</label>
 				  <select class="form-control" name="mode" id="mode">
-					  <option value="{{$settings->mode}}">{{$settings->mode}}</option>
+					  <option value="{{$settings->mode}}">{{Auth::user()->settings->mode}}</option>
 					<option value="Active" selected>Active</option>
 					<option value="Maintenance">Maintenance</option>
 				  </select>

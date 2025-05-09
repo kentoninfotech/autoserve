@@ -11,6 +11,9 @@
     th, td {
         padding: 0 !important;
     }
+    .page-break {
+        page-break-before: always; 
+    }
 </style>
 
     @php
@@ -33,7 +36,7 @@
                         <table class="table">
                             <thead>
                                 <tr>
-                                    <th>Customer Name:</th>
+                                    <th >Customer Name:</th>
                                     <th>Organization:</th>
                                     <th>Job No:</th>
                                     <th>Date:</th>
@@ -95,7 +98,7 @@
                                 <tr>
                                         <td colspan="4">
                                             <hr>
-                                        {{-- <img  src="{{ asset('/images/kjfooter.jpg') }}" alt="{{$settings->motto}}" style="width: 100%; height: 20px;"> --}}
+                                        {{-- <img  src="{{ asset('/images/aptfooter.jpg') }}" alt="{{ Auth::user()->settings->motto}}" style="width: 100%; height: 20px;"> --}}
                                         </td>
                                 </tr>
                             </tbody>
@@ -543,10 +546,70 @@
                             </tr>
                         </table>
                     @endif
-
-
-
-
                 @endif
+
+                <!-- @if(isset($pdf_url)) -->
+                
+                <div class="page-break"></div>
+
+                @if(isset($job_images) && !empty($job_images))
+                    <h2>Attached Images:</h2>
+                    <div class="row">
+                      @foreach($job_images as $image)
+                        <div class="col-md-3">
+                            <div class="thumbnail">                          
+                                <img src="{{ asset('job_images/' . $job->jobno . '/' . $image->getFilename()) }}" alt="Image" class="img-responsive" style="width:100%; height: auto;">
+                            </div>
+                        </div>
+                       @endforeach
+                    </div>
+                @endif
+
+                {{$pdf_url}}
+                <script>
+                    window.onload = function() {
+                        ///* Uncomment the following lines to enable auto-download of the PDF **/
+                        // const link = document.createElement('a');
+                        // link.href = "{{ $pdf_url }}";
+                        // link.download = "{{ $type.'-'.$job->jobno.'.pdf' }}";
+                        // document.body.appendChild(link);
+                        // link.click();
+                        // document.body.removeChild(link);
+                    };
+
+                    function sendToWhatsapp() {
+                        const phoneNumber = "{{ $job->contact->telephoneno }}";
+                        const formattedNumber = phoneNumber.startsWith('0')
+                            ? '+234' + phoneNumber.substring(1)
+                            : '+234' + phoneNumber;
+
+                        const jobno = '{{ $job->jobno }}';
+                        const type = '{{ $type }}';
+                        const pdfUrl = `http://auto.serve/public/pdf/${type}-${jobno}.pdf`;
+                        const galleryUrl = `http://auto.serve/job-gallery/${jobno}`;
+                        let message = `🔧 ${type.toUpperCase()} for Job #${jobno}\n📄 Invoice: ${pdfUrl}\n🖼️ Images: ${galleryUrl}`;
+
+                        Swal.fire({
+                            title: 'Share Invoice and Images to WhatsApp?',
+                            icon: 'question',
+                            showCancelButton: true,
+                            confirmButtonText: 'Yes',
+                            cancelButtonText: 'No',
+                            confirmButtonColor: '#28a745',
+                            cancelButtonColor: '#dc3545'
+                        }).then((result) => {
+                            if (result.isConfirmed) {
+                                const whatsappUrl = `https://wa.me/${formattedNumber}?text=${encodeURIComponent(message)}`;
+                                window.open(whatsappUrl, '_blank');
+                            }
+                        });
+                    }
+
+                    document.addEventListener('DOMContentLoaded', function() {
+                        sendToWhatsapp();
+                    });
+                </script>
+<!--           @endif -->
+
 
 @endsection
