@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-	<title>Autoserve ERP | Dashboard</title>
+	<title>Auto Prince ERP | Dashboard</title>
 	<meta name="csrf-token" content="{{ csrf_token() }}" />
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
@@ -103,7 +103,7 @@
 		<!-- NAVBAR -->
 		<nav class="navbar navbar-default navbar-fixed-top" style="clear: both !important;">
 			<div class="brand">
-				<a href="{{url('/')}}"><img  src="{{asset('images/logo.png') }}" alt="{{ Auth::user()->settings->motto }}" class="img-responsive logo" style="height: 40px !important; float: left;"></a> <b>{{ Auth::user()->settings->company_name}}</b>
+				<a href="{{url('/')}}"><img  src="{{asset('images/logo.png') }}" alt="{{ Auth::user()->settings->motto }}" class="img-responsive logo" style="height: 40px !important; float: left;"></a> <b>{{ Str::limit(Auth::user()->settings->company_name, 25) }}</b>
 				<button type="button" class="btn-toggle-fullwidth"><i class="lnr lnr-menu"></i></button>
 			</div>
 

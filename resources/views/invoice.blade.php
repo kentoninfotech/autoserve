@@ -459,7 +459,6 @@
                                 <tr>
                                     <td align="right">PSFU(Plan)</td>
                                     <td><input name="nofixed" id="nofixed" value="ok" type="checkbox"></td>
-                                </tr>
                                 </table>	</td>
                                 <td><p>Delivery: Dtae:______________</p>
                                 <p>&nbsp;</p>
@@ -585,24 +584,68 @@
 
                         const jobno = '{{ $job->jobno }}';
                         const type = '{{ $type }}';
-                        const pdfUrl = `http://auto.serve/public/pdf/${type}-${jobno}.pdf`;
+                        const pdfUrl = `http://auto.serve/pdf/${type}-${jobno}.pdf`;
                         const galleryUrl = `http://auto.serve/job-gallery/${jobno}`;
-                        let message = `🔧 ${type.toUpperCase()} for Job #${jobno}\n📄 Invoice: ${pdfUrl}\n🖼️ Images: ${galleryUrl}`;
 
-                        Swal.fire({
-                            title: 'Share Invoice and Images to WhatsApp?',
-                            icon: 'question',
-                            showCancelButton: true,
-                            confirmButtonText: 'Yes',
-                            cancelButtonText: 'No',
-                            confirmButtonColor: '#28a745',
-                            cancelButtonColor: '#dc3545'
-                        }).then((result) => {
-                            if (result.isConfirmed) {
-                                const whatsappUrl = `https://wa.me/${formattedNumber}?text=${encodeURIComponent(message)}`;
-                                window.open(whatsappUrl, '_blank');
-                            }
-                        });
+                        // Check if the directory exists and has files
+                        fetch(galleryUrl)
+                            .then(response => {
+                                let message = `🔧 ${type.toUpperCase()} for Job #${jobno}\n📄 Invoice: ${pdfUrl}`;
+
+                                if (response.ok) {
+                                    // Check if there are images in the directory
+                                    fetch(`${galleryUrl}/`, { method: 'GET' })
+                                        .then(res => res.text())
+                                        .then(html => {
+                                            const parser = new DOMParser();
+                                            const doc = parser.parseFromString(html, 'text/html');
+                                            const images = doc.querySelectorAll('img');
+
+                                            if (images.length > 0) {
+                                                message += `\n🖼️ Images: ${galleryUrl}`;
+                                            }
+
+                                            Swal.fire({
+                                                title: 'Share invoice and images to WhatsApp?',
+                                                icon: 'question',
+                                                showCancelButton: true,
+                                                confirmButtonText: 'Yes',
+                                                cancelButtonText: 'No',
+                                                confirmButtonColor: '#28a745',
+                                                cancelButtonColor: '#dc3545'
+                                            }).then((result) => {
+                                                if (result.isConfirmed) {
+                                                    const whatsappUrl = `https://wa.me/${formattedNumber}?text=${encodeURIComponent(message)}`;
+                                                    window.open(whatsappUrl, '_blank');
+                                                }
+                                            });
+                                        });
+                                } else {
+                                    // If gallery does not exist, share only the PDF
+                                    Swal.fire({
+                                        title: 'Share invoice to WhatsApp?',
+                                        icon: 'question',
+                                        showCancelButton: true,
+                                        confirmButtonText: 'Yes',
+                                        cancelButtonText: 'No',
+                                        confirmButtonColor: '#28a745',
+                                        cancelButtonColor: '#dc3545'
+                                    }).then((result) => {
+                                        if (result.isConfirmed) {
+                                            const whatsappUrl = `https://wa.me/${formattedNumber}?text=${encodeURIComponent(message)}`;
+                                            window.open(whatsappUrl, '_blank');
+                                        }
+                                    });
+                                }
+                            })
+                            .catch(() => {
+                                Swal.fire({
+                                    title: 'Error checking gallery!',
+                                    icon: 'error',
+                                    confirmButtonText: 'OK',
+                                    confirmButtonColor: '#dc3545'
+                                });
+                            });
                     }
 
                     document.addEventListener('DOMContentLoaded', function() {

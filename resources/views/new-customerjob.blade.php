@@ -260,11 +260,18 @@
                                 </div>
 
                                 <div class="row form-row">
-                                    <div class="form-group col-md-3">
+                                    <div class="form-group col-md-6">
                                         <label for="diagnosis">Upload Diagnosis Result</label>
                                         <div>
 
                                         <input type="file" id="diagnosis" name="diagnosis"  class="form-control" >
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <label for="images">Upload Images</label>
+                                        <div>
+
+                                        <input type="file" id="images" name="images[]"  class="form-control" multiple>
                                         </div>
                                     </div>
                                 </div>

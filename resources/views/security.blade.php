@@ -11,7 +11,7 @@
                     
                 </div>
                 <div class="panel-body">
-                   <p>Please, for enquiries, contact 07067973091 on security issues.</p>
+                   <p>Please, for enquiries, contact 09131095135 on security issues.</p>
                    <p>At the moment, you are simply required to logout properly everytime you finished using the app to avoid intruders.</p>
                 </div>
             </div>

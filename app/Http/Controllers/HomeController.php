@@ -229,7 +229,8 @@ class HomeController extends Controller
 
         $allnumbers = "";
         $lastrecord = end($reminders);
-        $lastkey = key($lastrecord);
+        // $lastkey = key($lastrecord);
+        $lastkey = is_array($lastrecord) ? key($lastrecord) : null;
 
         foreach($reminders as $key => $mnumber){
           if(isset($mnumber->contact)){
@@ -303,7 +304,7 @@ class HomeController extends Controller
 
         $allnumbers = "";
         $lastrecord = end($reminders);
-        $lastkey = key($lastrecord);
+        $lastkey = is_array($lastrecord) ? key($lastrecord) : null;
 
         foreach($reminders as $key => $mnumber){
           if(isset($mnumber->telephoneno)){

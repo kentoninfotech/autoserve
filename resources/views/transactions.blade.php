@@ -65,7 +65,8 @@
                                     <td>{{$transact->dated}}</td>
                                     <td>{{strtoupper($transact->reference_no)}}</td>
                                     <td>{{$transact->detail}}</td>
-                                    <td>{{is_numeric($transact->from)?$users->where('id',$transact->from)->first()->name:$transact->from}} / <br> {{is_numeric($transact->to)?$users->where('id',$transact->to)->first()->name:$transact->to}}</td>
+                                    <td>{{is_numeric($transact->from) ? optional($users->where('id', $transact->from)->first())->name : $transact->from}} / <br>
+                                    {{is_numeric($transact->to) ? optional($users->where('id', $transact->to)->first())->name : $transact->to}}</td>
                                     <td>{{is_numeric($transact->approved_by)?$users->where('id',$transact->approved_by)->first()->name:$transact->approved_by}} / <br> {{is_numeric($transact->recorded_by)?$users->where('id',$transact->recorded_by)->first()->name:$transact->recorded_by}}</td>
                                     <td>
                                         <button class="label label-primary" id="ach{{$transact->id}}" onclick="transaction({{$transact->id}})"  data-toggle="modal" data-target="#transaction" data-title="{{$transact->title}}" data-amount="{{$transact->amount}}" data-account_head="{{$transact->account_head}}" data-date="{{$transact->dated}}" data-reference_no="{{$transact->reference_no}}" data-detail="{{$transact->detail}}" data-from="{{$transact->from}}" data-to="{{$transact->to}}" data-approved_by="{{$transact->approved_by}}"  data-recorded_by="{{$transact->recorded_by}}">Edit</button>
@@ -172,8 +173,24 @@
                     <div class="form-group col-md-6">
                         <label for="from"  class="control-label">From/Sender</label>
 
+                        @php
+                            // List of stop words to ignore
+                            $stopWords = ['and', 'of', 'the', 'in', 'on', 'at', 'for', 'to', 'with', 'a', 'an', 'by'];
+
+                            // Split the string into words
+                            $words = explode(" ", Auth::user()->settings->company_name);
+                            $abbreviation = "";
+
+                            foreach ($words as $word) {
+                                $word = strtolower(trim($word)); // normalize and trim whitespace
+                                if (!empty($word) && !in_array($word, $stopWords)) {
+                                    $abbreviation .= strtoupper($word[0]);
+                                }
+                            }
+                        @endphp
+                        
                         <select class="form-control" name="from" id="from">
-                            <option value="1">LACT Management</option>
+                            <option value="1">{{ $abbreviation }} Management</option>
                             <option value="2">Others</option>
                             @foreach ($users as $user)
                                 <option value="{{$user->id}}">{{$user->name}}</option>
@@ -184,7 +201,7 @@
                     <div class="form-group col-md-6">
                         <label for="to"  class="control-label">To/Receiver</label>
                         <select class="form-control" name="to" id="to">
-                            <option value="1">LACT Management</option>
+                            <option value="1">{{ $abbreviation }} Management</option>
                             <option value="2">Others</option>
                             @foreach ($users as $user)
                                 <option value="{{$user->id}}">{{$user->name}}</option>
@@ -198,7 +215,7 @@
                         <label for="approved_by"  class="control-label">Approved By</label>
 
                         <select class="form-control" name="approved_by" id="approved_by">
-                            <option value="1">LACT Management</option>
+                        <option value="1">{{ $abbreviation }} Management</option>
                             <option value="2">Others</option>
                             @foreach ($users as $user)
                                 <option value="{{$user->id}}">{{$user->name}}</option>
@@ -209,7 +226,7 @@
                     <div class="form-group col-md-6">
                         <label for="recorded_by"  class="control-label">Delivered / Recorded By</label>
                         <select class="form-control" name="recorded_by" id="recorded_by">
-                            <option value="1">LACT Management</option>
+                            <option value="1">{{ $abbreviation }} Management</option>
                             <option value="2">Others</option>
                             @foreach ($users as $user)
                                 <option value="{{$user->id}}">{{$user->name}}</option>

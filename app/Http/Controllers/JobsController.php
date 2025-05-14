@@ -706,7 +706,15 @@ class JobsController extends Controller
             payments::findOrFail($id)->delete();
         }
         if($table=="jobs"){
-            jobs::findOrFail($id)->delete();
+            $job = jobs::findOrFail($id)->first();
+            if($job){
+                $job->delete();
+            }
+            // Delete the image directory
+            $imagePath = public_path("job_images/$job->jobno");
+            if (File::exists($imagePath)) {
+                File::deleteDirectory($imagePath);
+            }
         }
 
         if($table=="contacts"){
@@ -749,7 +757,7 @@ class JobsController extends Controller
         $path = public_path("job_images/$jobno");
 
         if (!File::exists($path)) {
-            return abort(404, 'Job image folder not found.');
+            return abort(403, 'image not found!');
         }
 
         $images = collect(File::files($path))->filter(function ($file) {

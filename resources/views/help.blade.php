@@ -11,7 +11,7 @@
                     
                 </div>
                 <div class="panel-body">
-                   <p>Please, for enquiries, contact 07067973091 on usage for now. A detailed Application User Guide will be published on this page very soon</p>
+                   <p>Please, for enquiries, contact 09131095135 on usage for now. A detailed Application User Guide will be published on this page very soon</p>
                 </div>
             </div>
         
