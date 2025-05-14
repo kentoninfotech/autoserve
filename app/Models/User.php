@@ -29,6 +29,12 @@ class User extends Authenticatable
         'facility',
     ];
 
+    public function hasRole($role)
+    {
+        return $this->role === $role;
+    }
+
+
     public function setting()
     {
         return $this->hasOne(settings::class);

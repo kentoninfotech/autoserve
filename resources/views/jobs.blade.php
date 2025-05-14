@@ -79,26 +79,26 @@
                                     <td>{{$job->status}}</td>
 
                                     <td>
-                                        <a href="{{ url('/edit-job/'.$job->jobno)}}" class="label label-warning roledlink Admin Super Front-Desk Spare-Parts">Edit</a>
+                                        <a href="{{ url('/edit-job/'.$job->jobno)}}" class="label label-warning roledlink Admin AutoServe Super Front-Desk Spare-Parts">Edit</a>
                                         <a href="{{ url('/invoice/'.$job->jobno)}}/invoice" target="_blank" class="label label-success">Invoice</a>
                                         <a href="{{ url('/invoice/'.$job->jobno)}}/estimate" target="_blank" class="label label-info">Estimate</a>
                                         <a href="{{ url('/invoice/'.$job->jobno)}}/instruction" target="_blank" class="label label-info">Instruction</a>
 
-                                            <a href="{{ url('/new-payment/'.$job->jid)}}" target="_blank" class="label label-primary roledlink Finance Admin Super Front-Desk">Make Payment</a>
+                                            <a href="{{ url('/new-payment/'.$job->jid)}}" target="_blank" class="label label-primary roledlink Finance Admin AutoServe Super Front-Desk">Make Payment</a>
 
                                         <a href="{{ url('/invoice/'.$job->jobno)}}/receipt" target="_blank" class="label label-primary">Receipt</a>
-                                        <a href="#"  data-toggle="modal" data-target="#invoicedate" id="{{$job->jobno}}" onClick="changeDate({{$job->jobno}})" class="label label-warning roledlink Super Admin">Change Date</a>
+                                        <a href="#"  data-toggle="modal" data-target="#invoicedate" id="{{$job->jobno}}" onClick="changeDate({{$job->jobno}})" class="label label-warning roledlink AutoServe Super Admin">Change Date</a>
                                         @if (isset($job->diagnosis) && ($job->diagnosis->diagnosis != ""))
                                             <a href="{{ url('/diagnosis-file/'.$job->jobno)}}" target="_blank" class="label label-info">Diagnosis File</a>
                                         @endif
                                         @php
-                                            $image_path = public_path("job_images/$job->jobno");
-                                            $image_files = File::files($image_path);
+                                             $image_path = public_path("job_images/$job->jobno");
+                                             $image_files = $image_path && File::exists($image_path) ? File::files($image_path) : [];
                                         @endphp
                                         @if(File::exists($image_path) && count($image_files) > 0)
                                             <a href="{{ url('/job-gallery/'.$job->jobno)}}" target="_blank" class="label label-info">Job Gallery</a>
                                         @endif
-                                        <a href="{{ url('/delete/'.$job->id)}}/jobs" class="label label-danger roledlink Super Admin"  onclick="return confirm('Are you sure you want to delete this record? {{$job->description}}?')">Delete</a>
+                                        <a href="{{ url('/delete/'.$job->id)}}/jobs" class="label label-danger roledlink AutoServe Super Admin"  onclick="return confirm('Are you sure you want to delete this record? {{$job->description}}?')">Delete</a>
                                     </td>
 
                                 </tr>
