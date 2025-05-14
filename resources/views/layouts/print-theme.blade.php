@@ -19,7 +19,7 @@
 
 <body onload="window.print()"  style="background-color: white !important;">
 	<!-- WRAPPER -->
-            <img  src="{{ asset('/images/aptheader.png') }}" alt="{{ Auth::user()->settings->motto}}" class="img-responsive" style="height: 150px; width: auto;">
+            <img  src="{{ Auth::user()->settings->header ? asset('images/' . Auth::user()->settings->header) : asset('images/asheader.png') }}" alt="{{ Auth::user()->settings->company_name}}" class="img-responsive" style="height: 150px; width: auto;">
 
         <div style="padding: 0px 30px 0px 30px; background-color: white !important;">
             @yield('content')

@@ -22,7 +22,7 @@
 	<link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700" rel="stylesheet">
 	<!-- ICONS -->
 	<link rel="apple-touch-icon" sizes="76x76" href="{{ asset('assets/img/apple-icon.png') }}">
-	<link rel="icon" type="{{ asset('image/png" sizes="96x96" href="assets/img/favicon.png') }}">
+	<link rel="icon" type="image/png" sizes="96x96" href="{{ asset('/images/favicon.png') }}">
 
 
     <link rel="stylesheet" href="{{asset('/css/jquery.dataTables.min.css')}}">
@@ -103,7 +103,7 @@
 		<!-- NAVBAR -->
 		<nav class="navbar navbar-default navbar-fixed-top" style="clear: both !important;">
 			<div class="brand">
-				<a href="{{url('/')}}"><img  src="{{asset('images/logo.png') }}" alt="{{ Auth::user()->settings->motto }}" class="img-responsive logo" style="height: 40px !important; float: left;"></a> <b>{{ Str::limit(Auth::user()->settings->company_name, 25) }}</b>
+				<a href="{{url('/')}}"><img  src="{{asset('images/'. Auth::user()->settings->logo) }}" alt="{{ Auth::user()->settings->company_name }}" class="img-responsive logo" style="height: 40px !important; float: left;"></a> <b>{{ Str::limit(Auth::user()->settings->company_name, 20) }}</b>
 				<button type="button" class="btn-toggle-fullwidth"><i class="lnr lnr-menu"></i></button>
 			</div>
 
@@ -161,11 +161,11 @@
 						<li class="dropdown">
 							<a href="#" class="dropdown-toggle" data-toggle="dropdown"> <i class="lnr lnr-user"></i> <span>@auth {{ Auth::user()->name }} @endauth </span> <i class="icon-submenu lnr lnr-chevron-down"></i></a>
 							<ul class="dropdown-menu">
-								<li class="roledlink AutoServe Admin Super Front-Desk"><a class="btn btn-success update-pro" href="{{url('newjob')}}" title="New Customer" target="_blank" style="color: white; font-weight: bold;"><span class="fa fa-user-plus"></span> <span>New Customer</span></a></li>
-								<li class="roledlink AutoServe Admin Super"><a href="{{url('my_profile/'.$login_user->id ?? '')}}"><i class="lnr lnr-user"></i> <span>My Profile</span></a></li>
+								<li class="roledlink   Admin AutoServe Super Front-Desk"><a class="btn btn-success update-pro" href="{{url('newjob')}}" title="New Customer" target="_blank" style="color: white; font-weight: bold;"><span class="fa fa-user-plus"></span> <span>New Customer</span></a></li>
+								<li class="roledlink   Admin AutoServe Super"><a href="{{url('my_profile/'.$login_user->id ?? '')}}"><i class="lnr lnr-user"></i> <span>My Profile</span></a></li>
 								<li><a href="{{url('tasks')}}"><i class="lnr lnr-envelope"></i> <span>Message</span></a></li>
 
-								<li class="roledlink AutoServe Admin Super" style="visibility:hidden !important;"><a href="#"  data-toggle="modal" data-target="#settings"><i class="lnr lnr-cog"></i> <span>Settings</span></a></li>
+								<li class="roledlink  Admin AutoServe Super" style="visibility:hidden !important;"><a href="#"  data-toggle="modal" data-target="#settings"><i class="lnr lnr-cog"></i> <span>Settings</span></a></li>
 								<li><a href="{{url('help')}}"><i class="lnr lnr-bubble"></i> Basic Use</a></li>
 								<li><a href="{{url('security')}}"><i class="lnr lnr-lock"></i> Security</a></li>
 								<li><a href="{{url('logout')}}"><i class="lnr lnr-exit"></i> <span>Logout</span></a></li>
@@ -196,86 +196,86 @@
 						</li>
 
 
-						<li class="roledlink Front-Desk Admin Followup Finance Super Spare-Parts" style="visibility:hidden;">
+						<li class="roledlink  Front-Desk Admin Followup Finance AutoServe Super Spare-Parts" style="visibility:hidden;">
 							<a href="#subPages2" data-toggle="collapse" class="collapsed"><i class="lnr lnr-users"></i> <span>Customers</span> <i class="icon-submenu lnr lnr-chevron-left"></i></a>
 							<div id="subPages2" class="collapse ">
 								<ul class="nav">
-									<li><a href="{{url('newjob')}}" class="roledlink Admin Front-Desk Spare-Parts Super">Add New Customer</a></li>
-									<li><a href="{{url('customers')}}" class="roledlink Admin Front-Desk Spare-Parts Super">All Customers</a></li>
-									<li><a href="{{url('vehicles')}}" class="roledlink Admin Front-Desk Super Spare-Parts">All Vehicles</a></li>
+									<li><a href="{{url('newjob')}}" class="roledlink  Admin Front-Desk Spare-Parts AutoServe Super">Add New Customer</a></li>
+									<li><a href="{{url('customers')}}" class="roledlink  Admin Front-Desk Spare-Parts AutoServe Super">All Customers</a></li>
+									<li><a href="{{url('vehicles')}}" class="roledlink  Admin Front-Desk AutoServe Super Spare-Parts">All Vehicles</a></li>
 
 								</ul>
 							</div>
 						</li>
-						<li class="roledlink Front-Desk Finance Admin Super" style="visibility:hidden;">
+						<li class="roledlink  Front-Desk Finance Admin AutoServe Super" style="visibility:hidden;">
 							<a href="#subPages3" data-toggle="collapse" class="collapsed"><i class="lnr lnr-briefcase"></i> <span>Jobs</span> <i class="icon-submenu lnr lnr-chevron-left"></i></a>
 							<div id="subPages3" class="collapse ">
 								<ul class="nav">
-									<li><a href="{{url('newjob')}}" class="roledlink Front-Desk Admin Super">New Job</a></li>
-									<li><a href="{{url('jobs')}}" class="roledlink Front-Desk Admin Super Finance">Pending Jobs</a></li>
-									<li><a href="{{url('completedjobs')}}" class="roledlink Front-Desk Admin Super Finance">Completed Jobs</a></li>
-                                    <li><a href="{{url('job-controls')}}" class="roledlink Front-Desk Admin Super">Job Control Management</a></li>
-                                    <li><a href="{{url('attendance')}}" class="roledlink Front-Desk Admin Super">Attendance Management</a></li>
+									<li><a href="{{url('newjob')}}" class="roledlink  Front-Desk Admin AutoServe Super">New Job</a></li>
+									<li><a href="{{url('jobs')}}" class="roledlink  Front-Desk Admin AutoServe Super Finance">Pending Jobs</a></li>
+									<li><a href="{{url('completedjobs')}}" class="roledlink  Front-Desk Admin AutoServe Super Finance">Completed Jobs</a></li>
+                                    <li><a href="{{url('job-controls')}}" class="roledlink  Front-Desk Admin AutoServe Super">Job Control Management</a></li>
+                                    <li><a href="{{url('attendance')}}" class="roledlink  Front-Desk Admin AutoServe Super">Attendance Management</a></li>
 
 								</ul>
 							</div>
 						</li>
 
-                        <li class="roledlink Spare-Parts Admin Super" style="visibility:hidden;">
+                        <li class="roledlink Spare-Parts Admin AutoServe Super" style="visibility:hidden;">
 							<a href="#subPages8" data-toggle="collapse" class="collapsed"><i class="fa fa-list"></i> <span>Sales/Inventory</span> <i class="icon-submenu lnr lnr-chevron-left"></i></a>
 							<div id="subPages8" class="collapse ">
 								<ul class="nav">
-                                    <li><a href="{{url('new-sales')}}" class="roledlink Front-Desk Admin Super">New Sales</a></li>
-									<li><a href="{{url('parts')}}" class="roledlink Front-Desk Admin Super Spare-Parts">Automobile Parts</a></li>
-									<li><a href="{{url('supplies')}}" class="roledlink Front-Desk Admin Super Spare-Parts">Supplies</a></li>
-									<li><a href="{{url('sales')}}" class="roledlink Front-Desk Finance Admin Super Spare-Parts">Sales</a></li>
-                                    <li><a href="{{url('deliveries')}}" class="roledlink Front-Desk Finance Admin Super">Deliveries</a></li>
+                                    <li><a href="{{url('new-sales')}}" class="roledlink Front-Desk Admin AutoServe Super">New Sales</a></li>
+									<li><a href="{{url('parts')}}" class="roledlink Front-Desk Admin AutoServe Super Spare-Parts">Automobile Parts</a></li>
+									<li><a href="{{url('supplies')}}" class="roledlink Front-Desk Admin AutoServe Super Spare-Parts">Supplies</a></li>
+									<li><a href="{{url('sales')}}" class="roledlink Front-Desk Finance Admin AutoServe Super Spare-Parts">Sales</a></li>
+                                    <li><a href="{{url('deliveries')}}" class="roledlink Front-Desk Finance Admin AutoServe Super">Deliveries</a></li>
 								</ul>
 							</div>
 						</li>
 
-						<li class="roledlink Admin Finance Super" style="visibility:hidden;">
+						<li class="roledlink Admin Finance AutoServe Super" style="visibility:hidden;">
 							<a href="#subPages4" data-toggle="collapse" class="collapsed"><i class="fa fa-dollar"></i> <span>Payments</span> <i class="icon-submenu lnr lnr-chevron-left"></i></a>
 							<div id="subPages4" class="collapse ">
 								<ul class="nav">
-									<li><a href="{{url('transactions')}}" class="roledlink Cashier Finance Admin Super">All Transactions</a></li>
-                                    <li><a href="{{url('payments')}}" class="roledlink Cashier Finance Admin Super">Payments</a></li>
-									<li><a href="{{url('debtors')}}" class="roledlink Cashier Finance Admin Super">Debtors</a></li>
-                                    <li><a href="{{url('account-heads')}}" class="roledlink Cashier Finance Admin Super">Account Heads</a></li>
+									<li><a href="{{url('transactions')}}" class="roledlink Cashier Finance Admin AutoServe Super">All Transactions</a></li>
+                                    <li><a href="{{url('payments')}}" class="roledlink Cashier Finance Admin AutoServe Super">Payments</a></li>
+									<li><a href="{{url('debtors')}}" class="roledlink Cashier Finance Admin AutoServe Super">Debtors</a></li>
+                                    <li><a href="{{url('account-heads')}}" class="roledlink Cashier Finance Admin AutoServe Super">Account Heads</a></li>
 
 								</ul>
 							</div>
 						</li>
 
-						<li class="roledlink Front-Desk Admin Super" style="visibility:hidden;">
+						<li class="roledlink Front-Desk Admin AutoServe Super" style="visibility:hidden;">
 							<a href="#subPages5" data-toggle="collapse" class="collapsed"><i class="fa fa-handshake-o"></i> <span>Post Service</span> <i class="icon-submenu lnr lnr-chevron-left"></i></a>
 							<div id="subPages5" class="collapse ">
 								<ul class="nav">
-									<li><a href="{{url('reminders')}}" class="roledlink Front-Desk Admin Super">Reminders</a></li>
-									<li><a href="{{url('psfu')}}" class="roledlink Front-Desk Admin Super">Post Service Followup</a></li>
-									<li><a href="{{url('allpsfus')}}" class="roledlink Front-Desk Admin Super">PSFU Reports</a></li>
+									<li><a href="{{url('reminders')}}" class="roledlink Front-Desk Admin AutoServe Super">Reminders</a></li>
+									<li><a href="{{url('psfu')}}" class="roledlink Front-Desk Admin AutoServe Super">Post Service Followup</a></li>
+									<li><a href="{{url('allpsfus')}}" class="roledlink Front-Desk Admin AutoServe Super">PSFU Reports</a></li>
 								</ul>
 							</div>
 						</li>
 
-						<li class="roledlink Front-Desk Finance Admin Super" style="visibility:hidden;">
+						<li class="roledlink Front-Desk Finance Admin AutoServe Super" style="visibility:hidden;">
 							<a href="#subPages6" data-toggle="collapse" class="collapsed"><i class="fa fa-phone"></i> <span>Communication</span> <i class="icon-submenu lnr lnr-chevron-left"></i></a>
 							<div id="subPages6" class="collapse ">
 								<ul class="nav">
-									<li><a href="{{url('communications')}}" class="roledlink Front-Desk Admin Super">Send SMS Messages</a></li>
-									<li><a href="{{url('sentmessages')}}" class="roledlink Front-Desk Admin Super">Sent Messages</a></li>
-									<li><a href="{{url('tasks')}}" class="roledlink Front-Desk Finance Admin Super">Tasks/Inbox</a></li>
+									<li><a href="{{url('communications')}}" class="roledlink Front-Desk Admin AutoServe Super">Send SMS Messages</a></li>
+									<li><a href="{{url('sentmessages')}}" class="roledlink Front-Desk Admin AutoServe Super">Sent Messages</a></li>
+									<li><a href="{{url('tasks')}}" class="roledlink Front-Desk Finance Admin AutoServe Super">Tasks/Inbox</a></li>
 								</ul>
 							</div>
 						</li>
 
-						<li class="roledlink Admin Super" style="visibility:hidden;">
+						<li class="roledlink Admin AutoServe Super" style="visibility:hidden;">
 							<a href="#subPages7" data-toggle="collapse" class="collapsed"><i class="fa fa-gear"></i> <span>Settings</span> <i class="icon-submenu lnr lnr-chevron-left"></i></a>
 							<div id="subPages7" class="collapse ">
 								<ul class="nav">
-									<li><a href="{{url('personnels')}}" class="roledlink Admin Super">Personnel</a></li>
-									<li><a href="{{url('users')}}" class="roledlink Admin Super">Users</a></li>
-									<li><a href="{{url('backup')}}" class="roledlink Admin Super">Backup</a></li>
+									<li><a href="{{url('personnels')}}" class="roledlink Admin AutoServe Super">Personnel</a></li>
+									<li><a href="{{url('users')}}" class="roledlink Admin AutoServe Super">Users</a></li>
+									<li><a href="{{url('backup')}}" class="roledlink Admin AutoServe Super">Backup</a></li>
 								</ul>
 							</div>
 						</li>

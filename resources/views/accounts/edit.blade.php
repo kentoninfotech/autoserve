@@ -31,6 +31,11 @@
                 </div>
 
                 <div class="form-group">
+                    <label for="facility">Facility</label>
+                    <input type="text" name="facility" id="facility" class="form-control" value="{{ $user->facility ?? '' }}">
+                </div>
+
+                <div class="form-group">
                     <label for="address">Address</label>
                     <input type="text" name="address" id="address" class="form-control" value="{{ $user->setting->address ?? '' }}">
                 </div>

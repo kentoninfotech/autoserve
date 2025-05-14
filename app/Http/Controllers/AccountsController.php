@@ -51,6 +51,7 @@ class AccountsController extends Controller
             'name' => $validatedData['name'],
             'email' => $validatedData['email'],
             'phone_number' => $validatedData['phone_number'],
+            'facility' => $validatedData['facility'],
         ]);
 
         $settings = settings::where('user_id', $id)->first();

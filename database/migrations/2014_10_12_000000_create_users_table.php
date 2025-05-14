@@ -33,7 +33,7 @@ class CreateUsersTable extends Migration
         DB::table('users')->insert(
             array(
                 'name' => 'AutoServe Admin',
-                'email' => 'admin@kojoautos.com',
+                'email' => 'admin@autoserve.com.ng',
                 'password' => '$2y$10$CjKcFVg7zWhsdqlqfQVKDeTHYy/j/kFlTSWnNLkMHZhK7q8yXfaXG',
                 'role' => 'AutoServe',
                 'status' => 'Active',

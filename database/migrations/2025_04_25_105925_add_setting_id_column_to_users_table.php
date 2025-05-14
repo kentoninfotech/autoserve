@@ -16,6 +16,8 @@ class AddSettingIdColumnToUsersTable extends Migration
         Schema::table('users', function (Blueprint $table) {
             $table->foreignId('setting_id')->nullable()->after('email')->constrained('settings');
         });
+
+        DB::table('users')->where('id', 1)->update(['setting_id' => 1]);
     }
 
     /**

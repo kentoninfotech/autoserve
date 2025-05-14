@@ -567,7 +567,7 @@
                 {{$pdf_url}}
                 <script>
                     window.onload = function() {
-                        ///* Uncomment the following lines to enable auto-download of the PDF **/
+                        // Uncomment this for auto-download of the PDF 
                         // const link = document.createElement('a');
                         // link.href = "{{ $pdf_url }}";
                         // link.download = "{{ $type.'-'.$job->jobno.'.pdf' }}";

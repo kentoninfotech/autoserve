@@ -18,7 +18,7 @@
 	<link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700" rel="stylesheet">
 	<!-- ICONS -->
 	<link rel="apple-touch-icon" sizes="76x76" href="{{asset('public/assets/img/apple-icon.png')}}">
-	<link rel="icon" type="image/png" sizes="96x96" href="{{asset('public/assets/images/favicon.png')}}">
+	<link rel="icon" type="image/png" sizes="96x96" href="{{asset('/images/favicon.png')}}">
     <style>
         .btn-primary{
             background-color: #032f69 !important;
@@ -45,8 +45,8 @@
                         <div class="right" style="background-image: url('{{ asset('/images/background.jpg') }}'); background-repeat: no-repeat; background-size: cover;">
                             <div class="overlay"></div>
                             <div class="content text">
-                                <h1 class="heading">Auto Prince Technologies</h1>
-                                <p>Reliable Auto-Care Provider</p>
+                                <h1 class="heading">AutoServe</h1>
+                                <p>Automobile Management System</p>
                             </div>
                         </div>
                         <div class="clearfix"></div>
