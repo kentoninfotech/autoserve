@@ -51,7 +51,7 @@ Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('ho
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index']);
 Route::get('/logout', [App\Http\Controllers\HomeController::class, 'logout'])->name('logout');
 
-Route::get('/my_profile/{id}/', [App\Http\Controllers\HomeController::class, 'member'])->name('my_profile')->middleware('role:Front-Desk,Front-Desk,Admin,Finance,Care,Super');
+Route::get('/my_profile/{id}/', [App\Http\Controllers\HomeController::class, 'myProfile'])->name('my_profile')->middleware('role:Front-Desk,Front-Desk,Admin,Finance,Care,Super');
 Route::get('/delete-member/{id}', [App\Http\Controllers\HomeController::class, 'deleteMember'])->name('delete-member')->middleware('role:Admin,Super');
 Route::post('/settings', [App\Http\Controllers\HomeController::class, 'settings'])->name('settings')->middleware('role:Super,Admin');
 Route::post('/searchjobs', [App\Http\Controllers\JobsController::class, 'jobSearch'])->name('searchjobs');

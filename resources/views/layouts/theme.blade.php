@@ -269,13 +269,13 @@
 							</div>
 						</li>
 
-						<li class="roledlink Finance Front-Desk Admin Super" style="visibility:hidden;">
+						<li class="roledlink Admin Super" style="visibility:hidden;">
 							<a href="#subPages7" data-toggle="collapse" class="collapsed"><i class="fa fa-gear"></i> <span>Settings</span> <i class="icon-submenu lnr lnr-chevron-left"></i></a>
 							<div id="subPages7" class="collapse ">
 								<ul class="nav">
 									<li><a href="{{url('personnels')}}" class="roledlink Admin Super">Personnel</a></li>
 									<li><a href="{{url('users')}}" class="roledlink Admin Super">Users</a></li>
-									<li><a href="{{url('backup')}}" class="roledlink Admin Finance Front-Desk  Super">Backup</a></li>
+									<li><a href="{{url('backup')}}" class="roledlink Admin Super">Backup</a></li>
 								</ul>
 							</div>
 						</li>

@@ -39,6 +39,11 @@ class User extends Authenticatable
         return $this->belongsTo(settings::class, 'setting_id');
     }
 
+    public function personnel()
+    {
+        return $this->hasOne(personnel::class, 'user_id', 'id');
+    }
+
     /**
      * The attributes that should be hidden for serialization.
      *

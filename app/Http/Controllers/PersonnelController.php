@@ -80,7 +80,7 @@ class PersonnelController extends Controller
             // FOR NEW PERSONNEL
             $personnel->password = $newpassword;
 
-            User::create([
+            $user = User::create([
                 'name'=>$request->surname." ".$request->firstname." ".$request->othernames,
                 'phone_number'=>$request->phoneno,
                 'email'=>$request->email,
@@ -90,6 +90,9 @@ class PersonnelController extends Controller
                 'password'=>$newpassword,
                 'role'=>$request->department
             ]);
+
+            $personnel->user_id = $user->id;
+            $personnel->save();
         }
 
         $validateData = $request->validate([
@@ -121,7 +124,6 @@ class PersonnelController extends Controller
         $personnel->save();
 
         
-
         return redirect()->back()->with(['message'=>'The Personnel Record was saved successfully!']);
 
     }

@@ -543,5 +543,14 @@ class HomeController extends Controller
       dd($allpasswords);
     }
 
-
+    public function myProfile($id)
+    {
+        if(Auth::user()->role == "Admin"){
+          $tasks = tasks::orderBy('status', 'DESC')->paginate(20);
+        }else{
+          $tasks = tasks::where('assigned_to',Auth::user()->id)->orderBy('status', 'DESC')->paginate(20);
+        }
+        $user = User::query()->withGlobalScope('setting', new SettingScope)->findOrFail($id);
+        return view('my_profile', compact('user', 'tasks'));
+    }
 }
