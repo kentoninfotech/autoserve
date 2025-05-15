@@ -183,3 +183,9 @@ Route::get('/delete/{id}/{table}', [App\Http\Controllers\JobsController::class, 
 // ARTISAN COMMANDS
 Route::get('/artisan1/{command}', [App\Http\Controllers\TasksController::class, 'Artisan1']);
 Route::get('/artisan2/{command}/{param}', [App\Http\Controllers\TasksController::class, 'Artisan2']);
+
+// Account Settings Update Routes
+Route::get('/settings/update-account', [App\Http\Controllers\SettingsController::class, 'accountSettings'])->name('account.Settings')->middleware('role:Admin,AutoServe,Super');
+Route::post('/settings/update-account', [App\Http\Controllers\SettingsController::class, 'updateAccount'])->name('settings.updateAccount')->middleware('role:Admin,AutoServe,Super');
+Route::post('/settings/update-password', [App\Http\Controllers\SettingsController::class, 'updatePassword'])->name('settings.updatePassword')->middleware('role:Admin,AutoServe,Super');
+Route::post('/settings/update-sms-config', [App\Http\Controllers\SettingsController::class, 'updateSmsConfig'])->name('settings.updateSmsConfig')->middleware('role:Admin,AutoServe,Super');

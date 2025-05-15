@@ -10,7 +10,7 @@
         <div class="justify-content-center">
             <div class="col-md-8">
                 <div class="card shadow-lg border-0">
-                    <div class="card-header bg-primary text-white text-center mb-2" style="padding: 5px; margin-bottom: 10px;">
+                    <div class="card-header text-white text-center mb-2" style="background-color: {{ Auth::user()->settings->secondary_color }}; color: #ffffff ;padding: 5px; margin-bottom: 10px;">
                         <h1 class="h4">Backup All Records</h1>
                     </div>
                     <div class="card-body">
@@ -31,8 +31,8 @@
                 </div>
 
                 <div class="card shadow-lg border-0 mt-4">
-                    <div class="card-header bg-primary text-white text-center" style="padding: 5px; margin-top: 20px;">
-                        <h2 class="h5">All Records Backups</h2>
+                    <div class="card-header text-white text-center" style="background-color: {{ Auth::user()->settings->secondary_color }}; color: #ffffff ;padding: 5px; margin-top: 20px;">
+                        <h2 class="h4">All Records Backups</h2>
                     </div>
                     <div class="card-body" style="margin-top: 10px;">
                         @if($allBackups->isEmpty())

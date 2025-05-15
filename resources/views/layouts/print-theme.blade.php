@@ -41,7 +41,7 @@
 
 		.company-name {
 		font-size: 36px;
-		color: #d12323;
+		color: {{ Auth::user()->settings->primary_color }};
 		font-weight: bold;
 		letter-spacing: 1px;
 		}
@@ -54,7 +54,7 @@
 
 		.contact-info span {
 		font-weight: bold;
-		color: #0077cc;
+		color: {{ Auth::user()->settings->secondary_color }};
 		}
 	</style>
 
@@ -73,8 +73,8 @@
 				<div class="company-name">{{ Auth::user()->settings->company_name }}</div>
 				<div class="contact-info">
 					<div><span>Address: </span>{{ Auth::user()->settings->address}}</div>
-					<div><span>Telephone: </span> {{ Auth::user()->phone_number }}</div>
-					<div><span>Email: </span> {{ Auth::user()->email}}</div>
+					<div><span>Telephone: </span> {{ Auth::user()->settings->phone_number ?? Auth::user()->phone_number }}</div>
+					<div><span>Email: </span> {{ Auth::user()->settings->company_email ?? Auth::user()->email }}</div>
 				</div>
 				</div>
 			</div>

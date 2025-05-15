@@ -83,32 +83,117 @@ class SettingsController extends Controller
 
     public function webEnquiry(Request $request){
 
-    // Send email to the AutoServe team
-    $request->validate([
-        'name' => 'required|string|max:100',
-        'email' => 'required|email',
-        'subject' => 'nullable|string|max:255',
-        'message' => 'required|string',
-    ]);
+        // Send email to the AutoServe team
+        $request->validate([
+            'name' => 'required|string|max:100',
+            'email' => 'required|email',
+            'subject' => 'nullable|string|max:255',
+            'message' => 'required|string',
+        ]);
 
-    $data = [
-        'name' => $request->input('name'),
-        'email' => $request->input('email'),
-        'subject' => $request->input('subject'),
-        'user_message' => $request->input('message'), 
-    ];
+        $data = [
+            'name' => $request->input('name'),
+            'email' => $request->input('email'),
+            'subject' => $request->input('subject'),
+            'user_message' => $request->input('message'), 
+        ];
 
-    Mail::queue('emails.enquiry', $data, function ($message) use ($data) {
-        $message->from($data['email'], $data['name']);
-        $message->to(env('MAIL_USERNAME'), 'AutoServe | Web Enquiry');
-        $message->subject($data['subject']);
-        $message->replyTo($data['email'], $data['name']);
-    });
+        Mail::queue('emails.enquiry', $data, function ($message) use ($data) {
+            $message->from($data['email'], $data['name']);
+            $message->to(env('MAIL_USERNAME'), 'AutoServe | Web Enquiry');
+            $message->subject($data['subject']);
+            $message->replyTo($data['email'], $data['name']);
+        });
 
-    return redirect()->back()->with('success', 'Thank you for your message! We will get back to you shortly.');
+        return redirect()->back()->with('success', 'Thank you for your message! We will get back to you shortly.');
 
     
 
+    }
+
+    // View Account Settings 
+    public function accountSettings()
+    {
+        $user = auth()->user();
+        $settings = $user->setting_id ? settings::find($user->setting_id) : settings::where('user_id', $user->settings->id)->first();
+        return view('account-settings', compact('user', 'settings'));
+    }
+
+    // Update Account Details
+    public function updateAccount(Request $request)
+    {
+        $user = auth()->user();
+        $validated = $request->validate([
+            'company_name' => 'required|string|max:255',
+            'company_email' => 'nullable|email',
+            'address' => 'nullable|string|max:255',
+            'phone_number' => 'nullable|string|max:100',
+            'header' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'logo' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'primary_color' => 'nullable|string|max:7',
+            'secondary_color' => 'nullable|string|max:7',
+        ]);
+
+        // Image path
+        $image_path = public_path("images/");
+
+        // Update settings
+        $settings = $user->settings ?? new \App\Models\settings();
+        $settings->company_name = $validated['company_name'];
+        $settings->company_email = $validated['company_email'];
+        $settings->address = $validated['address'] ?? '';
+        $settings->phone_number = $validated['phone_number'] ?? '';
+        if ($request->hasFile('header')) {
+            $image = $request->file('header');
+            $imageName = now()->format('Y_m_d') . '_' . $image->getClientOriginalName();
+            $headerPath = $image->move($image_path, $imageName);
+            $settings->header = basename($headerPath);
+        }
+        if ($request->hasFile('logo')) {
+            $image = $request->file('logo');
+            $imageName = now()->format('Y_m_d') . '_' . $image->getClientOriginalName();
+            $logoPath = $image->move($image_path, $imageName);
+            $settings->logo = basename($logoPath);
+        }
+        $settings->primary_color = $validated['primary_color'] ?? $settings->primary_color;
+        $settings->secondary_color = $validated['secondary_color'] ?? $settings->secondary_color;
+        $settings->save();
+
+        return back()->with('message', 'Account details updated successfully.');
+    }
+
+    // Update Password
+    public function updatePassword(Request $request)
+    {
+        $user = auth()->user();
+        $validator = \Validator::make($request->all(), [
+            'current_password' => 'required',
+            'new_password' => 'required|string|min:5|confirmed',
+        ]);
+        if ($validator->fails()) {
+            return back()->withErrors($validator, 'changePassword')->withInput();
+        }
+        if (!Hash::check($request->current_password, $user->password)) {
+            return back()->withErrors(['current_password' => 'Current password is incorrect.'], 'changePassword')->withInput();
+        }
+        $user->password = Hash::make($request->new_password);
+        $user->save();
+        return back()->with('message', 'Password updated successfully.');
+    }
+
+    // Update SMS Config
+    public function updateSmsConfig(Request $request)
+    {
+        $user = auth()->user();
+        $validated = $request->validate([
+            'sms_api_key' => 'required|string',
+            'sms_api_secret' => 'required|string',
+        ]);
+        $settings = $user->setting_id ? settings::find($user->setting_id) : settings::where('user_id', $user->settings->id)->first();
+        $settings->sms_api_key = $validated['sms_api_key'];
+        $settings->sms_api_secret = $validated['sms_api_secret'];
+        $settings->save();
+        return back()->with('message', 'SMS configuration updated successfully.');
     }
 
     /**

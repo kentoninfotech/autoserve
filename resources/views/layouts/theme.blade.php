@@ -62,15 +62,18 @@
 
 		.tab-content hr{
 			border-top: 1px solid green;
+			border-top: 1px solid {{ Auth::user()->settings->secondary_color }};
 		}
 
 		.form-row{
-			border-bottom: 0.5px solid green;
+			/* border-bottom: 0.5px solid green; */
+			border-bottom: 0.5px solid {{ Auth::user()->settings->secondary_color }};
 			margin-bottom: 5px;
 		}
 
 		label{
-			color: darkgreen;
+			/* color: darkgreen; */
+			color: {{ Auth::user()->settings->secondary_color }};
 			font-size: small;
 		}
 
@@ -85,12 +88,14 @@
 
         .btn-success{
             /* background-color: #032f69 !important; LAC*/
-            background-color: #5e9a52 !important;
+            /* background-color: #5e9a52 !important; */
+			background-color: {{ Auth::user()->settings->secondary_color }} !important;
         }
 
         .btn-primary{
             /* background-color: #032f69 !important; LAC*/
-            background-color: #5e9a52 !important;
+            /* background-color: #5e9a52 !important; */
+			background-color: {{ Auth::user()->settings->primary_color }} !important;
 
         }
 	</style>
@@ -273,6 +278,7 @@
 							<a href="#subPages7" data-toggle="collapse" class="collapsed"><i class="fa fa-gear"></i> <span>Settings</span> <i class="icon-submenu lnr lnr-chevron-left"></i></a>
 							<div id="subPages7" class="collapse ">
 								<ul class="nav">
+									<li><a href="{{ route('account.Settings') }}" class="roledlink Admin AutoServe Super">Account Settings</a></li>
 									<li><a href="{{url('personnels')}}" class="roledlink Admin AutoServe Super">Personnel</a></li>
 									<li><a href="{{url('users')}}" class="roledlink Admin AutoServe Super">Users</a></li>
 									<li><a href="{{url('backup')}}" class="roledlink Admin AutoServe Super">Backup</a></li>
@@ -333,6 +339,10 @@
 		  $(".ui-datepicker, .ui-widget").draggable().selectable();
 		});
 	</script>
+	
+	<!-- Account Setting ChangePasswordModal Scripts -->
+	@yield('modalScript')
+
 </body>
 
 </html>
