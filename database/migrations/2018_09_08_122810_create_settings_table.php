@@ -25,7 +25,7 @@ class CreateSettingsTable extends Migration
             $table->string('background')->nullable()->default('login-bg.jpg');
             $table->string('header')->nullable();
             $table->string('primary_color')->nullable()->default('#0000FF');
-            $table->string('secondary_color')->nullable()->default('#F26049');
+            $table->string('secondary_color')->nullable()->default('#5e9a52');
             $table->string('sms_api_key')->nullable();
             $table->string('sms_api_secret')->nullable();
             $table->string('mode')->nullable();

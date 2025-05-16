@@ -2,8 +2,7 @@
 
 @section('content')
                     <div class="header">
-                        <div class="logo text-center"><img src="{{asset('/images/logo.png')}}" alt="Logo" width="auto" height="50"></div>
-                        <p class="lead">Login to your account</p>
+                        <h3 class="heading">{{ __('Login to your account') }}</h3>
                     </div>
 
                     <form method="POST" action="{{ route('login') }}" class="form-auth-small">

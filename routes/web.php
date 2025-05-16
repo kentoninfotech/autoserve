@@ -22,6 +22,13 @@ Route::get('/accounts/{id}', [App\Http\Controllers\AccountsController::class, 's
 Route::get('/accounts/edit/{id}', [App\Http\Controllers\AccountsController::class, 'edit'])->name('accounts.edit')->middleware('role:AutoServe');
 Route::put('/accounts/update/{id}', [App\Http\Controllers\AccountsController::class, 'update'])->name('accounts.update')->middleware('role:AutoServe');
 
+// Account Settings Update Routes
+Route::get('/settings/update-account', [App\Http\Controllers\SettingsController::class, 'accountSettings'])->name('account.Settings')->middleware('role:Admin,AutoServe,Super');
+Route::post('/settings/update-account', [App\Http\Controllers\SettingsController::class, 'updateAccount'])->name('settings.updateAccount')->middleware('role:Admin,AutoServe,Super');
+Route::post('/settings/update-password', [App\Http\Controllers\SettingsController::class, 'updatePassword'])->name('settings.updatePassword')->middleware('role:Admin,AutoServe,Super');
+Route::post('/settings/update-sms-config', [App\Http\Controllers\SettingsController::class, 'updateSmsConfig'])->name('settings.updateSmsConfig')->middleware('role:Admin,AutoServe,Super');
+
+
 // Send Feedback/Equiry E-mail
 Route::post('/enquiry', [App\Http\Controllers\SettingsController::class, 'webEnquiry'])->name('web.enquiry');
 
@@ -35,13 +42,9 @@ Route::get('/', function () {
 });
 
 
-// Account Backup
-Route::get('/backup', [App\Http\Controllers\BackupController::class, 'index'])->name('backup')->middleware('role:AutoServe,Super,Admin');
-// Backup all records
+// Account Backups
 Route::post('/backup-all', [App\Http\Controllers\BackupController::class, 'backupAllRecords'])->name('backup.all')->middleware('role:AutoServe,Super,Admin');
-// Route to download backup files
 Route::get('/download-backup/{file}', [App\Http\Controllers\BackupController::class, 'downloadBackup'])->name('download.backup')->middleware('role:AutoServe,Super,Admin');
-// Route to delete backup files
 Route::delete('/delete-backup/{file}', [App\Http\Controllers\BackupController::class, 'deleteBackup'])->name('delete.backup')->middleware('role:AutoServe,Super,Admin');
 
 
@@ -184,8 +187,3 @@ Route::get('/delete/{id}/{table}', [App\Http\Controllers\JobsController::class, 
 Route::get('/artisan1/{command}', [App\Http\Controllers\TasksController::class, 'Artisan1']);
 Route::get('/artisan2/{command}/{param}', [App\Http\Controllers\TasksController::class, 'Artisan2']);
 
-// Account Settings Update Routes
-Route::get('/settings/update-account', [App\Http\Controllers\SettingsController::class, 'accountSettings'])->name('account.Settings')->middleware('role:Admin,AutoServe,Super');
-Route::post('/settings/update-account', [App\Http\Controllers\SettingsController::class, 'updateAccount'])->name('settings.updateAccount')->middleware('role:Admin,AutoServe,Super');
-Route::post('/settings/update-password', [App\Http\Controllers\SettingsController::class, 'updatePassword'])->name('settings.updatePassword')->middleware('role:Admin,AutoServe,Super');
-Route::post('/settings/update-sms-config', [App\Http\Controllers\SettingsController::class, 'updateSmsConfig'])->name('settings.updateSmsConfig')->middleware('role:Admin,AutoServe,Super');

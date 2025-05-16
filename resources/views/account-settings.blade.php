@@ -171,9 +171,9 @@
           <h4 class="modal-title" id="changePasswordModalLabel">Change Password</h4>
           @if($errors->changePassword && $errors->changePassword->any())
             <div class="alert alert-danger">
-                <ul>
+                <ul class="list-group">
                     @foreach ($errors->changePassword->all() as $error)
-                        <li>{{ $error }}</li>
+                        <li class="list-group-item list-group-item-danger">{{ $error }}</li>
                     @endforeach
                 </ul>
             </div>

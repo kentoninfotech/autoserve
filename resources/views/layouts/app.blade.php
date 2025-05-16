@@ -18,13 +18,15 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <link rel="icon" type="image/png" sizes="96x96" href="{{ asset('/images/favicon.png') }}">
 </head>
 <body>
     <div id="app">
         <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
             <div class="container">
                 <a class="navbar-brand" href="{{ url('/') }}">
-                    {{ config('app.name', 'Auto Serve') }}
+                    <img src="{{ asset('images/logo.png') }}" alt="Logo" style="width: 160px; height: auto; margin-right: 10px;">
+                    {{-- config('app.name', 'Auto Serve') --}}
                 </a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
                     <span class="navbar-toggler-icon"></span>
@@ -47,9 +49,9 @@
                             @endif
 
                             @if (Route::has('register'))
-                                <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
-                                </li>
+                                <!-- <li class="nav-item">
+                                  {{--  <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a> --}}
+                                </li> -->
                             @endif
                         @else
                             <li class="nav-item dropdown">

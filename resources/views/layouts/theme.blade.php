@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-	<title>Auto Prince ERP | Dashboard</title>
+	<title>{{ Auth::user()->settings->company_name ?? 'AutoServe ERP' }} | Dashboard</title>
 	<meta name="csrf-token" content="{{ csrf_token() }}" />
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
