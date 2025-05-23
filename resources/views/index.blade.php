@@ -34,6 +34,9 @@
         <li class="nav-item mx-2">
           <a class="nav-link fw-semibold text-dark" href="#contact"><i class="bi bi-envelope me-1"></i>Contact</a>
         </li>
+        <li class="nav-item mx-2">
+          <a class="nav-link fw-semibold text-dark" href="{{ route('login') }}" }}"><i class="bi bi-sign-in me-1" style="font-weight: bold; color: darkblue"></i>Sign In</a>
+        </li>
       </ul>
     </div>
   </div>
