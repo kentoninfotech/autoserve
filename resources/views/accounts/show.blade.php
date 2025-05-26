@@ -27,10 +27,38 @@
                             <p><strong>Facility:</strong> {{ $user->facility ?? 'N/A' }}</p>
                             <p><strong>Address:</strong> {{ $user->setting->address ?? 'N/A' }}</p>
                             <p><strong>Deployment Type:</strong> {{ $user->setting->deployment_type ?? 'N/A' }}</p>
+                            <p><strong>Account Status:</strong> {{ $user->setting->status}}</p>
                         </div>
                     </div>
                 </div>
             </div>
+
+            <div class="clearfix"></div>
+            <div class="mt-4" style="text-align: right;">
+                @if($user->setting->status == 'Active')
+                    <form id="deactivateForm" action="{{ route('accounts.deactivate', $user->id) }}" method="POST" style="display:inline;">
+                        @csrf
+                        <button type="button" class="btn btn-danger shadow-lg" onclick="confirmDeactivation()">Deactivate Account</button>
+                    </form>
+                @else
+                    <form id="activateForm" action="{{ route('accounts.activate', $user->id) }}" method="POST" style="display:inline;">
+                        @csrf
+                        <button type="button" class="btn btn-success shadow-lg" onclick="confirmActivation()">Activate Account</button>
+                    </form>
+                @endif
+            </div>
+            <script>
+                function confirmDeactivation() {
+                    if(confirm('Are you sure you want to Deactivate this Account?')) {
+                        document.getElementById('deactivateForm').submit();
+                    }
+                }
+                function confirmActivation() {
+                    if(confirm('Are you sure you want to Activate this Account?')) {
+                        document.getElementById('activateForm').submit();
+                    }
+                }
+            </script>
         </div>
     </div>
 </div>

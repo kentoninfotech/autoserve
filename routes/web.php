@@ -20,7 +20,9 @@ use App\Http\Controllers\HomeController;
 Route::get('/accounts', [App\Http\Controllers\AccountsController::class, 'index'])->name('accounts.index')->middleware('role:AutoServe');
 Route::get('/accounts/{id}', [App\Http\Controllers\AccountsController::class, 'show'])->name('accounts.show')->middleware('role:AutoServe');
 Route::get('/accounts/edit/{id}', [App\Http\Controllers\AccountsController::class, 'edit'])->name('accounts.edit')->middleware('role:AutoServe');
-Route::put('/accounts/update/{id}', [App\Http\Controllers\AccountsController::class, 'update'])->name('accounts.update')->middleware('role:AutoServe');
+Route::post('/accounts/update/{id}', [App\Http\Controllers\AccountsController::class, 'update'])->name('accounts.update')->middleware('role:AutoServe');
+Route::post('/accounts/activate/{id}', [App\Http\Controllers\AccountsController::class, 'activateAccount'])->name('accounts.activate')->middleware('role:AutoServe');
+Route::post('/accounts/deactivate/{id}', [App\Http\Controllers\AccountsController::class, 'deactivateAccount'])->name('accounts.deactivate')->middleware('role:AutoServe');
 
 // Account Settings Update Routes
 Route::get('/settings/update-account', [App\Http\Controllers\SettingsController::class, 'accountSettings'])->name('account.Settings')->middleware('role:Admin,AutoServe,Super');
@@ -43,6 +45,7 @@ Route::get('/', function () {
 
 
 // Account Backups
+Route::get('/backup', [App\Http\Controllers\BackupController::class, 'index'])->name('backup')->middleware('role:Super,Admin');
 Route::post('/backup-all', [App\Http\Controllers\BackupController::class, 'backupAllRecords'])->name('backup.all')->middleware('role:AutoServe,Super,Admin');
 Route::get('/download-backup/{file}', [App\Http\Controllers\BackupController::class, 'downloadBackup'])->name('download.backup')->middleware('role:AutoServe,Super,Admin');
 Route::delete('/delete-backup/{file}', [App\Http\Controllers\BackupController::class, 'deleteBackup'])->name('delete.backup')->middleware('role:AutoServe,Super,Admin');

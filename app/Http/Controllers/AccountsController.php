@@ -66,6 +66,27 @@ class AccountsController extends Controller
         return redirect()->route('accounts.index')->with('success', $user->name . ': Account updated successfully.');
     }
 
+    public function activateAccount($id)
+    {
+        $user = User::findOrFail($id);
+        $setting = $user->setting;
+        if ($setting) {
+            $setting->status = 'Active';
+            $setting->save();
+        }
+        return redirect()->route('accounts.index')->with('success', $setting->company_name . ': Account activated successfully.');
+    }
+    public function deactivateAccount($id)
+    {
+        $user = User::findOrFail($id);
+        $setting = $user->setting;
+        if ($setting) {
+            $setting->status = 'Inactive';
+            $setting->save();
+        }
+        return redirect()->route('accounts.index')->with('success', $setting->company_name . ': Account deactivated successfully.');
+    }
+
 
 
 }

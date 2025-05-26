@@ -326,7 +326,35 @@
 		</footer>
 	</div>
 	<!-- END WRAPPER -->
-	<!-- Javascript -->
+
+@if(Auth::user()->settings->status == 'Inactive')
+<!-- Account Inactive Modal -->
+<div class="modal fade" id="inactiveAccountModal" tabindex="-1" role="dialog" aria-labelledby="inactiveAccountModalLabel" aria-hidden="true" data-backdrop="static" data-keyboard="false">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content" style="border-radius: 10px; box-shadow: 0 4px 20px rgba(0,0,0,0.2);">
+      <div class="modal-header" style="background: #f44336; color: #fff; border-top-left-radius: 10px; border-top-right-radius: 10px;">
+        <h4 class="modal-title" id="inactiveAccountModalLabel"><i class="fa fa-exclamation-triangle"></i> Account Not Activated</h4>
+      </div>
+      <div class="modal-body text-center" style="padding: 30px 20px;">
+        <i class="fa fa-lock fa-4x text-danger mb-3"></i>
+        <h4 class="mb-3">Your account is currently <span class="label label-danger">Inactive</span>.</h4>
+        <p class="lead">Please contact your administrator or support to activate your account and gain full access to the system.</p>
+      </div>
+      <div class="modal-footer" style="border-bottom-left-radius: 10px; border-bottom-right-radius: 10px;">
+        <button type="button" class="btn btn-default" disabled>Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+  window.onload = function() {
+    $('#inactiveAccountModal').modal({backdrop: 'static', keyboard: false});
+    $('#inactiveAccountModal').modal('show');
+  };
+</script>
+@endif
+
+<!-- Javascript -->
 	<script src="{{asset('/assets/vendor/jquery/jquery.min.js')}}"></script>
 	<script src="{{asset('/assets/vendor/bootstrap/js/bootstrap.min.js')}}"></script>
 	<script src="{{asset('/assets/vendor/jquery-slimscroll/jquery.slimscroll.min.js')}}"></script>

@@ -41,8 +41,8 @@
                                 <td>{{ $user->setting->company_name ?? 'N/A' }}</td>
                                 <td>{{ $user->email }}</td>
                                 <td>{{ $user->phone_number }}</td>
-                                <td>{{ $user->setting->deployment_type ?? 'N/A' }}</td>
-                                <td>{{$user->setting->mode}}</td>
+                                <td>{{ Str::headline($user->setting->deployment_type) ?? 'N/A' }}</td>
+                                <td>{{$user->setting->status}}</td>
                                 <td>
                                     <a href="{{ route('accounts.edit', $user->id) }}" class="btn btn-primary">Edit</a>
                                     <a href="{{ route('accounts.show', $user->id) }}" class="btn btn-secondary">View</a>

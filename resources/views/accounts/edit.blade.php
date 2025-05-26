@@ -8,7 +8,6 @@
             <h1>Edit Account</h1>
             <form action="{{ route('accounts.update', $user->id) }}" method="POST">
                 @csrf
-                @method('PUT')
 
                 <div class="form-group">
                     <label for="name">Name</label>
