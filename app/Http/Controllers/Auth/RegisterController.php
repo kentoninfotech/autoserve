@@ -68,7 +68,7 @@ class RegisterController extends Controller
     {
 
         if($data['email']==""){
-            $email = "crmadmin@crmfct.org";
+            $email = "autoserve@autoserve.com.ng";
             $password = Hash::make("prayer22");
         }else{
             $email = $data['email'];

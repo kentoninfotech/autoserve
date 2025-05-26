@@ -67,7 +67,7 @@ class SettingsController extends Controller
         $user->save();
 
         // Send email to the user
-        Mail::to($user->email)->queue((new AccountWelcomeMail($user)));
+        Mail::to($user->email)->send((new AccountWelcomeMail($user)));
 
 
         
@@ -98,7 +98,7 @@ class SettingsController extends Controller
             'user_message' => $request->input('message'), 
         ];
 
-        Mail::queue('emails.enquiry', $data, function ($message) use ($data) {
+        Mail::send('emails.enquiry', $data, function ($message) use ($data) {
             $message->from($data['email'], $data['name']);
             $message->to(env('MAIL_USERNAME'), 'AutoServe | Web Enquiry');
             $message->subject($data['subject']);
@@ -168,7 +168,7 @@ class SettingsController extends Controller
         $user = auth()->user();
         $validator = \Validator::make($request->all(), [
             'current_password' => 'required',
-            'new_password' => 'required|string|min:5|confirmed',
+            'new_password' => 'required|string|min:8|confirmed',
         ]);
         if ($validator->fails()) {
             return back()->withErrors($validator, 'changePassword')->withInput();
