@@ -9,14 +9,23 @@
   <link rel="stylesheet" href="{{ asset('assets/css/auto.serve.styles.css') }}">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+  <style>
+    .navbar-toggler-icon {
+      background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='black' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
+    }
+  </style>
 </head>
 <body>
   <!-- Navbar -->
 <nav class="navbar navbar-expand-lg navbar-dark bg-white shadow-sm fixed-top py-2 border-bottom animate__animated animate__fadeInDown" style="background:rgba(255,255,255,0.98)!important;">
   <div class="container">
-    <a class="navbar-brand d-flex align-items-center fw-bold text-primary fs-3" href="#">
-      <i class="bi bi-gear-fill me-2 text-warning fs-2"></i>AutoServe
-    </a>
+    <div class="d-flex align-items-center">
+        <a class="navbar-brand fw-bold text-primary fs-3" href="#">
+            <i class="bi bi-gear-fill me-2 text-warning fs-2"></i>AutoServe
+        </a>
+        <a class="nav-link fw-semibold text-primary align-items-end" href="tel:+2349131095135"><i class="bi bi-telephone me-1"></i>+2349131095135</a>
+    </div>
+
     <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
@@ -33,6 +42,9 @@
         </li>
         <li class="nav-item mx-2">
           <a class="nav-link fw-semibold text-dark" href="#contact"><i class="bi bi-envelope me-1"></i>Contact</a>
+        </li>
+        <li class="nav-item mx-2">
+          <a class="nav-link fw-semibold text-dark" href="{{ route('login') }}"><i class="bi bi-box-arrow-in-right me-1"></i>Login</a>
         </li>
       </ul>
     </div>
@@ -362,5 +374,16 @@
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
   <!--Custom JS-->
   <script src="{{ asset('assets/js/auto.serve.scripts.js') }}"></script>
+  <script type="text/javascript">
+        var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
+        (function(){
+          var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
+          s1.async=true;
+          s1.src='https://embed.tawk.to/6842d588e8b5e919133221f3/1it2h47v8';
+          s1.charset='UTF-8';
+          s1.setAttribute('crossorigin','*');
+          s0.parentNode.insertBefore(s1,s0);
+        })();
+ </script>
 </body>
 </html>
