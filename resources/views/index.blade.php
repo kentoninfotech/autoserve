@@ -9,6 +9,7 @@
   <link rel="stylesheet" href="{{ asset('assets/css/auto.serve.styles.css') }}">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+  <link rel="icon" type="image/png" href="{{ asset('images/favicon.png') }}">
   <style>
     .navbar-toggler-icon {
       background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='black' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
@@ -19,11 +20,11 @@
   <!-- Navbar -->
 <nav class="navbar navbar-expand-lg navbar-dark bg-white shadow-sm fixed-top py-2 border-bottom animate__animated animate__fadeInDown" style="background:rgba(255,255,255,0.98)!important;">
   <div class="container">
-    <div class="d-flex align-items-center">
+    <div class="d-flex align-items-center justify-content-between">
         <a class="navbar-brand fw-bold text-primary fs-3" href="#">
-            <i class="bi bi-gear-fill me-2 text-warning fs-2"></i>AutoServe
+            <img src="{{ asset('images/logo.png') }}" alt="AutoServe Logo" style="height:40px;width:auto;" class="me-2 align-middle">
         </a>
-        <a class="nav-link fw-semibold text-primary align-items-end" href="tel:+2349131095135"><i class="bi bi-telephone me-1"></i>+2349131095135</a>
+        <a class="nav-link fw-semibold text-primary" href="tel:+2349131095135"><i class="bi bi-telephone me-1"></i>+2349131095135</a>
     </div>
 
     <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -169,7 +170,9 @@
         </div>
       </div>
       <div class="col-md-6 text-center animate__animated animate__fadeInRight">
-        <img src="assets/images/about.jpg" alt="About AutoServe" class="img-fluid rounded shadow-lg" style="max-width: 90%;">
+        <div class="ratio ratio-16x9 rounded shadow-lg" style="max-width: 90%; margin: 0 auto;">
+          <iframe src="https://www.youtube.com/embed/VP1FvsyUgBE" title="YouTube video" allowfullscreen></iframe>
+        </div>
       </div>
     </div>
     <!-- Decorative Shape -->
@@ -204,6 +207,76 @@
       </div>
     </div>
     <div style="position:absolute;top:-60px;right:-60px;width:180px;height:180px;background:rgba(255,193,7,0.08);border-radius:50%;z-index:0;"></div>
+  </div>
+</section>
+
+  <!-- Plans Section -->
+<section class="plans-section py-5 position-relative" style="background: linear-gradient(90deg, #f8f9fa 60%, #e9ecef 100%);">
+  <div class="container">
+    <h2 class="text-center mb-5 fw-bold text-primary animate__animated animate__fadeInDown">Choose Your Plan</h2>
+    <div class="row justify-content-center g-4">
+      <!-- Subscription Plan -->
+      <div class="col-md-4">
+        <div class="card h-100 border-0 shadow-lg rounded-4 plan-card animate__animated animate__fadeInUp animate__delay-1s position-relative overflow-hidden">
+          <div class="plan-badge bg-warning text-dark fw-bold position-absolute top-0 end-0 m-3 px-3 py-1 rounded-pill shadow-sm">Popular</div>
+          <div class="card-body text-center p-5">
+            <i class="bi bi-calendar2-check text-warning display-3 mb-3"></i>
+            <h4 class="fw-bold mb-2">Subscription</h4>
+            <div class="mb-3">
+              <span class="display-5 fw-bold text-dark">₦300,000</span>
+              <div class="text-muted">per year</div>
+            </div>
+            <ul class="list-unstyled mb-4">
+              <li class="mb-2"><i class="bi bi-check-circle-fill text-success me-2"></i>All Features Included</li>
+              <li class="mb-2"><i class="bi bi-check-circle-fill text-success me-2"></i>Cloud Hosted</li>
+              <li class="mb-2"><i class="bi bi-check-circle-fill text-success me-2"></i>Cancel Anytime</li>
+            </ul>
+            <a href="#" class="btn btn-lg btn-warning text-dark fw-semibold w-100 rounded-pill shadow mb-2" data-bs-toggle="modal" data-bs-target="#registerModal">Start Subscription</a>
+            <!-- <a href="#" class="btn btn-outline-primary w-100 rounded-pill fw-semibold" data-bs-toggle="modal" data-bs-target="#registerModal"><i class="bi bi-person-plus me-1"></i>Register</a> -->
+          </div>
+        </div>
+      </div>
+      <!-- Online Plan -->
+      <div class="col-md-4">
+        <div class="card h-100 border-0 shadow-lg rounded-4 plan-card animate__animated animate__fadeInUp animate__delay-2s position-relative overflow-hidden bg-primary text-white">
+          <div class="plan-badge bg-white text-primary fw-bold position-absolute top-0 end-0 m-3 px-3 py-1 rounded-pill shadow-sm">Best Value</div>
+          <div class="card-body text-center p-5">
+            <i class="bi bi-cloud-arrow-up text-white display-3 mb-3"></i>
+            <h4 class="fw-bold mb-2 text-white">Online</h4>
+            <div class="mb-3">
+              <span class="display-5 fw-bold text-white">₦1,500,000</span>
+              <div class="text-white-50">one-time<br><small>+ Yearly Domain &amp; Hosting: <span class="fw-bold text-warning">₦150,000</span></small></div>
+            </div>
+            <ul class="list-unstyled mb-4">
+              <li class="mb-2"><i class="bi bi-check-circle-fill text-warning me-2"></i>Lifetime Access</li>
+              <li class="mb-2"><i class="bi bi-check-circle-fill text-warning me-2"></i>Cloud Hosted</li>
+              <li class="mb-2"><i class="bi bi-check-circle-fill text-warning me-2"></i>Free Updates</li>
+            </ul>
+            <a href="#contact" class="btn btn-lg btn-light text-primary fw-semibold w-100 rounded-pill shadow">Get Online Plan</a>
+          </div>
+        </div>
+      </div>
+      <!-- On Premises Plan -->
+      <div class="col-md-4">
+        <div class="card h-100 border-0 shadow-lg rounded-4 plan-card animate__animated animate__fadeInUp animate__delay-3s position-relative overflow-hidden">
+          <div class="plan-badge bg-secondary text-white fw-bold position-absolute top-0 end-0 m-3 px-3 py-1 rounded-pill shadow-sm">Enterprise</div>
+          <div class="card-body text-center p-5">
+            <i class="bi bi-hdd-network text-secondary display-3 mb-3"></i>
+            <h4 class="fw-bold mb-2">On Premises</h4>
+            <div class="mb-3">
+              <span class="display-5 fw-bold text-dark">₦2,000,000</span>
+              <div class="text-muted">one-time</div>
+            </div>
+            <ul class="list-unstyled mb-4">
+              <li class="mb-2"><i class="bi bi-check-circle-fill text-success me-2"></i>One-Time Payment</li>
+              <li class="mb-2"><i class="bi bi-check-circle-fill text-success me-2"></i>Self-Hosted</li>
+              <li class="mb-2"><i class="bi bi-check-circle-fill text-success me-2"></i>Full Data Control</li>
+            </ul>
+            <a href="#contact" class="btn btn-lg btn-secondary fw-semibold w-100 rounded-pill shadow text-white">Contact Sales</a>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </section>
 

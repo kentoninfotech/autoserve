@@ -157,3 +157,16 @@ html {
   float: none;
   display: block;
 }
+
+.plan-card {
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+.plan-card:hover {
+  transform: translateY(-10px) scale(1.03);
+  box-shadow: 0 8px 32px rgba(0,0,0,0.15) !important;
+  z-index: 2;
+}
+.plan-badge {
+  font-size: 0.95rem;
+  letter-spacing: 0.5px;
+}
