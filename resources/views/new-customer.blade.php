@@ -10,6 +10,8 @@
                 </div>
                 <div class="panel-body">
                     @php
+                        $company_abbr = Abbr_company_name();
+            
                         if(!isset($editjobno)){
                             $editjobno = "";
                         }
@@ -24,7 +26,7 @@
                                 $job->diagnosis = [];
                                 $job->sale = [];
 
-                            $customerid = "TAS".strtoupper(substr(md5(uniqid(rand(1,6))), 0, 7));
+                            $customerid = $company_abbr.strtoupper(substr(md5(uniqid(rand(1,6))), 0, 7));
                         }else{
                             $jobno = $job->id;
                             if(isset($job->vehicle)){

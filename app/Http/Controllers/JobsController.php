@@ -116,7 +116,8 @@ class JobsController extends Controller
     {
 
         if($request->customerid=="New"){
-            $customerid = "LACS".strtoupper(substr(md5(uniqid(rand(1,6))), 0, 7));
+            $company_abbr = Abbr_company_name();
+            $customerid = $company_abbr.strtoupper(substr(md5(uniqid(rand(1,6))), 0, 7));
             contacts::create([
                 'name'=>$request->name,
                 'organization'=>$request->organixation,
@@ -133,7 +134,6 @@ class JobsController extends Controller
         }
 
         $jno = jobs::select('jobno')->orderBy('id','desc')->first();
-
         if($jno==null){
             $jobno = 0;
         }else{
@@ -155,30 +155,28 @@ class JobsController extends Controller
         $totalamount = 0;
 
         for ($i=0; $i < count($request->partname); $i++) {
-
             if($request->pnid[$i]==""){
                 $part = parts::create([
                     'part_name'=>$request->partname[$i],
                     'selling_price'=>$request->amount[$i]/$request->quantity[$i],
                 ]);
                 $partid = $part->id;
-
                 stock::create(['part_id'=>$partid,'quantity_in_stock'=>0]);
             }else{
                 $partid = $request->pnid[$i];
             }
-
-
-            partsorder::updateOrCreate(['jobno'=>$request->jobno, 'partsname'=>$request->partname[$i]],[
-            'customerid'=>$customerid,
-            'jobno'=>$jobno,
-            'partsname'=>$request->partname[$i],
-            'quantity'=>$request->quantity[$i],
-            'pdate'=>date('Y-m-d'),
-            'amount'=>$request->amount[$i],
-            'pid'=>$partid
-            ]);
-
+            partsorder::updateOrCreate(
+                ['jobno'=>$request->jobno, 'partsname'=>$request->partname[$i]], // Use $jobno here
+                [
+                    'customerid'=>$customerid,
+                    'jobno'=>$jobno,
+                    'partsname'=>$request->partname[$i],
+                    'quantity'=>$request->quantity[$i],
+                    'pdate'=>date('Y-m-d'),
+                    'amount'=>$request->amount[$i],
+                    'pid'=>$partid
+                ]
+            );
             $totalamount+=$request->amount[$i];
         }
 
@@ -266,14 +264,14 @@ class JobsController extends Controller
         // 
         $job_image_path = public_path("job_images/$jobno");
 
-        if (!File::exists($job_image_path)) {
-            File::makeDirectory($job_image_path, 0777, true);
-
+        if ($request->hasFile('images')) {
+            if (!File::exists($job_image_path)) {
+                File::makeDirectory($job_image_path, 0777, true);
+            }
             foreach ($request->file('images') as $index => $image) {
                 $imageName = $jobno . '_' . now()->format('Y_m_d') . '_' . $index . '_' . $image->getClientOriginalName();
                 $image->move($job_image_path, $imageName);
             }
-    
         }
 
 
