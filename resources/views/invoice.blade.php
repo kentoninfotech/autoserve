@@ -298,29 +298,46 @@
                                     <td colspan="4">
                                         <div style="text-align: left" style="height: 100%">
                                             @if(($title=="INVOICE"))
-                                                <b>TERMS OF PAYMENT: </b>CASH OR CHEQUE/DRAFT IN FAVOUR OF <b>LAC AUTOS-SPARES LTD</b><br>
+                                                <b>TERMS OF PAYMENT: </b>CASH OR CHEQUE/DRAFT IN FAVOUR OF <b>{{ Str::upper(auth()->user()->settings->company_name) ?? '' }}</b><br>
                                                 <b>VALIDITY: </b>THIS INVOICE/ESTIMATE IS VALID FOR <b>7 DAYS</b> FROM DATE OF RECEIPT<br>
-                                                <b>ACCOUNT DETAILS:</b><br>
-                                                ACCOUNT NAME: <b>LAC AUTOS-SPARES LTD</b><br>
-                                                ACCOUNT NUMBER: <b>5532927099</b><br>
-                                                BANK NAME: <b>MONIEPOINT MFB Bank</b>
+                                                @if(isset(auth()->user()->settings->accounts) && count(auth()->user()->settings->accounts))
+                                                    <div style="margin: 12px 0; padding: 10px 16px; background: #f9f9f9; max-width: 500px;">
+                                                        <div style="font-weight: bold; font-size: 1.1em; margin-bottom: 8px; letter-spacing: 1px; color: #222;">ACCOUNT DETAILS</div>
+                                                        @foreach(auth()->user()->settings->accounts as $account)
+                                                            <div style="margin-bottom: 10px; padding-bottom: 8px; border-bottom: 1px dashed #ddd;">
+                                                                <span style="display: block; font-size: 1em; margin-bottom: 2px;"><b>Account Name:</b> <span style="font-weight: 500; color: #333;">{{ $account->account_name }}</span></span>
+                                                                <span style="display: block; font-size: 1em; margin-bottom: 2px;"><b>Account Number:</b> <span style="font-family: monospace; color: #222;">{{ $account->account_number }}</span></span>
+                                                                <span style="display: block; font-size: 1em;"><b>Bank Name:</b> <span style="color: #222;">{{ $account->bank_name }}</span></span>
+                                                            </div>
+                                                        @endforeach
+                                                    </div>
+                                                @endif
 
                                             @endif
 
                                             @if(($title=="ESTIMATE"))
-                                                The above listed parts/items will be used to service the vehicle.
-                                                <hr>
-                                                <b>TERMS OF PAYMENT: </b>CASH OR CHEQUE/DRAFT IN FAVOUR OF <b>LAC AUTOS-SPARES LTD</b><br>
-                                                <b>VALIDITY: </b>THIS INVOICE/ESTIMATE IS VALID FOR <b>7 DAYS</b> FROM DATE OF RECEIPT<br>
-                                                <b>ACCOUNT DETAILS (1):</b><br>
-                                                ACCOUNT NAME: <b>LAC AUTOS-SPARES LTD</b><br>
-                                                ACCOUNT NUMBER: <b>5532927099</b><br>
-                                                BANK NAME: <b>MONIEPOINT MFB Bank</b> <br>
-
+                                                  The above listed parts/items will be used to service the vehicle.
+                                                  <hr>
+                                                  <b>TERMS OF PAYMENT: </b>CASH OR CHEQUE/DRAFT IN FAVOUR OF <b>{{ Str::upper(auth()->user()->settings->company_name) ?? ''}}</b><br>
+                                                  <b>VALIDITY: </b>THIS INVOICE/ESTIMATE IS VALID FOR <b>7 DAYS</b> FROM DATE OF RECEIPT<br>
+                                                 @if(isset(auth()->user()->settings->accounts) && count(auth()->user()->settings->accounts))
+                                                    <div style="margin: 12px 0; padding: 10px 16px; background: #f9f9f9; max-width: 400px;">
+                                                        <div style="font-weight: bold; font-size: 1.1em; margin-bottom: 8px; letter-spacing: 1px; color: #222;">ACCOUNT DETAILS</div>
+                                                        @foreach(auth()->user()->settings->accounts as $account)
+                                                            <div style="margin-bottom: 10px; padding-bottom: 8px; border-bottom: 1px dashed #ddd;">
+                                                                <span style="display: block; font-size: 1em; margin-bottom: 2px;"><b>Account Name:</b> <span style="font-weight: 500; color: #333;">{{ $account->account_name }}</span></span>
+                                                                <span style="display: block; font-size: 1em; margin-bottom: 2px;"><b>Account Number:</b> <span style="font-family: monospace; color: #222;">{{ $account->account_number }}</span></span>
+                                                                <span style="display: block; font-size: 1em;"><b>Bank Name:</b> <span style="color: #222;">{{ $account->bank_name }}</span></span>
+                                                            </div>
+                                                        @endforeach
+                                                    </div>
+                                                  @endif
                                             @endif
 
                                             @if(($title=="JOB INSTRUCTION"))
-                                                Please service/repair this vehicle with the above listed parts. <hr>                       @endif
+                                                Please service/repair this vehicle with the above listed parts. 
+                                                <hr>                       
+                                            @endif
 
                                         </div>
                                     </td>

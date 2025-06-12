@@ -29,7 +29,10 @@ Route::get('/settings/update-account', [App\Http\Controllers\SettingsController:
 Route::post('/settings/update-account', [App\Http\Controllers\SettingsController::class, 'updateAccount'])->name('settings.updateAccount')->middleware('role:Admin,AutoServe,Super');
 Route::post('/settings/update-password', [App\Http\Controllers\SettingsController::class, 'updatePassword'])->name('settings.updatePassword')->middleware('role:Admin,AutoServe,Super');
 Route::post('/settings/update-sms-config', [App\Http\Controllers\SettingsController::class, 'updateSmsConfig'])->name('settings.updateSmsConfig')->middleware('role:Admin,AutoServe,Super');
-
+// BANK ACCOUNTS
+Route::post('/settings/bank-account', [App\Http\Controllers\SettingsController::class, 'addBankAccount'])->name('settings.addBankAccount')->middleware('role:Admin,AutoServe,Super');
+Route::post('/settings/bank-account/{id}/update', [App\Http\Controllers\SettingsController::class, 'updateBankAccount'])->name('settings.updateBankAccount')->middleware('role:Admin,AutoServe,Super');
+Route::delete('/settings/bank-account/{id}', [App\Http\Controllers\SettingsController::class, 'deleteBankAccount'])->name('settings.deleteBankAccount')->middleware('role:Admin,AutoServe,Super');
 
 // Send Feedback/Equiry E-mail
 Route::post('/enquiry', [App\Http\Controllers\SettingsController::class, 'webEnquiry'])->name('web.enquiry');
@@ -122,7 +125,7 @@ Route::get('/delete-supply/{sid}', [App\Http\Controllers\PartsController::class,
 
 
 // PART/PRODUCT SALES
-Route::get('/sales', [App\Http\Controllers\PartsorderController::class, 'index'])->name('sales');
+Route::get('/sales', [AppHttp\Controllers\PartsorderController::class, 'index'])->name('sales');
 Route::get('/new-sales', [App\Http\Controllers\JobsController::class, 'newSales'])->name('new-sales')->middleware('role:Front-Desk,Admin,AutoServe,Super');
 Route::post('/add-sales', [App\Http\Controllers\JobsController::class, 'addSales'])->name('add-sales')->middleware('role:Front-Desk,Admin,AutoServe,Super');
 
@@ -204,4 +207,5 @@ Route::post('/car-inventory/{id}/upload-image', [App\Http\Controllers\CarInvento
 Route::post('/car-inventory/{id}/sell', [App\Http\Controllers\CarInventoryController::class, 'sell'])->name('car-inventory.sell')->middleware('role:Admin,AutoServe,Super');
 // Set thumbnail route
 Route::post('/car-inventory/{car}/set-thumbnail/{image}', [App\Http\Controllers\CarInventoryController::class, 'setThumbnail'])->name('car-inventory.set-thumbnail')->middleware('role:Admin,AutoServe,Super');
+
 

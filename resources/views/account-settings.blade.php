@@ -79,6 +79,116 @@
                                     </div>
                                 @endif
                             </div>
+                            <hr>
+                            <!-- Bank Accounts Section -->
+                            <div class="settings-section">
+                                <h4>Bank Accounts</h4>
+                                <p class="desc-left">Manage your company bank accounts below. Add, edit, or delete as needed. <span>(This will be visible on Invoice/Estimate)</span></p>
+                                <button class="btn btn-success pull-right" data-toggle="modal" data-target="#addBankAccountModal">Add Bank Account</button>
+                                <div class="clearfix"></div>
+                                <br>
+                                @if($user->settings && $user->settings->accounts && $user->settings->accounts->count())
+                                  <div class="table-responsive">
+                                      <table class="table table-bordered table-striped">
+                                          <thead>
+                                              <tr>
+                                                  <th>Bank Name</th>
+                                                  <th>Account Number</th>
+                                                  <th>Account Name</th>
+                                                  <!-- <th>IFSC Code</th>
+                                                  <th>Branch</th> -->
+                                                  <th>Actions</th>
+                                              </tr>
+                                          </thead>
+                                          <tbody>
+                                              @foreach($user->settings->accounts as $account)
+                                                  <tr>
+                                                      <td>{{ $account->bank_name }}</td>
+                                                      <td>{{ $account->account_number }}</td>
+                                                      <td>{{ $account->account_name }}</td>
+                                                      <!-- <td>{{-- $account->ifsc_code ?? '-' --}}</td>
+                                                      <td>{{-- $account->branch ?? '-' --}}</td> -->
+                                                      <td>
+                                                          <button class="btn btn-xs btn-info" data-toggle="modal" data-target="#editBankAccountModal{{ $account->id }}">Edit</button>
+                                                          <form action="{{ route('settings.deleteBankAccount', $account->id) }}" method="POST" style="display:inline;">
+                                                              @csrf
+                                                              @method('DELETE')
+                                                              <button type="submit" class="btn btn-xs btn-danger" onclick="return confirm('Are you sure you want to delete this bank account?')">Delete</button>
+                                                          </form>
+                                                      </td>
+                                                  </tr>
+                                                  <!-- Edit Modal for each account -->
+                                                  <div class="modal fade" id="editBankAccountModal{{ $account->id }}" tabindex="-1" role="dialog" aria-labelledby="editBankAccountModalLabel{{ $account->id }}">
+                                                    <div class="modal-dialog" role="document">
+                                                      <div class="modal-content">
+                                                        <form action="{{ route('settings.updateBankAccount', $account->id) }}" method="POST">
+                                                          @csrf
+                                                          <div class="modal-header">
+                                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                                            <h4 class="modal-title" id="editBankAccountModalLabel{{ $account->id }}">Edit Bank Account</h4>
+                                                          </div>
+                                                          <div class="modal-body">
+                                                            <div class="form-group">
+                                                              <label>Bank Name</label>
+                                                              <input type="text" class="form-control" name="bank_name" value="{{ old('bank_name_'.$account->id, $account->bank_name) }}" required>
+                                                            </div>
+                                                            <div class="form-group">
+                                                              <label>Account Number</label>
+                                                              <input type="text" class="form-control" name="account_number" value="{{ old('account_number_'.$account->id, $account->account_number) }}" required>
+                                                            </div>
+                                                            <div class="form-group">
+                                                              <label>Account Name</label>
+                                                              <input type="text" class="form-control" name="account_name" value="{{ old('account_name_'.$account->id, $account->account_name) }}" required>
+                                                            </div>
+                                                          </div>
+                                                          <div class="modal-footer">
+                                                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                                            <button type="submit" class="btn btn-primary">Save changes</button>
+                                                          </div>
+                                                        </form>
+                                                      </div>
+                                                    </div>
+                                                  </div>
+                                              @endforeach
+                                          </tbody>
+                                      </table>
+                                  </div>
+                                @else
+                                    <div class="alert alert-info">No bank accounts added yet.</div>
+                                @endif
+                            </div>
+                            <!-- Add Bank Account Modal -->
+                            <div class="modal fade" id="addBankAccountModal" tabindex="-1" role="dialog" aria-labelledby="addBankAccountModalLabel">
+                              <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                  <form action="{{ route('settings.addBankAccount') }}" method="POST">
+                                    @csrf
+                                    <div class="modal-header">
+                                      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                      <h4 class="modal-title" id="addBankAccountModalLabel">Add Bank Account</h4>
+                                    </div>
+                                    <div class="modal-body">
+                                      <div class="form-group">
+                                        <label>Bank Name</label>
+                                        <input type="text" class="form-control" name="bank_name" value="{{ old('bank_name') }}" required>
+                                      </div>
+                                      <div class="form-group">
+                                        <label>Account Number</label>
+                                        <input type="text" class="form-control" name="account_number" value="{{ old('account_number') }}" required>
+                                      </div>
+                                      <div class="form-group">
+                                        <label>Account Name</label>
+                                        <input type="text" class="form-control" name="account_name" value="{{ old('account_name') }}" required>
+                                      </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                      <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                      <button type="submit" class="btn btn-success">Add Bank Account</button>
+                                    </div>
+                                  </form>
+                                </div>
+                              </div>
+                            </div>
                         </div>
                     </div>
                 </div>

@@ -210,6 +210,63 @@ class SettingsController extends Controller
         return back()->with('message', 'SMS configuration updated successfully.');
     }
 
+    // Add Bank Account Details
+    public function addBankAccount(Request $request)
+    {
+        $validated = $request->validate([
+            'bank_name' => 'required|string|max:255',
+            'account_number' => 'required|string|max:50',
+            'account_name' => 'required|string|max:255',
+            // 'ifsc_code' => 'nullable|string|max:50',
+            // 'branch' => 'nullable|string|max:255',
+        ]);
+
+        $user = auth()->user();
+        $settings = $user->setting_id ? settings::find($user->setting_id) : null;
+        if (!$settings) {
+            return back()->withErrors(['settings' => 'Settings not found.']);
+        }
+
+        $settings->accounts()->create($validated);
+
+        return back()->with('message', 'Bank account added successfully.');
+    }
+
+    // Update Bank Account Details
+    public function updateBankAccount(Request $request, $id)
+    {
+        $validated = $request->validate([
+            'bank_name' => 'required|string|max:255',
+            'account_number' => 'required|string|max:50',
+            'account_name' => 'required|string|max:255',
+            // 'ifsc_code' => 'nullable|string|max:50',
+            // 'branch' => 'nullable|string|max:255',
+        ]);
+
+        $user = auth()->user();
+        $settings = $user->setting_id ? settings::find($user->setting_id) : null;
+        if (!$settings) {
+            return back()->withErrors(['settings' => 'Settings not found.']);
+        }
+
+        $account = $settings->accounts()->findOrFail($id);
+        $account->update($validated);
+
+        return back()->with('message', 'Bank account updated successfully.');
+    }
+
+    // Delete Bank Account
+    public function deleteBankAccount($id)
+    {
+        $user = auth()->user();
+        $settings = $user->setting_id ? settings::find($user->setting_id) : null;
+
+        $account = $settings->accounts()->findOrFail($id);
+        $account->delete();
+
+        return back()->with('message', 'Bank account deleted successfully.');
+    }
+
     /**
      * Store a newly created resource in storage.
      *
