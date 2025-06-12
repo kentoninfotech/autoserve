@@ -231,6 +231,7 @@
 							<div id="subPages8" class="collapse ">
 								<ul class="nav">
                                     <li><a href="{{url('new-sales')}}" class="roledlink Front-Desk Admin AutoServe Super">New Sales</a></li>
+									<li><a href="{{ route('car-inventory.index') }}" class="roledlink Front-Desk Admin AutoServe Super Spare-Parts">Car Sales/Inventory</a></li>
 									<li><a href="{{url('parts')}}" class="roledlink Front-Desk Admin AutoServe Super Spare-Parts">Automobile Parts</a></li>
 									<li><a href="{{url('supplies')}}" class="roledlink Front-Desk Admin AutoServe Super Spare-Parts">Supplies</a></li>
 									<li><a href="{{url('sales')}}" class="roledlink Front-Desk Finance Admin AutoServe Super Spare-Parts">Sales</a></li>

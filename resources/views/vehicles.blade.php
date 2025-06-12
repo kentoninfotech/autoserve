@@ -11,7 +11,7 @@
                     <table class="table  responsive-table" id="products">
                         <thead>
                             <tr style="color: ">
-                                <th>Customer Name/Orgnixzation</th>
+                                <th>Customer Name/Orgnization</th>
                                 <th>V. Reg No</th>
                                 <th>Brand</th>
                                 <th>Model No</th>

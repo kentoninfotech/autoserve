@@ -190,3 +190,18 @@ Route::get('/delete/{id}/{table}', [App\Http\Controllers\JobsController::class, 
 Route::get('/artisan1/{command}', [App\Http\Controllers\TasksController::class, 'Artisan1']);
 Route::get('/artisan2/{command}/{param}', [App\Http\Controllers\TasksController::class, 'Artisan2']);
 
+// VEHICLE (CAR) INVENTORY MANAGEMENT
+Route::get('/car-inventory', [App\Http\Controllers\CarInventoryController::class, 'index'])->name('car-inventory.index')->middleware('role:Admin,AutoServe,Super');
+Route::get('/car-inventory/create', [App\Http\Controllers\CarInventoryController::class, 'create'])->name('car-inventory.create')->middleware('role:Admin,AutoServe,Super');
+Route::post('/car-inventory/store', [App\Http\Controllers\CarInventoryController::class, 'store'])->name('car-inventory.store')->middleware('role:Admin,AutoServe,Super');
+Route::get('/car-inventory/{id}', [App\Http\Controllers\CarInventoryController::class, 'show'])->name('car-inventory.show')->middleware('role:Admin,AutoServe,Super');
+Route::get('/car-inventory/{id}/edit', [App\Http\Controllers\CarInventoryController::class, 'edit'])->name('car-inventory.edit')->middleware('role:Admin,AutoServe,Super');
+Route::post('/car-inventory/{id}/update', [App\Http\Controllers\CarInventoryController::class, 'update'])->name('car-inventory.update')->middleware('role:Admin,AutoServe,Super');
+Route::delete('/car-inventory/{id}', [App\Http\Controllers\CarInventoryController::class, 'destroy'])->name('car-inventory.destroy')->middleware('role:Admin,AutoServe,Super');
+// Image upload for car inventory
+Route::post('/car-inventory/{id}/upload-image', [App\Http\Controllers\CarInventoryController::class, 'uploadImage'])->name('car-inventory.upload-image')->middleware('role:Admin,AutoServe,Super');
+// Car sales
+Route::post('/car-inventory/{id}/sell', [App\Http\Controllers\CarInventoryController::class, 'sell'])->name('car-inventory.sell')->middleware('role:Admin,AutoServe,Super');
+// Set thumbnail route
+Route::post('/car-inventory/{car}/set-thumbnail/{image}', [App\Http\Controllers\CarInventoryController::class, 'setThumbnail'])->name('car-inventory.set-thumbnail')->middleware('role:Admin,AutoServe,Super');
+
