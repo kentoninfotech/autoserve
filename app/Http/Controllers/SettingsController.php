@@ -146,12 +146,26 @@ class SettingsController extends Controller
         if ($request->hasFile('header')) {
             $image = $request->file('header');
             $imageName = now()->format('Y_m_d') . '_' . $image->getClientOriginalName();
+            if($settings->header) {
+                // Delete old header image if exists
+                $oldHeaderPath = $image_path . $settings->header;
+                if (file_exists($oldHeaderPath)) {
+                    unlink($oldHeaderPath);
+                }
+            }
             $headerPath = $image->move($image_path, $imageName);
             $settings->header = basename($headerPath);
         }
         if ($request->hasFile('logo')) {
             $image = $request->file('logo');
             $imageName = now()->format('Y_m_d') . '_' . $image->getClientOriginalName();
+            if($settings->logo) {
+                // Delete old logo image if exists
+                $oldLogoPath = $image_path . $settings->logo;
+                if (file_exists($oldLogoPath)) {
+                    unlink($oldLogoPath);
+                }
+            }
             $logoPath = $image->move($image_path, $imageName);
             $settings->logo = basename($logoPath);
         }

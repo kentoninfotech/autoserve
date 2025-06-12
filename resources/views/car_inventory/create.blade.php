@@ -54,13 +54,19 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-sm-3 control-label">FUEL TYPE</label>
+                            <label class="col-sm-3 control-label">Mileage</label>
+                            <div class="col-sm-9">
+                                <input type="text" name="mileage" class="form-control input-lg" placeholder="e.g. 120km" value="{{ old('mileage') }}">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">Fuel Type</label>
                             <div class="col-sm-9">
                                 <input type="text" name="fuel_type" class="form-control input-lg" placeholder="e.g. Diesel" value="{{ old('fuel_type') }}">
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-sm-3 control-label">TRANSMISSION</label>
+                            <label class="col-sm-3 control-label">Transmission</label>
                             <div class="col-sm-9">
                                 <input type="text" name="transmission" class="form-control input-lg" placeholder="e.g. Automatic" value="{{ old('transmission') }}">
                             </div>

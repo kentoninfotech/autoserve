@@ -51,7 +51,7 @@ class CarInventoryController extends Controller
                 ]);
             }
         }
-        return redirect()->route('car-inventory.index')->with('success', 'Car added to inventory.');
+        return redirect()->route('car-inventory.index')->with('message', 'Car added to inventory.');
     }
 
     // Show a single car
@@ -88,7 +88,7 @@ class CarInventoryController extends Controller
             'description'  => 'nullable|string',
         ]);
         $car->update($data);
-        return redirect()->route('car-inventory.index')->with('success', 'Car updated.');
+        return redirect()->route('car-inventory.index')->with('message', 'Car updated.');
     }
 
     // Delete a car
@@ -96,11 +96,11 @@ class CarInventoryController extends Controller
     {
         $car = CarInventory::findOrFail($id);
         foreach ($car->images as $img) {
-            Storage::delete('vehicle_images/' . $img->image);
+            unlink('vehicle_images/' . $img->image);
             $img->delete();
         }
         $car->delete();
-        return redirect()->route('car-inventory.index')->with('success', 'Car deleted.');
+        return redirect()->route('car-inventory.index')->with('message', 'Car deleted.');
     }
 
     // Mark car as sold
@@ -109,7 +109,7 @@ class CarInventoryController extends Controller
         $car = CarInventory::findOrFail($id);
         $car->status = 'sold';
         $car->save();
-        return redirect()->route('car-inventory.index')->with('success', 'Car marked as sold.');
+        return redirect()->route('car-inventory.index')->with('message', 'Car marked as sold.');
     }
 
     // Upload car images (add to gallery, not just one)
@@ -134,7 +134,7 @@ class CarInventoryController extends Controller
                 'is_thumbnail' => $isThumbnail,
             ]);
         }
-        return back()->with('success', 'Image(s) uploaded.');
+        return back()->with('message', 'Image(s) uploaded.');
     }
 
     // Set thumbnail for a car image
@@ -145,6 +145,6 @@ class CarInventoryController extends Controller
             $img->is_thumbnail = ($img->id == $imageId);
             $img->save();
         }
-        return back()->with('success', 'Thumbnail updated.');
+        return back()->with('message', 'Thumbnail updated.');
     }
 }
