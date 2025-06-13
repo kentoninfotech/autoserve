@@ -74,7 +74,7 @@ class SettingsController extends Controller
         if ($request->ajax()) {
             return response()->json([
                 'message' => 'Company registered successfully!',
-                'instructions' => 'Please check your email (and your spam/junk folder, just in case it lands there) for further instructions on how to proceed.'
+                'instructions' => 'Please check your mailbox (or your spam/junk folder, just in case it lands there) for further instructions on how to proceed.'
             ]);
         }
 

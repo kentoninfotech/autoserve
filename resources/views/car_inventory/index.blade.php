@@ -23,6 +23,7 @@
                                 <th>Mileage</th>
                                 <th>Condition</th>
                                 <th>Fuel Type</th>
+                                <th>Drive Type</th>
                                 <th>Transmission</th>
                                 <th>Color</th>
                                 <th>Price</th>
@@ -46,9 +47,10 @@
                                 <td>{{ $car->model }}</td>
                                 <td>{{ $car->year }}</td>
                                 <td><i class="fa fa-tachometer"></i> {{ $car->mileage }} km</td>
-                                <td>{{ $car->condition }}</td>
-                                <td><i class="fa fa-gas-pump"></i> {{ $car->fuel_type }}</td>
-                                <td><i class="fa fa-cogs"></i> {{ $car->transmission }}</td>
+                                <td>{{ Str::headline($car->condition) }}</td>
+                                <td><i class="fa fa-gas-pump"></i> {{ Str::headline($car->fuel_type) }}</td>
+                                <td><i class="fa fa-road"></i> {{ Str::upper($car->drive_type) }}</td>
+                                <td><i class="fa fa-cogs"></i> {{ Str::headline($car->transmission) }}</td>
                                 <td>{{ $car->color }}</td>
                                 <td>₦{{ number_format($car->price, 0, '.', ',') }}</td>
                                 <td><span class="label label-{{ $car->status == 'available' ? 'success' : 'default' }}">{{ ucfirst($car->status) }}</span></td>

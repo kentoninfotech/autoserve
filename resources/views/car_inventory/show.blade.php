@@ -102,10 +102,11 @@
                                 <p><strong>Model:</strong> {{ $car->model }}</p>
                                 <p><strong>Year:</strong> {{ $car->year }}</p>
                                 <p><strong>VIN:</strong> {{ $car->vin }}</p>
-                                <p><strong>Condition:</strong> {{ $car->condition }}</p>
-                                <p><strong>Mileage:</strong> {{ $car->mileage }}</p>
-                                <p><strong>Fuel Type:</strong> {{ $car->fuel_type }}</p>
-                                <p><strong>Transmission:</strong> {{ $car->transmission }}</p>
+                                <p><strong>Condition:</strong> {{ Str::headline($car->condition) }}</p>
+                                <p><strong>Mileage:</strong> <i class="fa fa-tachometer"></i> {{ $car->mileage }}</p>
+                                <p><strong>Fuel Type:</strong> <i class="fa fa-gas-pump"></i> {{ Str::headline($car->fuel_type) }}</p>
+                                <p><strong>Drive Type:</strong> <i class="fa fa-road"></i> {{ Str::upper($car->drive_type) }}</p>
+                                <p><strong>Transmission:</strong> <i class="fa fa-cogs"></i> {{ Str::headline($car->transmission) }}</p>
                                 <p><strong>Color:</strong> {{ $car->color }}</p>
                                 <p><strong>Price:</strong> ₦{{ number_format($car->price, 2, '.', ',') }}</p>
                                 <p><strong>Status:</strong> <span class="label label-{{ $car->status == 'available' ? 'success' : 'default' }}">{{ ucfirst($car->status) }}</span></p>

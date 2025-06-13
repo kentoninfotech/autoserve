@@ -48,13 +48,14 @@ Route::get('/', function () {
 
 
 // Account Backups
-Route::get('/backup', [App\Http\Controllers\BackupController::class, 'index'])->name('backup')->middleware('role:Super,Admin');
+Route::get('/backup', [App\Http\Controllers\BackupController::class, 'index'])->name('backup')->middleware('role:AutoServe,Super,Admin');
 Route::post('/backup-all', [App\Http\Controllers\BackupController::class, 'backupAllRecords'])->name('backup.all')->middleware('role:AutoServe,Super,Admin');
 Route::get('/download-backup/{file}', [App\Http\Controllers\BackupController::class, 'downloadBackup'])->name('download.backup')->middleware('role:AutoServe,Super,Admin');
 Route::delete('/delete-backup/{file}', [App\Http\Controllers\BackupController::class, 'deleteBackup'])->name('delete.backup')->middleware('role:AutoServe,Super,Admin');
 
 
 Auth::routes();
+
 // ->middleware('role:editor,approver');
 Route::get('/dashboard', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index']);
@@ -125,7 +126,7 @@ Route::get('/delete-supply/{sid}', [App\Http\Controllers\PartsController::class,
 
 
 // PART/PRODUCT SALES
-Route::get('/sales', [AppHttp\Controllers\PartsorderController::class, 'index'])->name('sales');
+Route::get('/sales', [App\Http\Controllers\PartsorderController::class, 'index'])->name('sales');
 Route::get('/new-sales', [App\Http\Controllers\JobsController::class, 'newSales'])->name('new-sales')->middleware('role:Front-Desk,Admin,AutoServe,Super');
 Route::post('/add-sales', [App\Http\Controllers\JobsController::class, 'addSales'])->name('add-sales')->middleware('role:Front-Desk,Admin,AutoServe,Super');
 
@@ -201,11 +202,10 @@ Route::get('/car-inventory/{id}', [App\Http\Controllers\CarInventoryController::
 Route::get('/car-inventory/{id}/edit', [App\Http\Controllers\CarInventoryController::class, 'edit'])->name('car-inventory.edit')->middleware('role:Admin,AutoServe,Super');
 Route::post('/car-inventory/{id}/update', [App\Http\Controllers\CarInventoryController::class, 'update'])->name('car-inventory.update')->middleware('role:Admin,AutoServe,Super');
 Route::delete('/car-inventory/{id}', [App\Http\Controllers\CarInventoryController::class, 'destroy'])->name('car-inventory.destroy')->middleware('role:Admin,AutoServe,Super');
-// Image upload for car inventory
 Route::post('/car-inventory/{id}/upload-image', [App\Http\Controllers\CarInventoryController::class, 'uploadImage'])->name('car-inventory.upload-image')->middleware('role:Admin,AutoServe,Super');
+Route::post('/car-inventory/{car}/set-thumbnail/{image}', [App\Http\Controllers\CarInventoryController::class, 'setThumbnail'])->name('car-inventory.set-thumbnail')->middleware('role:Admin,AutoServe,Super');
 // Car sales
 Route::post('/car-inventory/{id}/sell', [App\Http\Controllers\CarInventoryController::class, 'sell'])->name('car-inventory.sell')->middleware('role:Admin,AutoServe,Super');
-// Set thumbnail route
-Route::post('/car-inventory/{car}/set-thumbnail/{image}', [App\Http\Controllers\CarInventoryController::class, 'setThumbnail'])->name('car-inventory.set-thumbnail')->middleware('role:Admin,AutoServe,Super');
+
 
 

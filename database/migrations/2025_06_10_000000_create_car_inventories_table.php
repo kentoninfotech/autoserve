@@ -22,6 +22,7 @@ return new class extends Migration
             $table->string('condition')->nullable();
             $table->string('mileage')->nullable();
             $table->string('fuel_type')->nullable();
+            $table->string('drive_type')->nullable();
             $table->string('transmission')->nullable();
             $table->string('vin')->nullable();
             $table->string('color')->nullable();

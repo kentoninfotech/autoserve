@@ -21,6 +21,7 @@ class CarInventory extends Model
         'mileage',
         'condition',
         'fuel_type',
+        'drive_type',
         'transmission',
         'color',
         'price',

@@ -50,7 +50,12 @@
                         <div class="form-group">
                             <label class="col-sm-3 control-label">Condition</label>
                             <div class="col-sm-9">
-                                <input type="text" name="condition" class="form-control input-lg" placeholder="e.g. New" value="{{ old('condition') }}">
+                                <select class="form-control input-lg" name="condition" id="condition">
+                                    <option value="" disabled selected>Select Condition</option>
+                                    <option value="new" {{ old('condition') == 'new' ? 'selected' : '' }}>New</option>
+                                    <option value="used" {{ old('condition') == 'used' ? 'selected' : '' }}>Used</option>
+                                    <!-- <option value="certified">Certified Pre-Owned</option> -->
+                                </select>
                             </div>
                         </div>
                         <div class="form-group">
@@ -62,13 +67,37 @@
                         <div class="form-group">
                             <label class="col-sm-3 control-label">Fuel Type</label>
                             <div class="col-sm-9">
-                                <input type="text" name="fuel_type" class="form-control input-lg" placeholder="e.g. Diesel" value="{{ old('fuel_type') }}">
+                                <select class="form-control input-lg" name="fuel_type" id="fuel_type">
+                                    <option value="" disabled selected>Select Fuel Type</option>
+                                    <option value="petrol" {{ old('fuel_type') == 'petrol' ? 'selected' : '' }}>Petrol</option>
+                                    <option value="diesel" {{ old('fuel_type') == 'diesel' ? 'selected' : '' }}>Diesel</option>
+                                    <option value="electric" {{ old('fuel_type') == 'electric' ? 'selected' : '' }}>Electric</option>
+                                    <option value="hybrid" {{ old('fuel_type') == 'hybrid' ? 'selected' : '' }}>Hybrid</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">Drive Type</label>
+                            <div class="col-sm-9">
+                                <select class="form-control input-lg" name="drive_type" id="drive_type">
+                                    <option value="" disabled selected>Select Drive Type</option>
+                                    <option value="fwd" {{ old('drive_type') == 'fwd' ? 'selected' : '' }}>Front-Wheel Drive (FWD)</option>
+                                    <option value="rwd" {{ old('drive_type') == 'rwd' ? 'selected' : '' }}>Rear-Wheel Drive (RWD)</option>
+                                    <option value="awd" {{ old('drive_type') == 'awd' ? 'selected' : '' }}>All-Wheel Drive (AWD)</option>
+                                    <option value="4wd" {{ old('drive_type') == '4wd' ? 'selected' : '' }}>Four-Wheel Drive (4WD)</option>
+                                </select>
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="col-sm-3 control-label">Transmission</label>
                             <div class="col-sm-9">
-                                <input type="text" name="transmission" class="form-control input-lg" placeholder="e.g. Automatic" value="{{ old('transmission') }}">
+                                <select class="form-control input-lg" name="transmission" id="transmission">
+                                    <option value="" disabled selected>Select Transmission</option>
+                                    <option value="automatic" {{ old('transmission') == 'automatic' ? 'selected' : '' }}>Automatic</option>
+                                    <option value="manual" {{ old('transmission') == 'manual' ? 'selected' : '' }}>Manual</option>
+                                    <option value="semi-automatic" {{ old('transmission') == 'semi-automatic' ? 'selected' : '' }}>Semi-Automatic</option>
+                                    <option value="cvt" {{ old('transmission') == 'cvt' ? 'selected' : '' }}>Continuously Variable Transmission (CVT)</option>
+                                </select>
                             </div>
                         </div>
                         <div class="form-group">
