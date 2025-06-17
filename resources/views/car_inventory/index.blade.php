@@ -10,6 +10,9 @@
                 <a href="{{ route('car-inventory.create') }}" class="btn btn-primary">
                     <i class="fa fa-plus"></i> Add New Car
                 </a>
+                <a href="{{ route('car-sales') }}" class="btn btn-success">
+                    <i class="fa fa-check"></i> Sell Car (cart)
+                </a>
             </div>
             <div class="panel-body">
                 <div class="table-responsive">
@@ -63,10 +66,7 @@
                                         <button type="submit" class="btn btn-danger btn-xs" onclick="return confirm('Delete this car?')">Delete</button>
                                     </form>
                                     @if($car->status == 'available')
-                                    <form action="{{ route('car-inventory.sell', $car->id) }}" method="POST" style="display:inline-block;">
-                                        @csrf
-                                        <button type="submit" class="btn btn-success btn-xs" onclick="return confirm('Mark as sold?')">Sell</button>
-                                    </form>
+                                    <a href="{{ route('car-sales.add', $car->id) }}" class="btn btn-success btn-xs">Sell</a>
                                     @endif
                                 </td>
                             </tr>

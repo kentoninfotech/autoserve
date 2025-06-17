@@ -205,7 +205,11 @@ Route::delete('/car-inventory/{id}', [App\Http\Controllers\CarInventoryControlle
 Route::post('/car-inventory/{id}/upload-image', [App\Http\Controllers\CarInventoryController::class, 'uploadImage'])->name('car-inventory.upload-image')->middleware('role:Admin,AutoServe,Super');
 Route::post('/car-inventory/{car}/set-thumbnail/{image}', [App\Http\Controllers\CarInventoryController::class, 'setThumbnail'])->name('car-inventory.set-thumbnail')->middleware('role:Admin,AutoServe,Super');
 // Car sales
-Route::post('/car-inventory/{id}/sell', [App\Http\Controllers\CarInventoryController::class, 'sell'])->name('car-inventory.sell')->middleware('role:Admin,AutoServe,Super');
+Route::get('/car-sales/order/{car}', [App\Http\Controllers\CarInventoryController::class, 'order'])->name('car-sales.order');
+Route::get('/car-sales', [App\Http\Controllers\CarInventoryController::class, 'cart'])->name('car-sales');
+Route::get('/car-sales/add/{car}', [App\Http\Controllers\CarInventoryController::class, 'addToCart'])->name('car-sales.add');
+Route::get('/car-sales/remove/{car}', [App\Http\Controllers\CarInventoryController::class, 'removeFromCart'])->name('car-sales.remove');
+Route::post('/car-sales/checkout', [App\Http\Controllers\CarInventoryController::class, 'checkout'])->name('car-sales.checkout');
 
 
 

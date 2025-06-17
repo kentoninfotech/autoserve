@@ -89,10 +89,11 @@
                             <div class="label" style="font-size: 14px; color: #666;">National Market Price</div>
                             <div class="price" style="font-size: 28px; font-weight: bold; color: #337ab7; margin-top: 5px;">₦{{ number_format($car->price, 0, '.', ',') }}</div>
                         </div>
-                        <form action="{{ route('car-inventory.sell', $car->id) }}" method="POST">
-                            @csrf
-                            <button type="submit" class="btn btn-success btn-block" onclick="return confirm('Mark as sold?')"><i class="fa fa-check"></i> Sell</button>
-                        </form>
+                        @if($car->status == 'available')
+                         <a href="{{ route('car-sales.order', $car->id) }}" class="btn btn-success btn-block">Sell</a>
+                        @else
+                        <button type="submit" class="btn btn-default btn-block"><i class="fa fa-check" disabled></i>Sold</button>
+                        @endif
                         <div class="panel panel-default" style="margin-top: 20px;">
                             <div class="panel-heading">
                                 <h4 class="panel-title">Car Details <small class="text-success">Inventory</small></h4>

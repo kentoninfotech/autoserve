@@ -138,6 +138,14 @@
                     </li>
 
 						@auth
+						<li>
+							<a href="{{ route('car-sales') }}"><i class="lnr lnr-cart"></i> 
+							
+							@if(session('cart') && count(session('cart')) > 0)
+								<span class="label label-danger">{{ count(session('cart')) }}</span>
+							@endif
+							</a>
+						</li>
 						<li class="dropdown">
 
 

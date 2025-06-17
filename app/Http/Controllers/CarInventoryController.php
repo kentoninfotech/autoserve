@@ -5,11 +5,21 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\CarInventory;
 use App\Models\CarInventoryImage;
+use App\Models\contacts;
 use Illuminate\Support\Facades\Storage;
 
 class CarInventoryController extends Controller
 {
-    // List all cars in inventory
+    /**
+     * This controller manages the car inventory, allowing users to add, edit, delete,
+     * and view cars in the inventory, as well as manage images associated with each car.
+     */
+
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+    
     public function index()
     {
         $cars = CarInventory::all();
@@ -105,15 +115,6 @@ class CarInventoryController extends Controller
         return redirect()->route('car-inventory.index')->with('message', 'Car deleted.');
     }
 
-    // Mark car as sold
-    public function sell(Request $request, $id)
-    {
-        $car = CarInventory::findOrFail($id);
-        $car->status = 'sold';
-        $car->save();
-        return redirect()->route('car-inventory.index')->with('message', 'Car marked as sold.');
-    }
-
     // Upload car images (add to gallery, not just one)
     public function uploadImage(Request $request, $id)
     {
@@ -149,4 +150,57 @@ class CarInventoryController extends Controller
         }
         return back()->with('message', 'Thumbnail updated.');
     }
+
+    // Show the cart page for new car sales
+    public function cart(Request $request)
+    {
+        $cart = session('cart', []);
+        $cars = CarInventory::all();
+        $customers = contacts::all();
+        return view('car_inventory.car-sales', compact('cart', 'cars', 'customers'));
+    }
+
+    // Add a car to the cart
+    public function addToCart($carId)
+    {
+        $car = \App\Models\CarInventory::findOrFail($carId);
+        $cart = session('cart', []);
+        // Prevent duplicate
+        if (!collect($cart)->pluck('id')->contains($car->id)) {
+            $cart[] = [
+                'id' => $car->id,
+                'name' => $car->make . ' ' . $car->model,
+                'price' => $car->price,
+            ];
+        }
+        session(['cart' => $cart]);
+        return redirect()->route('car-sales');
+    }
+
+    // Remove a car from the cart
+    public function removeFromCart($carId)
+    {
+        $cart = session('cart', []);
+        $cart = collect($cart)->reject(function($item) use ($carId) {
+            return $item['id'] == $carId;
+        })->values()->toArray();
+        session(['cart' => $cart]);
+        return redirect()->route('car-sales');
+    }
+
+    // Handle checkout
+    public function checkout(Request $request)
+    {
+        // Validate customer selection or new customer
+        $request->validate([
+            'customer_id' => 'nullable|exists:contacts,id',
+            'customer_name' => 'nullable|string',
+            'customer_email' => 'nullable|email',
+            'customer_phone' => 'nullable|string',
+        ]);
+        // Here you would process the sale, save order, etc.
+        session()->forget('cart');
+        return redirect()->route('car-inventory.index')->with('message', 'Car sale processed!');
+    }
+
 }
