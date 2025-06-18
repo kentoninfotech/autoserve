@@ -1,17 +1,20 @@
 <?php
 
 namespace App\Models;
-// use App\Models\vehicle;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Scopes\SettingScope;
 
-class contacts extends Model
+class CarOrderItem extends Model
 {
     use HasFactory;
 
-    protected $guarded = [];
+    protected $fillable = [
+        'order_id',
+        'car_id',
+        'price',
+    ];
 
     /**
      * The "booted" method of the model.
@@ -32,25 +35,13 @@ class contacts extends Model
         });
     }
 
-    public function vehicles()
+    public function order()
     {
-        return $this->hasMany(vehicle::class, 'customerid', 'customerid');
+        return $this->belongsTo(CarOrder::class, 'order_id');
     }
 
-    public function jobs()
+    public function car()
     {
-        return $this->hasMany(jobs::class, 'customerid', 'customerid');
+        return $this->belongsTo(CarInventory::class, 'car_id');
     }
-
-    public function payments()
-    {
-        return $this->hasMany(payments::class, 'customerid', 'customerid');
-    }
-
-    public function carOrders()
-    {
-        return $this->hasMany(CarOrder::class, 'customer_id');
-    }
-
-
 }

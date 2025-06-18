@@ -10,10 +10,10 @@
                 </div>
                 <div class="panel-body" style="background: #fafbfc;">
                     @if ($errors->any())
-                        <div class="alert alert-danger">
-                            <ul style="margin-bottom:0;">
+                        <div>
+                            <ul class="list-group" style="margin-bottom:0;">
                                 @foreach ($errors->all() as $error)
-                                    <li>{{ $error }}</li>
+                                    <li class="list-group-item list-group-item-danger">{{ $error }}</li>
                                 @endforeach
                             </ul>
                         </div>
@@ -51,7 +51,17 @@
                                     <option value="" disabled selected>Select Condition</option>
                                     <option value="new" {{ old('condition', $car->condition) == 'new' ? 'selected' : '' }}>New</option>
                                     <option value="used" {{ old('condition', $car->condition) == 'used' ? 'selected' : '' }}>Used</option>
-                                    <!-- <option value="certified">Certified Pre-Owned</option> -->
+                                    <option value="certified">Certified Pre-Owned</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">Status</label>
+                            <div class="col-sm-9">
+                                <select class="form-control input-lg" name="status" id="status">
+                                    <option value="" disabled selected>Select Status</option>
+                                    <option value="available" {{ old('status', $car->status) == 'available' ? 'selected' : '' }}>Available</option>
+                                    <option value="sold" {{ old('status', $car->status) == 'sold' ? 'selected' : '' }}>Sold</option>
                                 </select>
                             </div>
                         </div>

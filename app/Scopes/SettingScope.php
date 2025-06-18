@@ -17,7 +17,8 @@ class SettingScope implements Scope
             if (!Auth::user()->hasRole('AutoServe')) {
                 // Apply the scope only if the user does not have the "AutoServe" role
                 if (Auth::user()->setting_id) {
-                    $builder->where('setting_id', Auth::user()->setting_id);
+                    // $builder->where('setting_id', Auth::user()->setting_id);
+                    $builder->where($model->getTable() . '.setting_id', auth()->user()->setting_id);
                 }
             }
         }

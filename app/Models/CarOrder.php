@@ -1,17 +1,30 @@
 <?php
 
 namespace App\Models;
-// use App\Models\vehicle;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Scopes\SettingScope;
 
-class contacts extends Model
+class CarOrder extends Model
 {
     use HasFactory;
 
-    protected $guarded = [];
+    protected $fillable = [
+        'customer_id',
+        'order_number',
+        'status',
+        'payment_status',
+        // 'payment_method',
+        'subtotal',
+        'discount_percent',
+        'discount_value',
+        'vat_percent',
+        'vat_value',
+        'total',
+        // 'order_date',
+        // 'delivery_date',
+    ];
 
     /**
      * The "booted" method of the model.
@@ -32,25 +45,19 @@ class contacts extends Model
         });
     }
 
-    public function vehicles()
+    public function customer()
     {
-        return $this->hasMany(vehicle::class, 'customerid', 'customerid');
+        return $this->belongsTo(\App\Models\contacts::class, 'customer_id');
     }
 
-    public function jobs()
+    public function cars()
     {
-        return $this->hasMany(jobs::class, 'customerid', 'customerid');
+        return $this->belongsToMany(CarInventory::class, 'car_order_items', 'order_id', 'car_id')
+               ->withPivot('setting_id');
     }
 
-    public function payments()
+    public function items()
     {
-        return $this->hasMany(payments::class, 'customerid', 'customerid');
+        return $this->hasMany(CarOrderItem::class, 'order_id');
     }
-
-    public function carOrders()
-    {
-        return $this->hasMany(CarOrder::class, 'customer_id');
-    }
-
-
 }

@@ -53,4 +53,10 @@ class CarInventory extends Model
     {
         return $this->hasMany(CarInventoryImage::class, 'car_inventory_id');
     }
+
+    public function orders()
+    {
+        return $this->belongsToMany(CarOrder::class, 'car_order_items', 'car_id', 'order_id')
+            ->withPivot('price');
+    }
 }
