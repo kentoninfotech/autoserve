@@ -6,7 +6,7 @@
 <div class="row">
     <div class="panel">
         <a href="{{ route('car-inventory.index') }}" class="btn btn-primary pull-right" style="margin: 15px;">
-            <i class="fa fa-plus"></i> Back
+            <i class="fa fa-angle-left"></i> Back
         </a>
         <div class="panel-body">
             <form action="{{ route('car-sales.checkout') }}" method="POST">
@@ -57,14 +57,14 @@
                                     </tbody>
                                 </table>
                             @else
-                                <p class="alert alert-warning lead">No cars in cart.</p>
+                                <p class="alert alert-warning">No car(s) in cart.</p>
                             @endif
                         </div>
                         <div class="form-group">
                             <label for="add-car">Add Car:</label>
                             <select id="add-car" class="form-control select2" onchange="if(this.value) window.location.href=this.value;">
                                 <option value="">Select a car to add</option>
-                                @foreach($cars as $car)
+                                @foreach($cars->where('status', 'available') as $car)
                                     <option value="{{ route('car-sales.add', $car->id) }}">{{ $car->name ?? $car->model }} - {{ $car->price }}</option>
                                 @endforeach
                             </select>
@@ -109,7 +109,7 @@
                                 <select name="status" class="form-control" id="status">
                                     <option value="pending" old('status') == 'pending' ? 'selected' : ''>Pending</option>
                                     <option value="completed" old('status') == 'completed' ? 'selected' : ''>Completed</option>
-                                    <option value="cancelled" old('status') == 'cancelled' ? 'selected' : ''>Cancelled</option>
+                                    <!-- <option value="cancelled" old('status') == 'cancelled' ? 'selected' : ''>Cancelled</option> -->
                                     <!-- <option value="refunded">Refunded</option> -->
                                 </select>
                             </div>

@@ -6,15 +6,15 @@
     <h3 class="page-title">Car Inventory | <small style="color: green">All Cars</small></h3>
     <div class="row">
         <div class="panel">
-            <div style="text-align: right; margin:10px;">
-                <a href="{{ route('car-orders') }}" class="btn btn-info pull-left">
-                    <i class="fa fa-shopping-basket"></i> Orders
-                </a>
-                <a href="{{ route('car-inventory.create') }}" class="btn btn-success">
+            <div style="text-align: right; margin:15px;">
+                <a href="{{ route('car-inventory.create') }}" class="btn btn-success pull-left">
                     <i class="fa fa-plus"></i> Add New Car
                 </a>
+                <a href="{{ route('car-orders') }}" class="btn btn-info">
+                    <i class="fa fa-shopping-basket"></i> Orders
+                </a>
                 <a href="{{ route('car-sales') }}" class="btn btn-primary">
-                    <i class="fa fa-shopping-basket"></i> Sell Car (cart)
+                    <i class="fa fa-shopping-cart"></i> Sell Car (cart)
                 </a>
             </div>
             <div class="panel-body">
@@ -59,7 +59,7 @@
                                 <td><i class="fa fa-cogs"></i> {{ Str::headline($car->transmission) }}</td>
                                 <td>{{ $car->color }}</td>
                                 <td>₦{{ number_format($car->price, 0, '.', ',') }}</td>
-                                <td><span class="label label-{{ $car->status == 'available' ? 'success' : 'default' }}">{{ ucfirst($car->status) }}</span></td>
+                                <td><span class="label label-{{ $car->status == 'available' ? 'success' : 'default' }}">{{ Str::headline($car->status) }}</span></td>
                                 <td>
                                     <div class="btn-group btn-group-xs">
                                         <a href="{{ route('car-inventory.show', $car->id) }}" class="btn btn-info">View</a>

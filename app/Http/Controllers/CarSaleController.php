@@ -103,15 +103,15 @@ class CarSaleController extends Controller
             'order_number' => 'ORD-' . strtoupper(uniqid()),
             'status' => $request->status ?? 'pending',
             'payment_status' => $request->payment_status ?? 'unpaid',
-            'payment_method' => null,
+            // 'payment_method' => null,
             'subtotal' => str_replace(',', '', preg_replace('/[^\d.]/', '', $request->input('subtotal', 0))),
             'discount_percent' => $request->Ent_discount,
             'discount_value' => $request->discount_value,
             'vat_percent' => $request->ent_vat,
             'vat_value' => $request->vat_value,
             'total' => str_replace(',', '', preg_replace('/[^\d.]/', '', $request->input('grand_total', 0))),
-            'order_date' => now(),
-            'delivery_date' => null,
+            // 'order_date' => now(),
+            // 'delivery_date' => null,
         ];
 
         $order = CarOrder::create($orderData);
@@ -131,10 +131,76 @@ class CarSaleController extends Controller
                     $carModel->save();
                 }
             }
+            if($request->payment_status === 'partially_paid'){
+                $carModel = CarInventory::find($car['id']);
+                if ($carModel) {
+                    $carModel->status = 'on-hold';
+                    $carModel->save();
+                }
+            }
         }
 
         session()->forget('cart');
-        return redirect()->route('car-inventory.index')->with('message', 'Car sale processed!');
+
+        if($order->status === 'completed'){
+            return redirect()->route('car-orders')->with('message', 'Car sale processed! <br> <a href="/car-orders/'. $order->id .'/print/invoice" class="btn btn-success">Print Invoice</a> OR <a href="/car-orders/'. $order->id .'/print/invoice" class="btn btn-primary">Print Receipt</a>');
+        }
+        return redirect()->route('car-orders')->with('message', 'Car sale processed! <br> <a href="/car-orders/'. $order->id .'/print/invoice" class="btn btn-success">Print Invoice</a>');
+    }
+
+    public function updateOrder(Request $request, $id)
+    {
+        $order = CarOrder::findOrFail($id);
+        $order->status = $request->status;
+        $order->payment_status = $request->payment_status;
+        $order->save();
+
+        // Update car statuses based on order payment status
+        $carItems = $order->items;
+        if($order->payment_status === 'partially_paid'){
+            foreach ($carItems as $item) {
+                $car = CarInventory::find($item->car_id);
+                if ($car) {
+                    $car->status = 'on-hold';
+                    $car->save();
+                }
+            }
+        }
+        // Update car statuses based on order status
+        if ($order->status === 'completed') {
+            foreach ($carItems as $item) {
+                $car = CarInventory::find($item->car_id);
+                if ($car) {
+                    $car->status = 'sold';
+                    $car->save();
+                }
+            }
+        } elseif ($order->status === 'cancelled') {
+            foreach ($carItems as $item) {
+                $car = CarInventory::find($item->car_id);
+                if ($car) {
+                    $car->status = 'available';
+                    $car->save();
+                }
+            }
+        }
+
+        return redirect()->back()->with('message', $order->order_number .' Order updated successfully!');
+    }
+
+
+    public function deleteOrder($id)
+    {
+        $order = CarOrder::findOrFail($id);
+        $order->delete();
+        return redirect()->back()->with('message', $order->order_number . ' Order deleted successfully!');
+    }
+
+
+    public function printDocument($id, $type)
+    {
+        $order = CarOrder::with(['items', 'customer'])->findOrFail($id);
+        return view('car_inventory.car-invoice', compact('order', 'type'));
     }
 
 

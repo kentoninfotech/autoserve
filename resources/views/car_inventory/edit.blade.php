@@ -62,6 +62,7 @@
                                     <option value="" disabled selected>Select Status</option>
                                     <option value="available" {{ old('status', $car->status) == 'available' ? 'selected' : '' }}>Available</option>
                                     <option value="sold" {{ old('status', $car->status) == 'sold' ? 'selected' : '' }}>Sold</option>
+                                    <option value="on-hold" {{ old('status', $car->status) == 'on-hold' ? 'selected' : '' }}>On Hold</option>
                                 </select>
                             </div>
                         </div>
