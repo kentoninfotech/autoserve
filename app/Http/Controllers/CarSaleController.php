@@ -143,9 +143,9 @@ class CarSaleController extends Controller
         session()->forget('cart');
 
         if($order->status === 'completed'){
-            return redirect()->route('car-orders')->with('message', 'Car sale processed! <br> <a href="/car-orders/'. $order->id .'/print/invoice" target="_blank" class="btn btn-success">Print Invoice</a> OR <a href="/car-orders/'. $order->id .'/print/invoice" target="_blank" class="btn btn-primary">Print Receipt</a>');
+            return redirect()->route('car-orders')->with('message', 'Car sale processed! <a href="/car-orders/'. $order->id .'/print/invoice" target="_blank" class="btn btn-success">Print Invoice</a> OR <a href="/car-orders/'. $order->id .'/print/invoice" target="_blank" class="btn btn-primary">Print Receipt</a>');
         }
-        return redirect()->route('car-orders')->with('message', 'Car sale processed! <br> <a href="/car-orders/'. $order->id .'/print/invoice" target="_blank" class="btn btn-success">Print Invoice</a>');
+        return redirect()->route('car-orders')->with('message', 'Car sale processed! <a href="/car-orders/'. $order->id .'/print/invoice" target="_blank" class="btn btn-success">Print Invoice</a>');
     }
 
     public function updateOrder(Request $request, $id)

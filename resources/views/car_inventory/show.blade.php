@@ -90,9 +90,9 @@
                             <div class="price" style="font-size: 28px; font-weight: bold; color: #337ab7; margin-top: 5px;">₦{{ number_format($car->price, 0, '.', ',') }}</div>
                         </div>
                         @if($car->status == 'available')
-                         <a href="{{ route('car-sales.order', $car->id) }}" class="btn btn-success btn-block">Sell</a>
+                         <a href="{{ route('car-sales.add', $car->id) }}" class="btn btn-success btn-block">Sell</a>
                         @else
-                        <button type="submit" class="btn btn-default btn-block"><i class="fa fa-check" disabled></i>Sold</button>
+                        <h4 class="btn btn-default btn-block"><i class="fa fa-automobile"></i>  {{ Str::headline($car->status) }}</h4>
                         @endif
                         <div class="panel panel-default" style="margin-top: 20px;">
                             <div class="panel-heading">

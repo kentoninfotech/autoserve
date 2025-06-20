@@ -81,7 +81,7 @@
 @if($type === 'receipt')
     <div>
         <strong>Amount Paid:</strong> ${{ number_format($order->total, 0, '.', ',') }}<br>
-        <strong>Payment Method:</strong> {{ ucfirst($order->payment_method ?? 'N/A') }}<br>
+        <!-- <strong>Payment Method:</strong> {{-- Str::headline($order->payment_method ?? 'N/A') --}}<br> -->
     </div>
 @endif
 
