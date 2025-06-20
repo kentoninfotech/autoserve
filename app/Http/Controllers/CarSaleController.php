@@ -124,7 +124,7 @@ class CarSaleController extends Controller
                 'price' => $car['price'],
             ]);
             // Mark car as sold
-            if($request->status === 'completed'){
+            if($request->status === 'completed' && $request->payment_status === 'paid'){
                 $carModel = CarInventory::find($car['id']);
                 if ($carModel) {
                     $carModel->status = 'sold';
@@ -143,9 +143,9 @@ class CarSaleController extends Controller
         session()->forget('cart');
 
         if($order->status === 'completed'){
-            return redirect()->route('car-orders')->with('message', 'Car sale processed! <br> <a href="/car-orders/'. $order->id .'/print/invoice" class="btn btn-success">Print Invoice</a> OR <a href="/car-orders/'. $order->id .'/print/invoice" class="btn btn-primary">Print Receipt</a>');
+            return redirect()->route('car-orders')->with('message', 'Car sale processed! <br> <a href="/car-orders/'. $order->id .'/print/invoice" target="_blank" class="btn btn-success">Print Invoice</a> OR <a href="/car-orders/'. $order->id .'/print/invoice" target="_blank" class="btn btn-primary">Print Receipt</a>');
         }
-        return redirect()->route('car-orders')->with('message', 'Car sale processed! <br> <a href="/car-orders/'. $order->id .'/print/invoice" class="btn btn-success">Print Invoice</a>');
+        return redirect()->route('car-orders')->with('message', 'Car sale processed! <br> <a href="/car-orders/'. $order->id .'/print/invoice" target="_blank" class="btn btn-success">Print Invoice</a>');
     }
 
     public function updateOrder(Request $request, $id)
@@ -167,7 +167,7 @@ class CarSaleController extends Controller
             }
         }
         // Update car statuses based on order status
-        if ($order->status === 'completed') {
+        if ($order->status === 'completed' && $order->payment_status === 'paid') {
             foreach ($carItems as $item) {
                 $car = CarInventory::find($item->car_id);
                 if ($car) {
@@ -185,7 +185,11 @@ class CarSaleController extends Controller
             }
         }
 
-        return redirect()->back()->with('message', $order->order_number .' Order updated successfully!');
+        if($order->status === 'completed'){
+            return redirect()->route('car-orders')->with('message', $order->order_number .' Order updated successfully!   <a href="/car-orders/'. $order->id .'/print/invoice" target="_blank" class="btn btn-success">Print Invoice</a>  OR  <a href="/car-orders/'. $order->id .'/print/invoice" target="_blank" class="btn btn-primary">Print Receipt</a>');
+        }
+        return redirect()->route('car-orders')->with('message', $order->order_number .' Order updated successfully!   <a href="/car-orders/'. $order->id .'/print/invoice" target="_blank" class="btn btn-success">Print Invoice</a>');
+
     }
 
 

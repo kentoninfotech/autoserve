@@ -31,7 +31,7 @@
 
 <div class="order-info">
     <strong>Order Number:</strong> #{{ $order->order_number }}<br>
-    <strong>Order Date:</strong> {{ \Carbon\Carbon::parse($order->order_date)->format('d M Y') }}<br>
+    <strong>Order Date:</strong> {{ \Carbon\Carbon::parse($order->created_at)->format('d M Y') }}<br>
     <strong>Status:</strong> {{ ucfirst($order->status) }}<br>
     <strong>Payment Status:</strong> {{ ucfirst($order->payment_status) }}<br><br>
     <strong>Date:</strong> {{ \Carbon\Carbon::parse(now())->format('d M Y') }}<br>
@@ -41,8 +41,8 @@
     <thead>
         <tr>
             <th>#</th>
-            <th>Car</th>
-            <th>Price</th>
+            <th>Car(s)</th>
+            <th>Price(₦)</th>
         </tr>
     </thead>
     <tbody>

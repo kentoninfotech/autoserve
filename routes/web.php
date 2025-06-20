@@ -195,22 +195,22 @@ Route::get('/artisan1/{command}', [App\Http\Controllers\TasksController::class, 
 Route::get('/artisan2/{command}/{param}', [App\Http\Controllers\TasksController::class, 'Artisan2']);
 
 // VEHICLE (CAR) INVENTORY MANAGEMENT
-Route::get('/car-inventory', [App\Http\Controllers\CarInventoryController::class, 'index'])->name('car-inventory.index')->middleware('role:Admin,AutoServe,Super');
-Route::get('/car-inventory/create', [App\Http\Controllers\CarInventoryController::class, 'create'])->name('car-inventory.create')->middleware('role:Admin,AutoServe,Super');
-Route::post('/car-inventory/store', [App\Http\Controllers\CarInventoryController::class, 'store'])->name('car-inventory.store')->middleware('role:Admin,AutoServe,Super');
-Route::get('/car-inventory/{id}', [App\Http\Controllers\CarInventoryController::class, 'show'])->name('car-inventory.show')->middleware('role:Admin,AutoServe,Super');
-Route::get('/car-inventory/{id}/edit', [App\Http\Controllers\CarInventoryController::class, 'edit'])->name('car-inventory.edit')->middleware('role:Admin,AutoServe,Super');
-Route::post('/car-inventory/{id}/update', [App\Http\Controllers\CarInventoryController::class, 'update'])->name('car-inventory.update')->middleware('role:Admin,AutoServe,Super');
-Route::delete('/car-inventory/{id}', [App\Http\Controllers\CarInventoryController::class, 'destroy'])->name('car-inventory.destroy')->middleware('role:Admin,AutoServe,Super');
-Route::post('/car-inventory/{id}/upload-image', [App\Http\Controllers\CarInventoryController::class, 'uploadImage'])->name('car-inventory.upload-image')->middleware('role:Admin,AutoServe,Super');
-Route::post('/car-inventory/{car}/set-thumbnail/{image}', [App\Http\Controllers\CarInventoryController::class, 'setThumbnail'])->name('car-inventory.set-thumbnail')->middleware('role:Admin,AutoServe,Super');
+Route::get('/car-inventory', [App\Http\Controllers\CarInventoryController::class, 'index'])->name('car-inventory.index')->middleware('role:Admin,AutoServe,Super,Spare-Parts');
+Route::get('/car-inventory/create', [App\Http\Controllers\CarInventoryController::class, 'create'])->name('car-inventory.create')->middleware('role:Admin,AutoServe,Super,Spare-Parts');
+Route::post('/car-inventory/store', [App\Http\Controllers\CarInventoryController::class, 'store'])->name('car-inventory.store')->middleware('role:Admin,AutoServe,Super,Spare-Parts');
+Route::get('/car-inventory/{id}', [App\Http\Controllers\CarInventoryController::class, 'show'])->name('car-inventory.show')->middleware('role:Admin,AutoServe,Super,Spare-Parts');
+Route::get('/car-inventory/{id}/edit', [App\Http\Controllers\CarInventoryController::class, 'edit'])->name('car-inventory.edit')->middleware('role:Admin,AutoServe,Super,Spare-Parts');
+Route::post('/car-inventory/{id}/update', [App\Http\Controllers\CarInventoryController::class, 'update'])->name('car-inventory.update')->middleware('role:Admin,AutoServe,Super,Spare-Parts');
+Route::delete('/car-inventory/{id}', [App\Http\Controllers\CarInventoryController::class, 'destroy'])->name('car-inventory.destroy')->middleware('role:Admin,AutoServe,Super,Spare-Parts');
+Route::post('/car-inventory/{id}/upload-image', [App\Http\Controllers\CarInventoryController::class, 'uploadImage'])->name('car-inventory.upload-image')->middleware('role:Admin,AutoServe,Super,Spare-Parts');
+Route::post('/car-inventory/{car}/set-thumbnail/{image}', [App\Http\Controllers\CarInventoryController::class, 'setThumbnail'])->name('car-inventory.set-thumbnail')->middleware('role:Admin,AutoServe,Super,Spare-Parts');
 // VEHICLE (CAR) SALES & ORDERS
-Route::get('/car-sales/orders', [App\Http\Controllers\CarSaleController::class, 'index'])->name('car-orders');
-Route::get('/car-sales/order/{car}', [App\Http\Controllers\CarSaleController::class, 'order'])->name('car-sales.order');
-Route::get('/car-sales', [App\Http\Controllers\CarSaleController::class, 'cart'])->name('car-sales');
-Route::get('/car-sales/add/{car}', [App\Http\Controllers\CarSaleController::class, 'addToCart'])->name('car-sales.add');
-Route::get('/car-sales/remove/{car}', [App\Http\Controllers\CarSaleController::class, 'removeFromCart'])->name('car-sales.remove');
-Route::post('/car-sales/checkout', [App\Http\Controllers\CarSaleController::class, 'checkout'])->name('car-sales.checkout');
-Route::put('/car-orders/{order}', [App\Http\Controllers\CarSaleController::class, 'updateOrder'])->name('car-orders.update');
-Route::delete('/car-orders/{order}', [App\Http\Controllers\CarSaleController::class, 'deleteOrder'])->name('car-orders.delete');
-Route::get('/car-orders/{id}/print/{type}', [App\Http\Controllers\CarSaleController::class, 'printDocument'])->name('car-orders.print');
+Route::get('/car-sales/orders', [App\Http\Controllers\CarSaleController::class, 'index'])->name('car-orders')->middleware('role:Admin,AutoServe,Super,Spare-Parts');
+Route::get('/car-sales/order/{car}', [App\Http\Controllers\CarSaleController::class, 'order'])->name('car-sales.order')->middleware('role:Admin,AutoServe,Super,Spare-Parts');
+Route::get('/car-sales', [App\Http\Controllers\CarSaleController::class, 'cart'])->name('car-sales')->middleware('role:Admin,AutoServe,Super,Spare-Parts');
+Route::get('/car-sales/add/{car}', [App\Http\Controllers\CarSaleController::class, 'addToCart'])->name('car-sales.add')->middleware('role:Admin,AutoServe,Super,Spare-Parts');
+Route::get('/car-sales/remove/{car}', [App\Http\Controllers\CarSaleController::class, 'removeFromCart'])->name('car-sales.remove')->middleware('role:Admin,AutoServe,Super,Spare-Parts');
+Route::post('/car-sales/checkout', [App\Http\Controllers\CarSaleController::class, 'checkout'])->name('car-sales.checkout')->middleware('role:Admin,AutoServe,Super,Spare-Parts');
+Route::put('/car-orders/{order}', [App\Http\Controllers\CarSaleController::class, 'updateOrder'])->name('car-orders.update')->middleware('role:Admin,AutoServe,Super,Spare-Parts');
+Route::delete('/car-orders/{order}', [App\Http\Controllers\CarSaleController::class, 'deleteOrder'])->name('car-orders.delete')->middleware('role:Admin,AutoServe,Super,Spare-Parts');
+Route::get('/car-orders/{id}/print/{type}', [App\Http\Controllers\CarSaleController::class, 'printDocument'])->name('car-orders.print')->middleware('role:Admin,AutoServe,Super,Spare-Parts');
