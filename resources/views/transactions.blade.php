@@ -173,9 +173,12 @@
                     <div class="form-group col-md-6">
                         <label for="from"  class="control-label">From/Sender</label>
 
+                        @php
+                            
+                        @endphp
                         
                         <select class="form-control" name="from" id="from">
-                            <option value="1">{{ Abbr_company_name() }} Management</option>
+                            <option value="1">{{ \App\Helpers\AbbrCompanyName::Abbr_company_name() }} Management</option>
                             <option value="2">Others</option>
                             @foreach ($users as $user)
                                 <option value="{{$user->id}}">{{$user->name}}</option>
@@ -186,7 +189,7 @@
                     <div class="form-group col-md-6">
                         <label for="to"  class="control-label">To/Receiver</label>
                         <select class="form-control" name="to" id="to">
-                            <option value="1">{{ Abbr_company_name() }} Management</option>
+                            <option value="1">{{ \App\Helpers\AbbrCompanyName::Abbr_company_name() }} Management</option>
                             <option value="2">Others</option>
                             @foreach ($users as $user)
                                 <option value="{{$user->id}}">{{$user->name}}</option>
@@ -200,7 +203,7 @@
                         <label for="approved_by"  class="control-label">Approved By</label>
 
                         <select class="form-control" name="approved_by" id="approved_by">
-                        <option value="1">{{ Abbr_company_name() }} Management</option>
+                        <option value="1">{{ \App\Helpers\AbbrCompanyName::Abbr_company_name() }} Management</option>
                             <option value="2">Others</option>
                             @foreach ($users as $user)
                                 <option value="{{$user->id}}">{{$user->name}}</option>
@@ -211,7 +214,7 @@
                     <div class="form-group col-md-6">
                         <label for="recorded_by"  class="control-label">Delivered / Recorded By</label>
                         <select class="form-control" name="recorded_by" id="recorded_by">
-                            <option value="1">{{ Abbr_company_name() }} Management</option>
+                            <option value="1">{{ \App\Helpers\AbbrCompanyName::Abbr_company_name() }} Management</option>
                             <option value="2">Others</option>
                             @foreach ($users as $user)
                                 <option value="{{$user->id}}">{{$user->name}}</option>

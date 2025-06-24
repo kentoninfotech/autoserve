@@ -10,7 +10,7 @@
                 </div>
                 <div class="panel-body">
                     @php
-                        $company_abbr = Abbr_company_name();
+                        $company_abbr = \App\Helpers\AbbrCompanyName::Abbr_company_name();
             
                         if(!isset($editjobno)){
                             $editjobno = "";

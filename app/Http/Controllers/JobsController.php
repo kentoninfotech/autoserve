@@ -18,6 +18,7 @@ use App\Models\controls;
 use Illuminate\Http\Request;
 use App\Scopes\SettingScope;
 use Illuminate\Support\Facades\File;
+use App\Helpers\AbbrCompanyName;
 
 // use PDF;
 
@@ -93,11 +94,13 @@ class JobsController extends Controller
 
     public function create()
     {
-        $jobno = jobs::select('jobno')->orderBy('id','desc')->first();
-        if($jobno==null){
-            $jobno = 0;
+        $jobno = jobs::select('jobno')
+            ->orderByRaw('CAST(jobno AS UNSIGNED) DESC')
+            ->first();
+        if($jobno === null){
+            $jobno = 1;
         }else{
-            $jobno=$jobno->jobno+1;
+            $jobno = $jobno->jobno + 1;
         }
         $parts = parts::select('id','part_name','selling_price')->get();
         $services = serviceorder::select('id','servicename','amount')->distinct('servicename')->orderBy('id', 'desc')->get()->unique('servicename');
@@ -113,10 +116,10 @@ class JobsController extends Controller
     }
 
     public function addSales(Request $request)
-    {
+    {   
 
         if($request->customerid=="New"){
-            $company_abbr = Abbr_company_name();
+            $company_abbr = \App\Helpers\AbbrCompanyName::Abbr_company_name();
             $customerid = $company_abbr.strtoupper(substr(md5(uniqid(rand(1,6))), 0, 7));
             contacts::create([
                 'name'=>$request->name,
@@ -133,11 +136,13 @@ class JobsController extends Controller
             $customerid = $request->customerid;
         }
 
-        $jno = jobs::select('jobno')->orderBy('id','desc')->first();
-        if($jno==null){
-            $jobno = 0;
+        $jno = jobs::select('jobno')
+            ->orderByRaw('CAST(jobno AS UNSIGNED) DESC')
+            ->first();
+        if($jno === null){
+            $jobno = 1;
         }else{
-            $jobno = $jno->jobno+1;
+            $jobno = $jno->jobno + 1;
         }
 
         $job =  jobs::create([
@@ -190,9 +195,11 @@ class JobsController extends Controller
 
     public function newCustomerJob($customerid)
     {
-        $jobcheck = jobs::select('jobno')->orderBy('id','desc')->get();
+        $jobcheck = jobs::select('jobno')
+            ->orderByRaw('CAST(jobno AS UNSIGNED) DESC')
+            ->get();
         if($jobcheck->count()==0){
-            $jobno = 0;
+            $jobno = 1;
         }else{
             $jobno = $jobcheck->first()->jobno;
         }
@@ -207,9 +214,11 @@ class JobsController extends Controller
 
     public function newVehicleJob($customerid,$vid)
     {
-        $jobcheck = jobs::select('jobno')->orderBy('id','desc')->get();
+        $jobcheck = jobs::select('jobno')
+            ->orderByRaw('CAST(jobno AS UNSIGNED) DESC')
+            ->get();
         if(count($jobcheck)==0){
-            $jobno = 0;
+            $jobno = 1;
         }else{
             $jobno = $jobcheck->first()->jobno;
         }
@@ -234,7 +243,9 @@ class JobsController extends Controller
         // Validate Images (mulit-images) upload
         $request->validate(['images.*' => 'image|mimes:jpeg,png,jpg,gif|max:2048',]);
 
-        $jno = jobs::select('jobno')->orderBy('id','desc')->first();
+        $jno = jobs::select('jobno')
+            ->orderByRaw('CAST(jobno AS UNSIGNED) DESC')
+            ->first();
         if($jno==null){
             $jobno = 0;
         }else{

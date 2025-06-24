@@ -91,7 +91,7 @@ class CarSaleController extends Controller
             $contact->address = $request->customer_address;
             $contact->setting_id = auth()->user()->setting_id ?? null;
             // Generate unique customerid
-            $company_abbr = Abbr_company_name();
+            $company_abbr = \App\Helpers\AbbrCompanyName::Abbr_company_name();
             $contact->customerid = $company_abbr.strtoupper(substr(md5(uniqid(rand(1,6))), 0, 7));
             $contact->save();
 
@@ -143,7 +143,7 @@ class CarSaleController extends Controller
         session()->forget('cart');
 
         if($order->status === 'completed'){
-            return redirect()->route('car-orders')->with('message', 'Car sale processed! <a href="/car-orders/'. $order->id .'/print/invoice" target="_blank" class="btn btn-success">Print Invoice</a> OR <a href="/car-orders/'. $order->id .'/print/invoice" target="_blank" class="btn btn-primary">Print Receipt</a>');
+            return redirect()->route('car-orders')->with('message', 'Car sale processed! <a href="/car-orders/'. $order->id .'/print/invoice" target="_blank" class="btn btn-success">Print Invoice</a> OR <a href="/car-orders/'. $order->id .'/print/receipt" target="_blank" class="btn btn-primary">Print Receipt</a>');
         }
         return redirect()->route('car-orders')->with('message', 'Car sale processed! <a href="/car-orders/'. $order->id .'/print/invoice" target="_blank" class="btn btn-success">Print Invoice</a>');
     }
@@ -186,7 +186,7 @@ class CarSaleController extends Controller
         }
 
         if($order->status === 'completed'){
-            return redirect()->route('car-orders')->with('message', $order->order_number .' Order updated successfully!   <a href="/car-orders/'. $order->id .'/print/invoice" target="_blank" class="btn btn-success">Print Invoice</a>  OR  <a href="/car-orders/'. $order->id .'/print/invoice" target="_blank" class="btn btn-primary">Print Receipt</a>');
+            return redirect()->route('car-orders')->with('message', $order->order_number .' Order updated successfully!   <a href="/car-orders/'. $order->id .'/print/invoice" target="_blank" class="btn btn-success">Print Invoice</a>  OR  <a href="/car-orders/'. $order->id .'/print/receipt" target="_blank" class="btn btn-primary">Print Receipt</a>');
         }
         return redirect()->route('car-orders')->with('message', $order->order_number .' Order updated successfully!   <a href="/car-orders/'. $order->id .'/print/invoice" target="_blank" class="btn btn-success">Print Invoice</a>');
 
