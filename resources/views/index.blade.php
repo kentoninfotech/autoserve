@@ -223,7 +223,7 @@
             <i class="bi bi-calendar2-check text-warning display-3 mb-3"></i>
             <h4 class="fw-bold mb-2">Subscription</h4>
             <div class="mb-3">
-              <span class="display-5 fw-bold text-dark">₦300,000</span>
+              <span class="display-5 fw-bold text-dark">₦500,000</span>
               <div class="text-muted">per year</div>
             </div>
             <ul class="list-unstyled mb-4">
@@ -244,7 +244,7 @@
             <i class="bi bi-cloud-arrow-up text-white display-3 mb-3"></i>
             <h4 class="fw-bold mb-2 text-white">Online</h4>
             <div class="mb-3">
-              <span class="display-5 fw-bold text-white">₦1,500,000</span>
+              <span class="display-5 fw-bold text-white">₦3,000,000</span>
               <div class="text-white-50">one-time<br><small>+ Yearly Domain &amp; Hosting: <span class="fw-bold text-warning">₦150,000</span></small></div>
             </div>
             <ul class="list-unstyled mb-4">
@@ -264,7 +264,7 @@
             <i class="bi bi-hdd-network text-secondary display-3 mb-3"></i>
             <h4 class="fw-bold mb-2">On Premises</h4>
             <div class="mb-3">
-              <span class="display-5 fw-bold text-dark">₦2,000,000</span>
+              <span class="display-5 fw-bold text-dark">₦5,000,000</span>
               <div class="text-muted">one-time</div>
             </div>
             <ul class="list-unstyled mb-4">
