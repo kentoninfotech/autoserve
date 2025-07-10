@@ -94,7 +94,7 @@ class JobsController extends Controller
 
     public function create()
     {
-        $jobno = jobs::withoutGlobalScopes(SettingScope::class)->select('jobno')
+        $jobno = jobs::withoutGlobalScope(SettingScope::class)->select('jobno')
             ->orderByRaw('CAST(jobno AS UNSIGNED) DESC')
             ->first();
         if($jobno === null){
@@ -195,7 +195,7 @@ class JobsController extends Controller
 
     public function newCustomerJob($customerid)
     {
-        $jobcheck = jobs::withoutGlobalScopes(SettingScope::class)->select('jobno')
+        $jobcheck = jobs::withoutGlobalScope(SettingScope::class)->select('jobno')
             ->orderByRaw('CAST(jobno AS UNSIGNED) DESC')
             ->get();
         if($jobcheck->count()==0){
@@ -214,7 +214,7 @@ class JobsController extends Controller
 
     public function newVehicleJob($customerid,$vid)
     {
-        $jobcheck = jobs::withoutGlobalScopes(SettingScope::class)->select('jobno')
+        $jobcheck = jobs::withoutGlobalScope(SettingScope::class)->select('jobno')
             ->orderByRaw('CAST(jobno AS UNSIGNED) DESC')
             ->get();
         if(count($jobcheck)==0){
@@ -243,7 +243,7 @@ class JobsController extends Controller
         // Validate Images (mulit-images) upload
         $request->validate(['images.*' => 'image|mimes:jpeg,png,jpg,gif|max:2048',]);
 
-        $jno = jobs::withoutGlobalScopes(SettingScope::class)->orderByRaw('CAST(jobno AS UNSIGNED) DESC')->first();
+        $jno = jobs::withoutGlobalScope(SettingScope::class)->orderByRaw('CAST(jobno AS UNSIGNED) DESC')->first();
         if($jno === null){
             $jobno = 1;
         }else{
