@@ -550,10 +550,21 @@
                     };
 
                     function sendToWhatsapp() {
-                        const phoneNumber = "{{ $job->contact->telephoneno }}";
-                        const formattedNumber = phoneNumber.startsWith('0')
-                            ? '+234' + phoneNumber.substring(1)
-                            : '+234' + phoneNumber;
+                        let phoneNumber = "{{ $job->contact->telephoneno }}";
+                        
+                        // Remove all non-digit characters except leading +
+                        phoneNumber = phoneNumber.replace(/\D/g, '');
+                        
+                        // Ensure country code +234
+                        if (phoneNumber.startsWith('234')) {
+                            phoneNumber = '+' + phoneNumber;
+                        } else if (phoneNumber.startsWith('0')) {
+                            // Replace leading 0 with +234
+                            phoneNumber = '+234' + phoneNumber.substring(1);
+                        } else {
+                            // Assume it's just the number without country code
+                            phoneNumber = '+234' + phoneNumber;
+                        }
 
                         const jobno = '{{ $job->jobno }}';
                         const type = '{{ $type }}';
@@ -586,7 +597,7 @@
                                                 cancelButtonColor: '#dc3545'
                                             }).then((result) => {
                                                 if (result.isConfirmed) {
-                                                    const whatsappUrl = `https://wa.me/${formattedNumber}?text=${encodeURIComponent(message)}`;
+                                                    const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
                                                     window.open(whatsappUrl, '_blank');
                                                 }
                                             });
@@ -602,7 +613,7 @@
                                         cancelButtonColor: '#dc3545'
                                     }).then((result) => {
                                         if (result.isConfirmed) {
-                                            const whatsappUrl = `https://wa.me/${formattedNumber}?text=${encodeURIComponent(message)}`;
+                                            const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
                                             window.open(whatsappUrl, '_blank');
                                         }
                                     });
