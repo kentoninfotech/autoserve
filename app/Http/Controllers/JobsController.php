@@ -614,9 +614,17 @@ class JobsController extends Controller
 
             $pdf_doc = \PDF::loadView('invoice', compact('job','vehicle','title'));
 
+            // Ensure pdf directory exists with proper permissions
+            $pdf_dir = public_path('pdf');
+            if (!File::exists($pdf_dir)) {
+                File::makeDirectory($pdf_dir, 0755, true);
+            }
+            @chmod($pdf_dir, 0755);
+
             // 1. Save the PDF to server
             $pdf_path = public_path('pdf/'.$type.'-'.$jobno.'.pdf');
             $pdf_doc->save($pdf_path);
+            @chmod($pdf_path, 0644);
 
             // Pass PDF URL to blade to trigger download with JS
             $pdf_url = asset('/pdf/'.$type.'-'.$jobno.'.pdf');
