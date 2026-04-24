@@ -87,6 +87,19 @@ class AccountsController extends Controller
         return redirect()->route('accounts.index')->with('success', $setting->company_name . ': Account deactivated successfully.');
     }
 
+    public function changePassword(\Illuminate\Http\Request $request, $id)
+    {
+        $validated = $request->validate([
+            'password' => 'required|string|min:8|confirmed',
+        ]);
+
+        $user = User::findOrFail($id);
+        $user->password = \Illuminate\Support\Facades\Hash::make($validated['password']);
+        $user->save();
+
+        return redirect()->route('accounts.show', $user->id)->with('success', 'Password for ' . $user->name . ' has been changed successfully.');
+    }
+
 
 
 }

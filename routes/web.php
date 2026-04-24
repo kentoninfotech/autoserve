@@ -21,6 +21,7 @@ Route::get('/accounts', [App\Http\Controllers\AccountsController::class, 'index'
 Route::get('/accounts/{id}', [App\Http\Controllers\AccountsController::class, 'show'])->name('accounts.show')->middleware('role:AutoServe');
 Route::get('/accounts/edit/{id}', [App\Http\Controllers\AccountsController::class, 'edit'])->name('accounts.edit')->middleware('role:AutoServe');
 Route::post('/accounts/update/{id}', [App\Http\Controllers\AccountsController::class, 'update'])->name('accounts.update')->middleware('role:AutoServe');
+Route::post('/accounts/change-password/{id}', [App\Http\Controllers\AccountsController::class, 'changePassword'])->name('accounts.changePassword')->middleware('role:AutoServe');
 Route::post('/accounts/activate/{id}', [App\Http\Controllers\AccountsController::class, 'activateAccount'])->name('accounts.activate')->middleware('role:AutoServe');
 Route::post('/accounts/deactivate/{id}', [App\Http\Controllers\AccountsController::class, 'deactivateAccount'])->name('accounts.deactivate')->middleware('role:AutoServe');
 

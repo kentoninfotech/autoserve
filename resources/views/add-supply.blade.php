@@ -46,8 +46,8 @@
                             </div>
 
                             <div class="form-group col-md-6">
-                                <label for="payment_made">Payment Made</label>
-                                <input type="text" name="payment_made" id="payment_made" class="form-control" value="">
+                                <label for="payment_made">Payment Made (Amount)</label>
+                                <input type="number" step="0.01" name="payment_made" id="payment_made" class="form-control" placeholder="Enter amount" value="">
                             </div>
                             <!-- Add other fields as needed -->
 

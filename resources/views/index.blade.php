@@ -24,7 +24,7 @@
         <a class="navbar-brand fw-bold text-primary fs-3" href="#">
             <img src="{{ asset('images/logo.png') }}" alt="AutoServe Logo" style="height:40px;width:auto;" class="me-2 align-middle">
         </a>
-        <a class="nav-link fw-semibold text-primary" href="tel:+2349131095135"><i class="bi bi-telephone me-1"></i>+2349131095135</a>
+        <a class="nav-link fw-semibold text-primary" href="tel:+2347067973091"><i class="bi bi-telephone me-1"></i>+2347067973091</a>
     </div>
 
     <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -414,7 +414,7 @@
       <div class="col-md-6 d-flex flex-column justify-content-center animate__animated animate__fadeInRight">
         <div class="ps-md-4 bg-dark bg-opacity-75 p-4 rounded text-white">
           <div class="mb-3"><i class="bi bi-envelope-at text-primary fs-3 me-2"></i><a href="mailto:info@autoserve.com" class="text-white text-decoration-underline">info@autoserve.com.ng</a></div>
-          <div class="mb-3"><i class="bi bi-telephone text-success fs-3 me-2"></i><a href="tel:+1234567890" class="text-white text-decoration-underline">+234 913 109 5135</a></div>
+          <div class="mb-3"><i class="bi bi-telephone text-success fs-3 me-2"></i><a href="tel:+1234567890" class="text-white text-decoration-underline">+234 706 797 3091</a></div>
           <div class="mb-3"><i class="bi bi-geo-alt text-danger fs-3 me-2"></i>Peace Park Building, Utako, Abuja</div>
           <div class="alert alert-info mt-3">We respond within 24 hours. Your information is safe with us!</div>
         </div>

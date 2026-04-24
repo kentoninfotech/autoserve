@@ -64,12 +64,20 @@ class PartsController extends Controller
     }
 
     public function saveSupply(Request $request){
-        // $supply->load('part'); // Load the related part
-
+        // Validate request data
+        $validated = $request->validate([
+            'part_id' => 'required|exists:parts,id',
+            'quantity_supplied' => 'required|numeric|min:0',
+            'supplier_name' => 'required|string',
+            'phone_number' => 'nullable|string',
+            'date_supplied' => 'required|date',
+            'batch_no' => 'nullable|string',
+            'payment_made' => 'nullable|numeric|min:0',
+        ]);
 
         // Increase stock
         $part = parts::where('id',$request->part_id)->first();
-        supplies::create($request->all());
+        supplies::create($validated);
         $part->stock()->increment('quantity_in_stock', $request->quantity_supplied);
 
         $supplies = supplies::all();

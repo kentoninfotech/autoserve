@@ -204,9 +204,9 @@
                                     <div class="form-group col-md-3">
                                         <label for="sstatus">Status</label>
                                         <div>
-                                        <select name="sstatus" id="sstatus" class="pending">
+                                        <select name="sstatus" id="sstatus" class="form-control">
                                             <option value="Just Arrived">Just Arrived</option>
-                                            <option value="Pending">Pending</option>
+                                            <option value="Pending" selected>Pending</option>
                                             <option value="In Progress">In Progress</option>
                                             <option value="Completed">Completed</option>
                                         </select>

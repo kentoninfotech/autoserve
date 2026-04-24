@@ -34,6 +34,38 @@
             </div>
 
             <div class="clearfix"></div>
+
+            <!-- Password Change Section -->
+            <div class="mt-5 p-4 border rounded" style="background-color: #f9f9f9;">
+                <h5 class="mb-4 text-primary font-weight-bold">Change User Password</h5>
+                <form action="{{ route('accounts.changePassword', $user->id) }}" method="POST">
+                    @csrf
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="password" class="font-weight-bold">New Password <span class="text-danger">*</span></label>
+                                <input type="password" class="form-control @error('password') is-invalid @enderror" id="password" name="password" placeholder="Enter new password" required>
+                                @error('password')
+                                    <span class="invalid-feedback">{{ $message }}</span>
+                                @enderror
+                                <small class="form-text text-muted">Password must be at least 8 characters long.</small>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="password_confirmation" class="font-weight-bold">Confirm Password <span class="text-danger">*</span></label>
+                                <input type="password" class="form-control @error('password_confirmation') is-invalid @enderror" id="password_confirmation" name="password_confirmation" placeholder="Confirm new password" required>
+                                @error('password_confirmation')
+                                    <span class="invalid-feedback">{{ $message }}</span>
+                                @enderror
+                            </div>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary shadow-lg">Update Password</button>
+                </form>
+            </div>
+
+            <div class="clearfix"></div>
             <div class="mt-4" style="text-align: right;">
                 @if($user->setting->status == 'Active')
                     <form id="deactivateForm" action="{{ route('accounts.deactivate', $user->id) }}" method="POST" style="display:inline;">

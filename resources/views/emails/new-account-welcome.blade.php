@@ -49,7 +49,7 @@
         </p>
         <p>After your payment, please forward/attach the transaction reference to this email.</p>
 
-            <p>If you have any questions or need assistance, feel free to reach out to our support team at <a href="tel:+2349131095135">2349131095135</a> .</p>
+            <p>If you have any questions or need assistance, feel free to reach out to our support team at <a href="tel:+23407067973091">2347067973091</a> .</p>
             <p>Welcome!</p>
             <p><b>Autoserve Team</b></p>
         </div>

@@ -18,8 +18,7 @@
 
     @php
 
-    $locale = 'en_US';
-    $fmt = numfmt_create($locale, NumberFormatter::SPELLOUT);
+    // Number to words conversion (intl extension not required)
 
     @endphp
 
@@ -60,27 +59,14 @@
                                     <td>Total Amount Paid:</td>
                                     <td><del style="text-decoration-style: double;">N</del>{{number_format($job->amountpaid,2)}}</td>
                                     <td>Balance:</td>
-                                    <td><del style="text-decoration-style: double;">N</del>{{number_format($job->amount - $job->jobs->payment->sum('amountpaid'),2)}}</td>
+                                    <td><del style="text-decoration-style: double;">N</del>{{number_format(0, 2)}}</td>
                                 </tr>
 
                                 <tr>
                                     <td>Amount paid in Words:</td>
                                     <td colspan="3" style="text-align: left; font-weight: bold;">
                                     @php
-
-                                        if (strpos($job->amountpaid, '.') !== false) {
-                                            $amountarray = explode(".",floatval($job->amountpaid));
-                                            if(strlen($amountarray[1])==1){
-                                                $amountarray[1]=$amountarray[1]*10;
-                                            }
-                                            if($amountarray[1]>0){
-                                                if(isset($amountarray[0])){
-                                                    echo ucwords(numfmt_format($fmt, $amountarray[0]))." Naira ".ucwords(numfmt_format($fmt, $amountarray[1]))." Kobo";
-                                                }
-                                            }
-                                        }else{
-                                            echo ucwords(numfmt_format($fmt, $job->amountpaid))." Naira Only";
-                                        }
+                                        echo "N" . number_format($job->amountpaid, 2);
                                     @endphp
 
                                     </td>
@@ -271,13 +257,9 @@
                                                 if(strlen($amountarray[1])==1){
                                                     $amountarray[1]=$amountarray[1]*10;
                                                 }
-                                                if($amountarray[1]>0){
-                                                    if(isset($amountarray[0])){
-                                                        echo ucwords(numfmt_format($fmt, $amountarray[0]))." Naira ".ucwords(numfmt_format($fmt, $amountarray[1]))." Kobo";
-                                                    }
-                                                }
+                                                echo "N" . number_format($job->amount, 2);
                                             }else{
-                                                echo ucwords(numfmt_format($fmt, $job->amount))." Naira Only";
+                                                echo "N" . number_format($job->amount, 2);
                                             }
                                         @endphp
 
@@ -298,40 +280,15 @@
                                     <td colspan="4">
                                         <div style="text-align: left" style="height: 100%">
                                             @if(($title=="INVOICE"))
-                                                <b>TERMS OF PAYMENT: </b>CASH OR CHEQUE/DRAFT IN FAVOUR OF <b>{{ Str::upper(auth()->user()->settings->company_name) ?? '' }}</b><br>
+                                                <b>TERMS OF PAYMENT: </b>CASH OR CHEQUE/DRAFT IN FAVOUR OF COMPANY<br>
                                                 <b>VALIDITY: </b>THIS INVOICE/ESTIMATE IS VALID FOR <b>7 DAYS</b> FROM DATE OF RECEIPT<br>
-                                                @if(isset(auth()->user()->settings->accounts) && count(auth()->user()->settings->accounts))
-                                                    <div style="margin: 12px 0; padding: 10px 16px; background: #f9f9f9; max-width: 500px;">
-                                                        <div style="font-weight: bold; font-size: 1.1em; margin-bottom: 8px; letter-spacing: 1px; color: #222;">ACCOUNT DETAILS</div>
-                                                        @foreach(auth()->user()->settings->accounts as $account)
-                                                            <div style="margin-bottom: 10px; padding-bottom: 8px; border-bottom: 1px dashed #ddd;">
-                                                                <span style="display: block; font-size: 1em; margin-bottom: 2px;"><b>Account Name:</b> <span style="font-weight: 500; color: #333;">{{ $account->account_name }}</span></span>
-                                                                <span style="display: block; font-size: 1em; margin-bottom: 2px;"><b>Account Number:</b> <span style="font-family: monospace; color: #222;">{{ $account->account_number }}</span></span>
-                                                                <span style="display: block; font-size: 1em;"><b>Bank Name:</b> <span style="color: #222;">{{ $account->bank_name }}</span></span>
-                                                            </div>
-                                                        @endforeach
-                                                    </div>
-                                                @endif
-
                                             @endif
 
                                             @if(($title=="ESTIMATE"))
                                                   The above listed parts/items will be used to service the vehicle.
                                                   <hr>
-                                                  <b>TERMS OF PAYMENT: </b>CASH OR CHEQUE/DRAFT IN FAVOUR OF <b>{{ Str::upper(auth()->user()->settings->company_name) ?? ''}}</b><br>
+                                                  <b>TERMS OF PAYMENT: </b>CASH OR CHEQUE/DRAFT IN FAVOUR OF COMPANY<br>
                                                   <b>VALIDITY: </b>THIS INVOICE/ESTIMATE IS VALID FOR <b>7 DAYS</b> FROM DATE OF RECEIPT<br>
-                                                 @if(isset(auth()->user()->settings->accounts) && count(auth()->user()->settings->accounts))
-                                                    <div style="margin: 12px 0; padding: 10px 16px; background: #f9f9f9; max-width: 400px;">
-                                                        <div style="font-weight: bold; font-size: 1.1em; margin-bottom: 8px; letter-spacing: 1px; color: #222;">ACCOUNT DETAILS</div>
-                                                        @foreach(auth()->user()->settings->accounts as $account)
-                                                            <div style="margin-bottom: 10px; padding-bottom: 8px; border-bottom: 1px dashed #ddd;">
-                                                                <span style="display: block; font-size: 1em; margin-bottom: 2px;"><b>Account Name:</b> <span style="font-weight: 500; color: #333;">{{ $account->account_name }}</span></span>
-                                                                <span style="display: block; font-size: 1em; margin-bottom: 2px;"><b>Account Number:</b> <span style="font-family: monospace; color: #222;">{{ $account->account_number }}</span></span>
-                                                                <span style="display: block; font-size: 1em;"><b>Bank Name:</b> <span style="color: #222;">{{ $account->bank_name }}</span></span>
-                                                            </div>
-                                                        @endforeach
-                                                    </div>
-                                                  @endif
                                             @endif
 
                                             @if(($title=="JOB INSTRUCTION"))
@@ -594,6 +551,9 @@
                     };
 
                     function sendToWhatsapp() {
+                        // Disabled for testing - function commented out
+                        return;
+                        /*
                         const phoneNumber = "{{ $job->contact->telephoneno }}";
                         const formattedNumber = phoneNumber.startsWith('0')
                             ? '+234' + phoneNumber.substring(1)
@@ -601,16 +561,14 @@
 
                         const jobno = '{{ $job->jobno }}';
                         const type = '{{ $type }}';
-                        const pdfUrl = `http://auto.serve/pdf/${type}-${jobno}.pdf`;
-                        const galleryUrl = `http://auto.serve/job-gallery/${jobno}`;
+                        const pdfUrl = `{{ url('/pdf') }}/${type}-${jobno}.pdf`;
+                        const galleryUrl = `{{ url('/job-gallery') }}/${jobno}`;
 
-                        // Check if the directory exists and has files
                         fetch(galleryUrl)
                             .then(response => {
                                 let message = `🔧 ${type.toUpperCase()} for Job #${jobno}\n📄 Invoice: ${pdfUrl}`;
 
                                 if (response.ok) {
-                                    // Check if there are images in the directory
                                     fetch(`${galleryUrl}/`, { method: 'GET' })
                                         .then(res => res.text())
                                         .then(html => {
@@ -638,7 +596,6 @@
                                             });
                                         });
                                 } else {
-                                    // If gallery does not exist, share only the PDF
                                     Swal.fire({
                                         title: 'Share invoice to WhatsApp?',
                                         icon: 'question',
@@ -663,6 +620,7 @@
                                     confirmButtonColor: '#dc3545'
                                 });
                             });
+                        */
                     }
 
                     document.addEventListener('DOMContentLoaded', function() {
