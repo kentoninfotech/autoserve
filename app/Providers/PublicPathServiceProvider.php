@@ -16,17 +16,22 @@ class PublicPathServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        // Check if we have a custom public path in env
-        $publicPath = $this->app->basePath() . DIRECTORY_SEPARATOR . 'public';
-        
-        // If deployed on shared hosting with separate public_html
-        // The public_html should be at the same level as the app root
-        $parentPath = dirname($this->app->basePath());
-        $publicHtmlPath = $parentPath . DIRECTORY_SEPARATOR . 'public_html';
-        
-        // Use public_html if it exists and we're not in local development
-        if (is_dir($publicHtmlPath) && !$this->app->environment('local')) {
-            $publicPath = $publicHtmlPath;
+        // Check for explicit public path in environment
+        if ($publicPathEnv = env('PUBLIC_PATH')) {
+            $publicPath = $publicPathEnv;
+        } else {
+            // Default to app's public folder
+            $publicPath = $this->app->basePath() . DIRECTORY_SEPARATOR . 'public';
+            
+            // If deployed on shared hosting with separate public_html
+            // The public_html should be at the same level as the app root
+            $parentPath = dirname($this->app->basePath());
+            $publicHtmlPath = $parentPath . DIRECTORY_SEPARATOR . 'public_html';
+            
+            // Use public_html if it exists (always prefer it if it's there)
+            if (is_dir($publicHtmlPath)) {
+                $publicPath = $publicHtmlPath;
+            }
         }
         
         $this->app->bind('path.public', function () use ($publicPath) {
