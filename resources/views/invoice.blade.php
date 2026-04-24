@@ -185,7 +185,7 @@
                             @foreach ($job->sale as $sa)
                                 @if ($sa->salesdesc!="Labour" && $job->partsorder->count()<1)
                                     <tr>
-                                        <td>{{str_replace('-','',$sa->salesdesc)}}  {{ $po->partno!="-" && $po->partno!="" ? $po->partno : " "}}</td>
+                                        <td>{{str_replace('-','',$sa->salesdesc)}}</td>
                                         <td>{{$sa->quantity}}
                                         </td>
                                         <td></td>
@@ -527,18 +527,8 @@
 
                 @if(isset($job_images) && !empty($job_images))
                     <h2>Attached Images:</h2>
-                    <div class="row">
-                      @foreach($job_images as $image)
-                        <div class="col-md-3">
-                            <div class="thumbnail">                          
-                                <img src="{{ asset('job_images/' . $job->jobno . '/' . $image->getFilename()) }}" alt="Image" class="img-responsive" style="width:100%; height: auto;">
-                            </div>
-                        </div>
-                       @endforeach
-                    </div>
+                    <p>Note: Images are available in the gallery</p>
                 @endif
-
-                {{$pdf_url}}
                 <script>
                     window.onload = function() {
                         // Uncomment this for auto-download of the PDF 
@@ -551,9 +541,6 @@
                     };
 
                     function sendToWhatsapp() {
-                        // Disabled for testing - function commented out
-                        return;
-                        /*
                         const phoneNumber = "{{ $job->contact->telephoneno }}";
                         const formattedNumber = phoneNumber.startsWith('0')
                             ? '+234' + phoneNumber.substring(1)
@@ -620,7 +607,6 @@
                                     confirmButtonColor: '#dc3545'
                                 });
                             });
-                        */
                     }
 
                     document.addEventListener('DOMContentLoaded', function() {

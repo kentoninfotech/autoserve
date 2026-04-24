@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\File;
 use App\Scopes\SettingScope;
 
 class PersonnelController extends Controller
@@ -100,11 +101,20 @@ class PersonnelController extends Controller
             'cv'=>'image|mimes:jpg,png,jpeg,gif,svg,doc,docx,pdf|max:2048',
         ]);
         
+        $images_path = public_path('images');
+        
+        // Ensure images directory exists
+        if (!File::exists($images_path)) {
+            File::makeDirectory($images_path, 0755, true);
+        }
+        @chmod($images_path, 0755);
+        
         if(!empty($request->file('picture'))){
          
             $picture = time().'.'.$request->picture->extension();
           
-            $request->picture->move(\public_path('images'),$picture);
+            $request->picture->move($images_path, $picture);
+            @chmod($images_path . '/' . $picture, 0644);
         }else{
             $picture = $request->oldpicture;
         }
@@ -113,7 +123,8 @@ class PersonnelController extends Controller
             
             $cv = time().'.'.$request->cv->extension();
             
-            $request->cv->move(\public_path('images'),$cv);
+            $request->cv->move($images_path, $cv);
+            @chmod($images_path . '/' . $cv, 0644);
         }else{
             $cv = $request->oldcv;
         }

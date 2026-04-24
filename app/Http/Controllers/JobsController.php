@@ -270,16 +270,21 @@ class JobsController extends Controller
             ));
         }
 
-        // 
+        // Ensure image directories exist with proper permissions
         $job_image_path = public_path("job_images/$jobno");
 
         if ($request->hasFile('images')) {
             if (!File::exists($job_image_path)) {
-                File::makeDirectory($job_image_path, 0777, true);
+                File::makeDirectory($job_image_path, 0755, true);
             }
+            // Ensure directory is writable
+            @chmod($job_image_path, 0755);
+            
             foreach ($request->file('images') as $index => $image) {
                 $imageName = $jobno . '_' . now()->format('Y_m_d') . '_' . $index . '_' . $image->getClientOriginalName();
                 $image->move($job_image_path, $imageName);
+                // Ensure file is readable
+                @chmod($job_image_path . '/' . $imageName, 0644);
             }
         }
 
@@ -288,7 +293,15 @@ class JobsController extends Controller
             $file = $request->file('diagnosis');
             $filename = time() . '_' . $file->getClientOriginalName();
             $destinationPath = public_path('/pdf');
+            
+            // Ensure pdf directory exists
+            if (!File::exists($destinationPath)) {
+                File::makeDirectory($destinationPath, 0755, true);
+            }
+            @chmod($destinationPath, 0755);
+            
             $file->move($destinationPath, $filename);
+            @chmod($destinationPath . '/' . $filename, 0644);
             $diagnosis_file = $filename;
         } else {
             $diagnosis_file = $request->old_diagnosis_file;

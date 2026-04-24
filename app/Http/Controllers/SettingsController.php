@@ -7,6 +7,7 @@ use App\Models\settings;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\File;
 use App\Mail\AccountWelcomeMail;
 
 class SettingsController extends Controller
@@ -136,6 +137,12 @@ class SettingsController extends Controller
 
         // Image path
         $image_path = public_path("images/");
+        
+        // Ensure images directory exists
+        if (!File::exists($image_path)) {
+            File::makeDirectory($image_path, 0755, true);
+        }
+        @chmod($image_path, 0755);
 
         // Update settings
         $settings = $user->settings ?? new \App\Models\settings();
@@ -154,6 +161,7 @@ class SettingsController extends Controller
                 }
             }
             $headerPath = $image->move($image_path, $imageName);
+            @chmod($image_path . $imageName, 0644);
             $settings->header = basename($headerPath);
         }
         if ($request->hasFile('logo')) {
@@ -167,6 +175,7 @@ class SettingsController extends Controller
                 }
             }
             $logoPath = $image->move($image_path, $imageName);
+            @chmod($image_path . $imageName, 0644);
             $settings->logo = basename($logoPath);
         }
         $settings->primary_color = $validated['primary_color'] ?? $settings->primary_color;

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\CarInventory;
 use App\Models\CarInventoryImage;
+use Illuminate\Support\Facades\File;
 
 class CarInventoryController extends Controller
 {
@@ -50,9 +51,18 @@ class CarInventoryController extends Controller
         ]);
         $car = CarInventory::create($data);
         if ($request->hasFile('images')) {
+            $vehicle_images_path = public_path('vehicle_images');
+            
+            // Ensure vehicle_images directory exists
+            if (!File::exists($vehicle_images_path)) {
+                File::makeDirectory($vehicle_images_path, 0755, true);
+            }
+            @chmod($vehicle_images_path, 0755);
+            
             foreach ($request->file('images') as $index => $image) {
                 $imageName = time().'_'.$index.'_'.$image->getClientOriginalName();
-                $image->move('vehicle_images', $imageName);
+                $image->move($vehicle_images_path, $imageName);
+                @chmod($vehicle_images_path . '/' . $imageName, 0644);
                 CarInventoryImage::create([
                     'car_inventory_id' => $car->id,
                     'image' => $imageName,
@@ -106,8 +116,13 @@ class CarInventoryController extends Controller
     public function destroy($id)
     {
         $car = CarInventory::findOrFail($id);
+        $vehicle_images_path = public_path('vehicle_images');
+        
         foreach ($car->images as $img) {
-            unlink('vehicle_images/' . $img->image);
+            $filePath = $vehicle_images_path . '/' . $img->image;
+            if (File::exists($filePath)) {
+                unlink($filePath);
+            }
             $img->delete();
         }
         $car->delete();
@@ -126,9 +141,19 @@ class CarInventoryController extends Controller
         if (!is_array($images)) {
             $images = [$images];
         }
+        
+        $vehicle_images_path = public_path('vehicle_images');
+        
+        // Ensure vehicle_images directory exists
+        if (!File::exists($vehicle_images_path)) {
+            File::makeDirectory($vehicle_images_path, 0755, true);
+        }
+        @chmod($vehicle_images_path, 0755);
+        
         foreach ($images as $img) {
             $imageName = time().'_'.uniqid().'_'.$img->getClientOriginalName();
-            $img->move('vehicle_images', $imageName);
+            $img->move($vehicle_images_path, $imageName);
+            @chmod($vehicle_images_path . '/' . $imageName, 0644);
             $isThumbnail = !$car->images()->where('is_thumbnail', true)->exists();
             CarInventoryImage::create([
                 'car_inventory_id' => $car->id,

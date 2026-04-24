@@ -18,6 +18,7 @@ use App\Scopes\SettingScope;
 use DB;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Validator;
 
 
@@ -487,11 +488,20 @@ class HomeController extends Controller
           'background'=>'image|mimes:jpg,png,jpeg,gif,svg'
       ]);
 
+      $images_path = public_path('images');
+      
+      // Ensure images directory exists
+      if (!File::exists($images_path)) {
+          File::makeDirectory($images_path, 0755, true);
+      }
+      @chmod($images_path, 0755);
+
       if(!empty($request->file('logo'))){
 
           $logo = time().'.'.$request->logo->extension();
 
-          $request->logo->move(\public_path('images'),$logo);
+          $request->logo->move($images_path, $logo);
+          @chmod($images_path . '/' . $logo, 0644);
       }else{
           $logo = $request->oldlogo;
       }
@@ -500,7 +510,8 @@ class HomeController extends Controller
 
           $background = time().'.'.$request->background->extension();
 
-          $request->background->move(\public_path('images'),$background);
+          $request->background->move($images_path, $background);
+          @chmod($images_path . '/' . $background, 0644);
       }else{
           $background = $request->oldbackground;
       }
