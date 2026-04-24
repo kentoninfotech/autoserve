@@ -527,7 +527,16 @@
 
                 @if(isset($job_images) && !empty($job_images))
                     <h2>Attached Images:</h2>
-                    <p>Note: Images are available in the gallery</p>
+                    <div class="row" style="margin-top: 20px;">
+                        @foreach($job_images as $image)
+                            <div class="col-md-3 col-sm-4 col-xs-6" style="margin-bottom: 15px;">
+                                <img src="{{ asset('job_images/' . $job->jobno . '/' . $image->getFilename()) }}" 
+                                     alt="Job Image" 
+                                     class="img-thumbnail img-responsive" 
+                                     style="max-width: 100%; height: auto; border: 1px solid #ddd; padding: 5px; display: block;">
+                            </div>
+                        @endforeach
+                    </div>
                 @endif
                 <script>
                     window.onload = function() {
