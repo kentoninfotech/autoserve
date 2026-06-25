@@ -324,7 +324,16 @@
                         </table>
                         <table width="100%" style="font-size:9px !important; width:95%" class="table table-condensed" align="center" border="1">
                             <tr>
-                                <td colspan="2"><img src="{{ asset('/images/v.jpg') }}" alt="VEHICLE" width="200" height="120"></td>
+                                <td colspan="2">
+                                    @php
+                                        $img_src = isset($for_pdf) && $for_pdf && isset($v_image_path) && !empty($v_image_path) 
+                                            ? $v_image_path 
+                                            : asset('/images/v.jpg');
+                                    @endphp
+                                    @if(!empty($img_src))
+                                        <img src="{{ $img_src }}" alt="VEHICLE" width="200" height="120" style="display:block;">
+                                    @endif
+                                </td>
                                 <td colspan="3">
                                     <table cellspacing="0" cellpadding="0" style="font-size:7px !important; width:98%">
                                         <tr>
@@ -523,20 +532,22 @@
 
                 <!-- @if(isset($pdf_url)) -->
                 
-                <div class="page-break"></div>
+                @if(isset($title) && $title !== 'JOB INSTRUCTION')
+                    <div class="page-break"></div>
 
-                @if(isset($job_images) && !empty($job_images))
-                    <h2>Attached Images:</h2>
-                    <div class="row" style="margin-top: 20px;">
-                        @foreach($job_images as $image)
-                            <div class="col-md-3 col-sm-4 col-xs-6" style="margin-bottom: 15px;">
-                                <img src="{{ asset('job_images/' . $job->jobno . '/' . $image->getFilename()) }}" 
-                                     alt="Job Image" 
-                                     class="img-thumbnail img-responsive" 
-                                     style="max-width: 100%; height: auto; border: 1px solid #ddd; padding: 5px; display: block;">
+                    @if(isset($job_images) && !empty($job_images))
+                        <h2>Attached Images:</h2>
+                        <div class="row" style="margin-top: 20px;">
+                            @foreach($job_images as $image)
+                                <div class="col-md-3 col-sm-4 col-xs-6" style="margin-bottom: 15px;">
+                                    <img src="{{ asset('job_images/' . $job->jobno . '/' . $image->getFilename()) }}" 
+                                         alt="Job Image" 
+                                         class="img-thumbnail img-responsive" 
+                                         style="max-width: 100%; height: auto; border: 1px solid #ddd; padding: 5px; display: block;">
                             </div>
                         @endforeach
-                    </div>
+                        </div>
+                    @endif
                 @endif
                 <script>
                     window.onload = function() {

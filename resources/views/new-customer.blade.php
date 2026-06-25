@@ -182,7 +182,7 @@
                                     </div>
                                     <div class="form-group col-md-4">
                                         <div class="form-group">
-                                          <label for="frameno">Chasis Number</label>
+                                          <label for="frameno">Frame Number</label>
                                           <input type="text"
                                             class="form-control" name="frameno" id="frameno" placeholder="Chasis Number" value="{{$vehicle ? $vehicle->frameno:''}}">
                                         </div>
@@ -325,7 +325,7 @@
                                     <div class="form-group col-md-3">
                                         <label for="sstatus">Status</label>
                                         <div>
-                                        <select name="sstatus" id="sstatus" class="pending">
+                                        <select name="sstatus" id="sstatus" class="form-control">
                                             <option value="{{$job->serviceorder ? $job->serviceorder->first()->status ?? '':'Pending'}}" selected>{{$job->serviceorder ? $job->serviceorder->first()->status ?? '':'Pending'}}</option>
                                             <option value="Just Arrived">Just Arrived</option>
                                             <option value="Pending">Pending</option>

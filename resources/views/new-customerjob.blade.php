@@ -82,7 +82,7 @@
                                     </div>
                                     <div class="form-group col-md-4">
                                         <div class="form-group">
-                                          <label for="frameno">Chasis Number</label>
+                                          <label for="frameno">Frame Number</label>
                                           <input type="text"
                                             class="form-control" name="frameno" id="frameno" placeholder="Frame Number" value="{{$vehicle ? $vehicle->frameno:''}}">
                                         </div>
@@ -290,7 +290,7 @@
                                         <label for="deliverydate">Expected Delivery Date</label>
                                         <div>
 
-                                        <input type="text" id="diagnosis" value="" placeholder="Expected Delivery Date"
+                                        <input type="text" id="deliverydate" value="" placeholder="Expected Delivery Date"
                                         name="deliverydate"  class="form-control date" >
                                         </div>
                                     </div>
@@ -300,14 +300,14 @@
                                         <div>
 
                                         <input type="text" id="remarks" value="" placeholder="Remarks"
-                                        name="status" class="form-control" >
+                                        name="remarks" class="form-control" >
                                         </div>
                                     </div>
 
                                     <div class="form-group col-md-3">
                                         <label for="status">Status</label>
                                         <div>
-                                        <select name="status" id="status" class="pending">
+                                        <select name="status" id="status" class="form-control">
                                             <option value="Just Arrived">Just Arrived</option>
                                             <option value="Pending">Pending</option>
                                             <option value="In Progress">In Progress</option>

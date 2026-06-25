@@ -612,7 +612,12 @@ class JobsController extends Controller
             $title = "SALES";
         }
 
-            $pdf_doc = \PDF::loadView('invoice', compact('job','vehicle','title'));
+            // Prepare image paths for PDF generation (use file:// protocol instead of HTTP URLs)
+            $for_pdf = true;
+            $image_base_path = public_path('images/v.jpg');
+            $v_image_path = file_exists($image_base_path) ? 'file://' . str_replace('\\', '/', $image_base_path) : '';
+
+            $pdf_doc = \PDF::loadView('invoice', compact('job','vehicle','title','for_pdf','v_image_path'));
 
             // Ensure pdf directory exists with proper permissions
             $pdf_dir = public_path('pdf');
@@ -629,16 +634,22 @@ class JobsController extends Controller
             // Pass PDF URL to blade to trigger download with JS
             $pdf_url = asset('/pdf/'.$type.'-'.$jobno.'.pdf');
 
-            // Check if Job Images & then pass to invoice
+            // Check if Job Images & then pass to invoice (skip for instruction type to improve performance)
             $job_images = []; 
-            $job_image_Path = public_path("job_images/$jobno");
-            if (File::exists($job_image_Path)){
-                $job_images = File::files($job_image_Path);
-                $job_images = collect($job_images)->filter(function ($image) {
-                    // Filter for image files (optional: adjust extensions)
-                    return in_array($image->getExtension(), ['jpg', 'jpeg', 'png', 'gif']);
-                });
+            if($type !== 'instruction') {
+                $job_image_Path = public_path("job_images/$jobno");
+                if (File::exists($job_image_Path)){
+                    $job_images = File::files($job_image_Path);
+                    $job_images = collect($job_images)->filter(function ($image) {
+                        // Filter for image files (optional: adjust extensions)
+                        return in_array($image->getExtension(), ['jpg', 'jpeg', 'png', 'gif']);
+                    })->take(5); // Limit to 5 images max to improve performance
+                }
             }
+
+            // Reset for_pdf for view display
+            $for_pdf = false;
+            $v_image_path = asset('/images/v.jpg');
 
             // $pdf_doc->save('public/pdf/'.$type.'-'.$jobno.'.pdf')->stream($type.'-'.$jobno.'.pdf');
 
