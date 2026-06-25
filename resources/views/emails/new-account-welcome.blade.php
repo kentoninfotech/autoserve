@@ -42,11 +42,10 @@
             <p>Thank you for registering with us. We are excited to have you on board!</p>
             <p>With AutoServe, management of your workshop, sales, inventory and jobs becomes very easy.</p>
             <p>Please proceed to make payment to the bank account below;</p>
-            <p>Account Name: <b>Kenton Infotech Systems Ltd </b><br>
-            Account Number: <b>2001175618</b><br>
-            Bank: <b>FCMB</b><br>
-            Sort Code: <b>214081857</b>   
-        </p>
+            <p>Account Name: <b>Gintec Solutions Consults ltd</b><br>
+            Account Number: <b>6729927159</b><br>
+            Bank: <b>Moniepoint</b>
+            </p>
         <p>After your payment, please forward/attach the transaction reference to this email.</p>
 
             <p>If you have any questions or need assistance, feel free to reach out to our support team at <a href="tel:+23407067973091">2347067973091</a> .</p>
