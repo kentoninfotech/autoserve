@@ -68,7 +68,7 @@ class BackupController extends Controller
             'Supply' => \App\Models\supplies::class,
             'Stock' => \App\Models\stock::class,
             'Setting' => \App\Models\settings::class,
-            'ServiceOrder' => \App\Models\serviceOrder::class,
+            'ServiceOrder' => \App\Models\serviceorder::class,
             'Sale' => \App\Models\sale::class,
             'Personnel' => \App\Models\personnel::class,
             'Payment' => \App\Models\payments::class,
