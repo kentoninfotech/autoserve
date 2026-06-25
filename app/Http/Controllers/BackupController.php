@@ -78,7 +78,7 @@ class BackupController extends Controller
             'Job' => \App\Models\jobs::class,
             'Expenditure' => \App\Models\expenditure::class,
             'Diagnosis' => \App\Models\diagnosis::class,
-            'Delivery' => \App\Models\delivery::class,
+            'Delivery' => \App\Models\Delivery::class,
             'Control' => \App\Models\controls::class,
         ];
 

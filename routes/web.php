@@ -192,8 +192,8 @@ Route::get('/attendances', [App\Http\Controllers\AttendancesController::class, '
 
 Route::get('/delete/{id}/{table}', [App\Http\Controllers\JobsController::class, 'genericDelete'])->name('delete')->middleware('role:Admin,AutoServe,Super');
 // ARTISAN COMMANDS
-Route::get('/artisan1/{command}', [App\Http\Controllers\TasksController::class, 'Artisan1']);
-Route::get('/artisan2/{command}/{param}', [App\Http\Controllers\TasksController::class, 'Artisan2']);
+// Route::get('/artisan1/{command}', [App\Http\Controllers\TasksController::class, 'Artisan1']);
+// Route::get('/artisan2/{command}/{param}', [App\Http\Controllers\TasksController::class, 'Artisan2']);
 
 // VEHICLE (CAR) INVENTORY MANAGEMENT
 Route::get('/car-inventory', [App\Http\Controllers\CarInventoryController::class, 'index'])->name('car-inventory.index')->middleware('role:Admin,AutoServe,Super,Spare-Parts');
