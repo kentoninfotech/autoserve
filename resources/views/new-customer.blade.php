@@ -410,7 +410,7 @@
                                         <label for="deliverydate">Expected Delivery Date</label>
                                         <div>
 
-                                        <input type="text" id="diagnosis" value="{{$job->diagnosis ? $job->diagnosis->deliverydate:''}}" placeholder="Expected Delivery Date"
+                                        <input type="text" id="deliverydate" value="{{$job->diagnosis ? $job->diagnosis->deliverydate:''}}" placeholder="Expected Delivery Date"
                                         name="deliverydate"  class="form-control date" >
                                         </div>
                                     </div>

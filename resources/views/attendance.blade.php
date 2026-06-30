@@ -35,7 +35,7 @@
                                     <td>
                                         
                                         @php
-                                            $record = \App\Models\Attendances::select('date_time','personnel_id')->where('personnel_id', $per->id)->whereDate('date_time', date('Y-m-d'))->first(); 
+                                            $record = \App\Models\Attendance::select('date_time','personnel_id')->where('personnel_id', $per->id)->whereDate('date_time', date('Y-m-d'))->first(); 
                                         @endphp
                                         @if(!isset($record))
                                             <form action="{{url('/present/'.$per->id)}}" method="POST">

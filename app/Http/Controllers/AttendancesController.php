@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\attendances;
+use App\Models\Attendance;
 use Illuminate\Http\Request;
 use App\Models\personnel;
 
@@ -21,7 +21,7 @@ class AttendancesController extends Controller
 
     public function Attendances()
     {
-        $attendances = attendances::paginate(50);
+        $attendances = Attendance::paginate(50);
         return view('attendances', compact('attendances'));
     }
     /**
@@ -42,7 +42,7 @@ class AttendancesController extends Controller
      */
     public function store(Request $request)
     {
-        attendances::create($request->all());
+        Attendance::create($request->all());
 
         return redirect()->back()->with('message','Attendance added successfully');
     }
@@ -50,10 +50,10 @@ class AttendancesController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\attendances  $attendances
+     * @param  \App\Models\Attendance  $attendances
      * @return \Illuminate\Http\Response
      */
-    public function show(attendances $attendances)
+    public function show(Attendance $attendances)
     {
         //
     }
@@ -61,10 +61,10 @@ class AttendancesController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\attendances  $attendances
+     * @param  \App\Models\Attendance  $attendances
      * @return \Illuminate\Http\Response
      */
-    public function edit(attendances $attendances)
+    public function edit(Attendance $attendances)
     {
         //
     }
@@ -73,10 +73,10 @@ class AttendancesController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\attendances  $attendances
+     * @param  \App\Models\Attendance  $attendances
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, attendances $attendances)
+    public function update(Request $request, Attendance $attendances)
     {
         //
     }
@@ -84,10 +84,10 @@ class AttendancesController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\attendances  $attendances
+     * @param  \App\Models\Attendance  $attendances
      * @return \Illuminate\Http\Response
      */
-    public function destroy(attendances $attendances)
+    public function destroy(Attendance $attendances)
     {
         //
     }

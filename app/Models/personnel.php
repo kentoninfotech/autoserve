@@ -34,7 +34,7 @@ class personnel extends Model
 
     public function attendances()
     {
-        return $this->hasMany(attendances::class, 'personnel_id', 'id');
+        return $this->hasMany(Attendance::class, 'personnel_id', 'id');
     }
 
     public function user()

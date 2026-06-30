@@ -125,7 +125,7 @@
                         <div class="row form-row">
                             <div class="form-group col-md-6">
                                 <label for="ent_vat">Vat (in Percentage %)</label>
-                                <input type="number" name="ent_vat" id="ent_vat" class="form-control" min="0" value="0" oninput="updateSummary()">
+                                <input type="number" name="ent_vat" id="ent_vat" class="form-control" min="0" value="0" oninput="updateSummary()" step="0.01">
                             </div>
                             <div class="form-group col-md-6">
                                 <label for="vat">Vat (₦)</label>

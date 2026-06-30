@@ -2,7 +2,7 @@
 
 namespace Database\Factories;
 
-use App\Models\attendances;
+use App\Models\Attendance;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class AttendancesFactory extends Factory
@@ -12,7 +12,7 @@ class AttendancesFactory extends Factory
      *
      * @var string
      */
-    protected $model = attendances::class;
+    protected $model = Attendance::class;
 
     /**
      * Define the model's default state.
